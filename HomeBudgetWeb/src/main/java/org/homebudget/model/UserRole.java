@@ -8,8 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
 @Entity(name = "USER_ROLES")
 public class UserRole {
@@ -19,9 +17,7 @@ public class UserRole {
     @GeneratedValue
     private long userRoleId;
     
-    @OneToOne
-    @JoinColumn(name = "USER_ID")
-    private UserDetails user;
+
     
     @Column(name="AUTHORITY")
     private String authority;
@@ -33,16 +29,6 @@ public class UserRole {
     public void setUserRoleId(long userRoleId) {
         this.userRoleId = userRoleId;
     }
-
-    public UserDetails getUser() {
-        return user;
-    }
-
-    public void setUser(UserDetails user) {
-        this.user = user;
-    }
-
-    
 
     public String getAuthority() {
         return authority;

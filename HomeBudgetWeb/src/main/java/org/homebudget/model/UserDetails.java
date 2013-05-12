@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
@@ -22,7 +24,7 @@ public class UserDetails {
     @Column(name = "USER_NICKNAME")
     private String userNickName;
 
-	@Column(name = "USER_NAME")
+    @Column(name = "USER_NAME")
     private String userName;
 
     @Column(name = "USER_SURNAME")
@@ -32,6 +34,10 @@ public class UserDetails {
     @Column(name = "PASSWORD")
     private String password;
 
+    @OneToOne
+    @JoinColumn(name = "USER_ROLE_ID")
+    private UserRole userRole;
+    
     @Column(name = "ENABLED")
     private int enabled;
     
@@ -106,6 +112,14 @@ public class UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
     
     
