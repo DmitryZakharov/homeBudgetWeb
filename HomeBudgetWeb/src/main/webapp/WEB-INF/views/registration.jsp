@@ -12,11 +12,18 @@
                    commandName="userDetails">
             <table>
                 <tr>
-                    <td>User Name:<FONT color="red"><form:errors
+                    <td>Name:<FONT color="red"><form:errors
                             path="userName" /></FONT></td>
                 </tr>
                 <tr>
                     <td><form:input path="userName" /></td>
+                </tr>
+                <tr>
+                    <td>Surname:<FONT color="red"><form:errors
+                            path="userSurname" /></FONT></td>
+                </tr>
+                <tr>
+                    <td><form:input path="userSurname" /></td>
                 </tr>
                 <tr>
                     <td>Password:<FONT color="red"><form:errors
@@ -25,18 +32,27 @@
                 <tr>
                     <td><form:password path="password" /></td>
                 </tr>
-                                <tr>
+                <tr>
                     <td>Email:<FONT color="red"><form:errors path="email" /></FONT></td>
                 </tr>
                 <tr>
                     <td><form:input path="email" /></td>
                 </tr>
-                <tr>
-                    <td><input type="submit" value="Submit" /></td>
-                </tr>
-            </table>
 
-        </form:form>
+            </tr>
+            <tr>
+                <td>Date of birth:<FONT color="red"><form:errors path="userBirthday" /></FONT></td>
+            </tr>
+            <tr>
+                <td><form:input path="userBirthday" /></td>
+            </tr>
 
-    </body>
+            <tr>
+                <td><input type="submit" value="Submit" /></td>
+            </tr>
+        </table>
+
+    </form:form>
+
+</body>
 </html>
