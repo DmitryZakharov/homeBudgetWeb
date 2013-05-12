@@ -24,7 +24,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
      from USER_DETAILS where USER_NAME=?"
 
 				authorities-by-username-query="
-     select u.USER_NAME, ur.authority from users u, user_roles ur 
+     select u.USER_NAME, ur.authority from USER_DETAILS u, user_roles ur 
      where u.user_id = ur.user_id and u.USER_NAME =?  " />
 		</authentication-provider>
 	</authentication-manager>
