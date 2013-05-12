@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Email;
+import org.omg.CosNaming.NamingContextPackage.NotEmpty;
 
 @Entity(name = "USER_DETAILS")
 public class UserDetails {
@@ -22,11 +25,16 @@ public class UserDetails {
     @Column(name = "USER_SURNAME")
     private String userSurname;
 
+    @Size(min = 4, max = 20)
     @Column(name = "PASSWORD")
     private String password;
 
     @Column(name = "ENABLED")
     private int enabled;
+    
+    @Email
+    @Column(name="EMAIL")
+    private String email;
 
     @Column(name = "DATE_OF_BIRTH")
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -79,4 +87,14 @@ public class UserDetails {
     public void setEnabled(int enabled) {
         this.enabled = enabled;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    
 }
