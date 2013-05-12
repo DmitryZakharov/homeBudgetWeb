@@ -20,12 +20,12 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 			<jdbc-user-service data-source-ref="dataSource"
 
 				users-by-username-query="
-     select USER_NAME, PASSWORD,  ENABLED 
-     from USER_DETAILS where USER_NAME=?"
+     select USER_NICKNAME, PASSWORD,  ENABLED 
+     from USER_DETAILS where USER_NICKNAME=?"
 
 				authorities-by-username-query="
-     select u.USER_NAME, ur.authority from USER_DETAILS u, user_roles ur 
-     where u.user_id = ur.user_id and u.USER_NAME =?  " />
+     select u.USER_NICKNAME, ur.authority from USER_DETAILS u, user_roles ur 
+     where u.user_id = ur.user_id and u.USER_NICKNAME =?  " />
 		</authentication-provider>
 	</authentication-manager>
 
