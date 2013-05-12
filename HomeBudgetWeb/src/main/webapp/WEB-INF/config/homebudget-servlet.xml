@@ -13,13 +13,13 @@
             http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
 	<mvc:annotation-driven />
-
+<import resource="datasource-config.xml"/>
 	<context:component-scan base-package="org.homebudget.controller" />
 
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-		<property name="dataSource" ref="datasource" />
+		<property name="dataSource"><ref bean="dataSource"/></property>
 		<property name="annotatedClasses">
 			<list>
 				<value>org.homebudget.model.Account</value>
