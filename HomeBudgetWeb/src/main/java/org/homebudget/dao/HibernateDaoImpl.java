@@ -1,5 +1,8 @@
 package org.homebudget.dao;
 
+import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.homebudget.model.Account;
 import org.homebudget.model.UserDetails;
@@ -17,6 +20,17 @@ public class HibernateDaoImpl {
 		Account account = (Account) getSessionFactory().openSession().get(
 				Account.class, id);
 		return account;
+	}
+	
+	
+	public List<UserDetails> getAllUsers() {
+
+	    Query q = getSessionFactory().openSession().createQuery("from USER_DETAILS");
+
+	    List<UserDetails> allUsers = (List<UserDetails>) q.list();
+
+	    return allUsers;
+
 	}
 
 	public UserDetails getUser(long id) {

@@ -1,10 +1,7 @@
 package org.homebudget.controller;
 
-import java.util.Date;
-
 import org.homebudget.dao.HibernateDaoImpl;
 import org.homebudget.model.Account;
-import org.homebudget.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,18 +21,18 @@ public class HelloController {
 		return "hello";
 	}
 	
-	@RequestMapping(value = "/addUser")
-	public String addUser(Model model){
-		UserDetails user = new UserDetails();
-		user.setUserBirthday(new Date());
-		user.setUserName("someUserName");
-		user.setUserSurname("Parcenson");
-		
-		getHibernateDaoImpl().addUser(user);
-		model.addAttribute("greeting", user.getUserName());
-		return "hello";
-		
-	}
+	// @RequestMapping(value = "/addUser")
+	// public String addUser(Model model){
+	// UserDetails user = new UserDetails();
+	// user.setUserBirthday(new Date());
+	// user.setUserName("someUserName");
+	// user.setUserSurname("Parcenson");
+	//
+	// getHibernateDaoImpl().addUser(user);
+	// model.addAttribute("greeting", user.getUserName());
+	// return "hello";
+	//
+	// }
 
 	public HibernateDaoImpl getHibernateDaoImpl() {
 		return hibernateDaoImpl;
