@@ -15,9 +15,7 @@
  
     <mvc:annotation-driven />
    
-    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-        <property name="basename" value="messages"/>
-    </bean>     
+   
     <context:component-scan base-package="org.homebudget.controller" />
 
 
