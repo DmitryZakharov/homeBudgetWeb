@@ -1,4 +1,4 @@
-package utils.org.homebudget.utils;
+package org.homebudget.utils;
 
 import java.util.Date;
 

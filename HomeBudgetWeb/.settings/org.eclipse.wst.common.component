@@ -4,6 +4,7 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/utils"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/utils"/>
         <property name="context-root" value="HomeBudgetWeb"/>
         <property name="java-output-path" value="/HomeBudgetWeb/build/classes"/>
     </wb-module>
