@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.homebudget.dao.HibernateDaoImpl;
+import org.homebudget.dao.UserRepositoryDaoImpl;
 import org.homebudget.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserManagmentController {
 
 	@Autowired
-	private HibernateDaoImpl hibernateDaoImpl;
+	private UserRepositoryDaoImpl hibernateDaoImpl;
 
 	@RequestMapping(value = "/addUser")
 	public String addNewUser(
@@ -53,11 +53,11 @@ public class UserManagmentController {
 				dateFormat, false));
 	}
 
-	public HibernateDaoImpl getHibernateDaoImpl() {
+	public UserRepositoryDaoImpl getHibernateDaoImpl() {
 		return hibernateDaoImpl;
 	}
 
-	public void setHibernateDaoImpl(HibernateDaoImpl hibernateDaoImpl) {
+	public void setHibernateDaoImpl(UserRepositoryDaoImpl hibernateDaoImpl) {
 		this.hibernateDaoImpl = hibernateDaoImpl;
 	}
 }

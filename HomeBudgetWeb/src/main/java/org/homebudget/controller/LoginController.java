@@ -1,6 +1,6 @@
 package org.homebudget.controller;
 
-import org.homebudget.dao.HibernateDaoImpl;
+import org.homebudget.dao.UserRepositoryDaoImpl;
 import org.homebudget.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LoginController {
 
 	@Autowired
-	private HibernateDaoImpl hibernateDaoImpl;
+	private UserRepositoryDaoImpl hibernateDaoImpl;
 
 	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
@@ -54,11 +54,11 @@ public class LoginController {
 		return "login";
 	}
 
-	public HibernateDaoImpl getHibernateDaoImpl() {
+	public UserRepositoryDaoImpl getHibernateDaoImpl() {
 		return hibernateDaoImpl;
 	}
 
-	public void setHibernateDaoImpl(HibernateDaoImpl hibernateDaoImpl) {
+	public void setHibernateDaoImpl(UserRepositoryDaoImpl hibernateDaoImpl) {
 		this.hibernateDaoImpl = hibernateDaoImpl;
 	}
 

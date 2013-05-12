@@ -33,7 +33,7 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 		p:prefix="/WEB-INF/views/" p:suffix=".jsp" />
 
-	<bean name="hibernateDaoImpl" class="org.homebudget.dao.HibernateDaoImpl" />
+	<bean name="hibernateDaoImpl" class="org.homebudget.dao.UserRepositoryDaoImpl" />
 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
