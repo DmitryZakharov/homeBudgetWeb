@@ -26,7 +26,7 @@ public class UserManagmentController {
 			@ModelAttribute("userDetails") UserDetails userDetails) {
 
 		if (userDetails.getUserName() != null) {
-			hibernateDaoImpl.addUser(userDetails);
+			hibernateDaoImpl.addUser(userDetails, "ROLE_USER");
 		}
 
 		System.out.println("User Name: " + userDetails.getUserName());

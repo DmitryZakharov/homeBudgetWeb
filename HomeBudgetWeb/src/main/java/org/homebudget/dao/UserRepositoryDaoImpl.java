@@ -6,6 +6,7 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.homebudget.model.Account;
 import org.homebudget.model.UserDetails;
+import org.homebudget.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -34,7 +35,7 @@ public class UserRepositoryDaoImpl {
 	public UserDetails getUser(String userNickname) {
 
 		Query q = getSessionFactory().openSession().createQuery(
-				"from USER_DETAILS where USER_NICKNAME=?");
+				"from USER_DETAILS where USER_USERNAME=?");
 		q.setString(0, userNickname);
 		List<UserDetails> users = (List<UserDetails>) q.list();
 
@@ -43,7 +44,11 @@ public class UserRepositoryDaoImpl {
 		return null;
 	}
 
-	public void addUser(UserDetails user) {
+	public void addUser(UserDetails user, String role) {
+		UserRole uRole = new UserRole();
+		uRole.setAuthority(role);
+		user.setUserRole(uRole);
+		getSessionFactory().openSession().save(uRole);
 		getSessionFactory().openSession().save(user);
 	}
 

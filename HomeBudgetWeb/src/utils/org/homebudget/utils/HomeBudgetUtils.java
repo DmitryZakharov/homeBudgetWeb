@@ -28,7 +28,7 @@ public class HomeBudgetUtils {
 
 			final UserDetails user = new UserDetails();
 			user.setUserName("Dmitry" + i);
-			user.setUserNickName(user.getUserName() + "_nick");
+			user.setUserUsername(user.getUserName() + "_nick");
 			user.setUserSurname("Zakharov");
 			user.setEmail("some" +i+"@email.com");
 			Date birthday = new Date();

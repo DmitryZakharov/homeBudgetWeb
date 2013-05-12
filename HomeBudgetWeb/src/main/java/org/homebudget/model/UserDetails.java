@@ -21,8 +21,8 @@ public class UserDetails {
 	@GeneratedValue
 	private long userId;
 
-	@Column(name = "USER_NICKNAME")
-	private String userNickName;
+	@Column(name = "USER_USERNAME")
+	private String userUsername;
 
 	@Column(name = "USER_NAME")
 	private String userName;
@@ -57,12 +57,12 @@ public class UserDetails {
 		this.userId = userId;
 	}
 
-	public String getUserNickName() {
-		return userNickName;
+	public String getUserUsername() {
+		return userUsername;
 	}
 
-	public void setUserNickName(String userNickName) {
-		this.userNickName = userNickName;
+	public void setUserUsername(String userUsername) {
+		this.userUsername = userUsername;
 	}
 
 	public String getUserName() {
