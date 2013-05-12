@@ -3,7 +3,7 @@ package org.homebudget.controller;
 import java.util.Map;
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import org.homebudget.dao.HibernateDaoImpl;
+import org.homebudget.dao.UserRepositoryDaoImpl;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ public class RegistrationController {
     
     private final Logger logger = LoggerFactory.getLogger(getClass());
     @Resource
-    private HibernateDaoImpl service;
+    private UserRepositoryDaoImpl service;
 
     @RequestMapping(method = RequestMethod.GET)
     protected String showRegistration(Map model) throws Exception {
