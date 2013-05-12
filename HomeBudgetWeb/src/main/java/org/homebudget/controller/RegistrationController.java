@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import org.homebudget.dao.HibernateDaoImpl;
 import org.homebudget.model.UserDetails;
+import org.homebudget.model.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class RegistrationController {
     @RequestMapping(method = RequestMethod.GET)
     protected String showRegistration(Map model) throws Exception {
         UserDetails aUserDetails = new UserDetails();
+        UserRole aUserRole  = new UserRole();
+        aUserRole.setAuthority("ROLE_USER");
         model.put("userDetails", aUserDetails);
         return "registration";
     }
@@ -45,15 +48,7 @@ public class RegistrationController {
                 return "registrationsuccess";
         }
 
-    @RequestMapping(value = "/user/{userId}")
-    public ModelAndView userDetails(@PathVariable Long userId) {
-        UserDetails aUserDetails = service.getUser(userId);
-        ModelAndView model = new ModelAndView();
-        model.addObject("uname", aUserDetails.getUserName());
-        model.addObject("fname", aUserDetails.getUserSurname());
-        model.addObject("bthday", aUserDetails.getUserBirthday());
-        return model;
-    }
+  
     
     public void setReistrationValidation(ReistrationValidation aReistrationValidation){
         this.aReistrationValidation = aReistrationValidation;
