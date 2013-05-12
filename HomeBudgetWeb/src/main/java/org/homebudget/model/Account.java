@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.GenericGenerator;
@@ -29,6 +30,7 @@ public class Account {
 	private String accountName;
 
 	@Column(name = "CREATION_DATE")
+        @Temporal(javax.persistence.TemporalType.DATE)
 	private Date dateOfCreation;
 
 	@OneToOne

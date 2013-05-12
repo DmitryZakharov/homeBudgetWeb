@@ -1,0 +1,114 @@
+/* Menu-Header styles v2
+-------------------------------------------------- */
+body {
+    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+
+.container {
+    width: auto;
+    max-width: 1080px;
+}
+
+body > div.container {
+    
+}
+
+h1 {
+  font-size: 22px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+form.form-inline {
+    margin-bottom: 0;
+}
+
+.form-horizontal .controls > span:not(.uneditable-input):not(.uneditable-textarea):not(.help-inline):not(.help-block),
+.form-horizontal .controls > pre:not(.uneditable-input):not(.uneditable-textarea),
+.form-horizontal .controls > div:not(.uneditable-input):not(.uneditable-textarea):not(.help-inline):not(.help-block),
+.form-horizontal .controls > a:not(.uneditable-input):not(.uneditable-textarea) {
+    margin: 0px 0px;
+}
+.form-horizontal .controls > span:not(.uneditable-input):not(uneditable-textarea):not(.help-inline),
+.form-horizontal .controls > a:not(.uneditable-input):not(.uneditable-textarea) {
+    display: block;
+    float: left;
+}
+.form-horizontal .controls > pre {
+    padding: 0 4px;
+}
+.form-horizontal .controls > pre:empty {
+    padding: 9.5px;
+}
+
+.table th.ctrl.ctrl-1 {
+    width: 120px; 
+}
+.table th.ctrl.ctrl-2 {
+    width: 160px; 
+}
+.table th.ctrl.ctrl-3 {
+    width: 240px; 
+}
+.table th.name {
+    width: 215px; 
+}
+
+table th.center,
+table td.center {
+    text-align: center;
+}
+
+.table-striped tbody > tr > td.warning,
+.table > tbody > td.warning {
+    background-color: #fcf8e3;
+}
+
+.table > tbody > td.center {
+    text-align: center;
+}
+
+.syntaxhighlighter { 
+    overflow-y: hidden !important; 
+    overflow-x: auto !important; 
+}
+
+.tree-representation {
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    overflow: hidden;
+}
+
+.form-horizontal .controls {
+    width: 700px;
+    overflow-x: auto;
+}
+.form-horizontal .controls > pre:not(:empty) {
+    display: inline-block;
+    white-space: pre;
+    min-width: 690px;
+}
+
+.form-horizontal .control-group {
+  margin-bottom: 2px;
+  margin-top: 2px;
+}
+
+.nowrap{
+    white-space: nowrap;
+}
+
+.page-header{
+    margin: 0px;
+    padding: 0px;
+}
+
+.logo{
+    height: 30px;
+    width: 60px;
+}
+
+#lines{
+    max-width: 100px;
+}
