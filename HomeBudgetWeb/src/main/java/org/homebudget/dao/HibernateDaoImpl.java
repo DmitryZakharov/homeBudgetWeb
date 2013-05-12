@@ -21,23 +21,29 @@ public class HibernateDaoImpl {
 				Account.class, id);
 		return account;
 	}
-	
-	
+
 	public List<UserDetails> getAllUsers() {
 
-	    Query q = getSessionFactory().openSession().createQuery("from USER_DETAILS");
+		Query q = getSessionFactory().openSession().createQuery(
+				"from USER_DETAILS");
 
-	    List<UserDetails> allUsers = (List<UserDetails>) q.list();
-
-	    return allUsers;
+		return (List<UserDetails>) q.list();
 
 	}
 
-	public UserDetails getUser(long id) {
-		return (UserDetails) getSessionFactory().openSession().get(UserDetails.class, id);
+	public UserDetails getUser(String userNickname) {
+
+		Query q = getSessionFactory().openSession().createQuery(
+				"from USER_DETAILS where USER_NICKNAME=?");
+		q.setString(0, userNickname);
+		List<UserDetails> users = (List<UserDetails>) q.list();
+
+		if (users.size() == 1)
+			return users.get(0);
+		return null;
 	}
-	
-	public  void addUser(UserDetails user){
+
+	public void addUser(UserDetails user) {
 		getSessionFactory().openSession().save(user);
 	}
 
