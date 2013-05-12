@@ -1,30 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_2.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_2.xsd">
 
-    <display-name>Home Budgets</display-name>
-    
-    <servlet>
-        <servlet-name>homeBudgetServlet</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/config/servlet-config.xml</param-value>
-            <param-value>/WEB-INF/config/servlet-security.xml</param-value>
-            <param-value>/WEB-INF/config/datasource-config.xml</param-value>
-        </init-param>
-    </servlet>
+	<display-name>Home Budget</display-name>
 
-    <servlet-mapping>
-        <servlet-name>homeBudgetServlet</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
-    
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-    
-        
+	<servlet>
+		<servlet-name>homebudget</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>
+				/WEB-INF/config/homebudget-servlet.xml,
+				/WEB-INF/config/datasource-config.xml,
+				/WEB-INF/config/servlet-security.xml
+			</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>homebudget</servlet-name>
+		<url-pattern>*.html</url-pattern>
+	</servlet-mapping>
+
     <!-- Spring Security -->
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
@@ -35,7 +34,7 @@
  
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/some/*</url-pattern>
     </filter-mapping>
-   
+    
 </web-app>

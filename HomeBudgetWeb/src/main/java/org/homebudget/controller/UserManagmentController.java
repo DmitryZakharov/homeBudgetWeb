@@ -46,13 +46,6 @@ public class UserManagmentController {
 		return "usersList";
 	}
 
-	// @RequestMapping( value = "/usersList")
-	// public String getUsers(Model model){
-	// List<UserDetails> usersList = getHibernateDaoImpl().getAllUsers();
-	// model.addAttribute("usersList", usersList);
-	// return "usersList";
-	// }
-
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");

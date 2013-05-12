@@ -15,14 +15,19 @@ public class UserDetails {
     @Column(name = "USER_ID")
     @GeneratedValue
     private long userId;
+
     @Column(name = "USER_NAME")
     private String userName;
+
     @Column(name = "USER_SURNAME")
     private String userSurname;
+
     @Column(name = "PASSWORD")
     private String password;
+
     @Column(name = "ENABLED")
     private int enabled;
+
     @Column(name = "DATE_OF_BIRTH")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date userBirthday;
