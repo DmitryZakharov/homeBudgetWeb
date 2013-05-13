@@ -1,4 +1,4 @@
-package org.homebudget.controller;
+package org.homebudget.controllers;
 
 import java.util.Map;
 
@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.homebudget.dao.UserRepositoryDaoImpl;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
+import org.homebudget.services.ReistrationValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +20,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
-	@Autowired
-	private ReistrationValidation aReistrationValidation;
 
 	private final Logger logger = LoggerFactory
 			.getLogger(RegistrationController.class);
-	
-	@Resource
-	private UserRepositoryDaoImpl service;
+
+	@Autowired
+	private ReistrationValidation aReistrationValidation;
+
+	@Resource(name = "userRepositoryDao")
+	private UserRepositoryDaoImpl userRepositoryDao;
 
 	@RequestMapping(method = RequestMethod.GET)
 	protected String showRegistration(Map model) throws Exception {
@@ -45,7 +47,7 @@ public class RegistrationController {
 		if (result.hasErrors()) {
 			return "registration";
 		}
-		service.addUser(aUserDetails, "ROLE_USER");
+		userRepositoryDao.addUser(aUserDetails, "ROLE_USER");
 		return "registrationsuccess";
 	}
 

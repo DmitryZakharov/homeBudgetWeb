@@ -18,7 +18,8 @@
 
 	<import resource="datasource-config.xml" />
 
-	<context:component-scan base-package="org.homebudget.controller" />
+	<context:component-scan
+		base-package="org.homebudget.controllers, org.homebudget.services" />
 
 	<bean
 		class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" />
@@ -31,7 +32,7 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 		p:prefix="/WEB-INF/views/" p:suffix=".jsp" />
 
-	<bean name="hibernateDaoImpl" class="org.homebudget.dao.UserRepositoryDaoImpl" />
+	<bean name="userRepositoryDao" class="org.homebudget.dao.UserRepositoryDaoImpl" />
 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource"

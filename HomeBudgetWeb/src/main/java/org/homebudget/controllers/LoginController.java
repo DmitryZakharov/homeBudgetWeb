@@ -1,4 +1,4 @@
-package org.homebudget.controller;
+package org.homebudget.controllers;
 
 import org.homebudget.dao.UserRepositoryDaoImpl;
 import org.homebudget.model.UserDetails;

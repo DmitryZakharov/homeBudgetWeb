@@ -1,4 +1,4 @@
-package org.homebudget.controller;
+package org.homebudget.controllers;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -1,12 +1,12 @@
 
-package org.homebudget.controller;
+package org.homebudget.services;
 
 import org.homebudget.model.UserDetails;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 
-@Component("registrationValidator")
+@Service("registrationValidator")
 public class ReistrationValidation {
      public boolean supports(Class<?> klass) {
     return UserDetails.class.isAssignableFrom(klass);
