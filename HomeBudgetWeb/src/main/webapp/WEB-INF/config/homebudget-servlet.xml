@@ -11,8 +11,10 @@
             http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
 	<mvc:annotation-driven />
-	
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" p:location="WEB-INF/config/homebudget.properties"/>
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		p:location="WEB-INF/config/homebudget.properties" />
 
 	<import resource="datasource-config.xml" />
 
@@ -23,17 +25,7 @@
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
-		p:dataSource-ref="dataSource" p:packagesToScan="org.homebudget.model">
-
-		<!-- <property name="annotatedClasses" > -->
-		<!-- <list> -->
-		<!-- <value>org.homebudget.model.Account</value> -->
-		<!-- <value>org.homebudget.model.UserDetails</value> -->
-		<!-- <value>org.homebudget.model.Category</value> -->
-		<!-- <value>org.homebudget.model.UserRole</value> -->
-		<!-- </list> -->
-		<!-- </property> -->
-	</bean>
+		p:dataSource-ref="dataSource" p:packagesToScan="org.homebudget.model" />
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
