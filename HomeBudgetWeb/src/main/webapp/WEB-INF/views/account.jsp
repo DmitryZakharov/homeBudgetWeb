@@ -21,5 +21,7 @@
 			</tr>
 		</c:forEach>
 	</table>
+	
+		<a href="<c:url value="/account/createAccount.html" />" >create new account</a>
 </body>
 </html>

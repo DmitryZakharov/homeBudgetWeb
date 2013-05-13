@@ -25,6 +25,11 @@ public class AccountRepositoryDaoImpl {
 		return accounts;
 	}
 
+	public void addAccount(Account account) {
+
+		getSessionFactory().openSession().save(account);
+	}
+
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}

@@ -3,7 +3,7 @@
 <body>
 	<h3>Hello ${username} ${usersurname}</h3>	
 	
-	<a href="<c:url value="/account" />" > accounts details</a>
+	<a href="<c:url value="/account.html" />" > accounts details</a>
 	<a href="<c:url value="/j_spring_security_logout" />" > Logout</a>
 	
 </body>

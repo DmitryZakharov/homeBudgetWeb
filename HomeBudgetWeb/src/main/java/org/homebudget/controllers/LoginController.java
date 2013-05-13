@@ -3,6 +3,7 @@ package org.homebudget.controllers;
 import org.homebudget.dao.UserRepositoryDaoImpl;
 import org.homebudget.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LoginController {
 
 	@Autowired
+	@Qualifier("userRepositoryDao")
 	private UserRepositoryDaoImpl userRepositoryDao;
 
 	@RequestMapping(value = "/welcome", method = RequestMethod.GET)

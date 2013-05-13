@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.homebudget.model.Account;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;

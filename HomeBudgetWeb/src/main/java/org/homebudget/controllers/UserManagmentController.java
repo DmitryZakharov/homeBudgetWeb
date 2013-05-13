@@ -7,6 +7,7 @@ import java.util.List;
 import org.homebudget.dao.UserRepositoryDaoImpl;
 import org.homebudget.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,14 +20,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserManagmentController {
 
 	@Autowired
-	private UserRepositoryDaoImpl hibernateDaoImpl;
+	@Qualifier("userRepositoryDao")
+	private UserRepositoryDaoImpl userRepositoryDao;
 
 	@RequestMapping(value = "/addUser")
 	public String addNewUser(
 			@ModelAttribute("userDetails") UserDetails userDetails) {
 
 		if (userDetails.getUserName() != null) {
-			hibernateDaoImpl.addUser(userDetails, "ROLE_USER");
+			userRepositoryDao.addUser(userDetails, "ROLE_USER");
 		}
 
 		System.out.println("User Name: " + userDetails.getUserName());
@@ -54,10 +56,10 @@ public class UserManagmentController {
 	}
 
 	public UserRepositoryDaoImpl getHibernateDaoImpl() {
-		return hibernateDaoImpl;
+		return userRepositoryDao;
 	}
 
 	public void setHibernateDaoImpl(UserRepositoryDaoImpl hibernateDaoImpl) {
-		this.hibernateDaoImpl = hibernateDaoImpl;
+		this.userRepositoryDao = hibernateDaoImpl;
 	}
 }
