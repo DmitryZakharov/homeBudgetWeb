@@ -18,7 +18,7 @@ import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-@Entity
+@Entity( name = "ACCOUNT")
 public class Account {
 
 	@Id
@@ -26,7 +26,7 @@ public class Account {
 	@GeneratedValue
 	private long accountId;
 	
-	@Column (name="ACOOUNT_NAME")
+	@Column (name="ACCOUNT_NAME")
 	private String accountName;
 
 	@Column(name = "CREATION_DATE")
@@ -53,6 +53,15 @@ public class Account {
 	public void setAccountId(long accountId) {
 		this.accountId = accountId;
 	}
+	
+	public String getAccountName() {
+		return accountName;
+	}
+
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
+	}
+
 
 	public UserDetails getOwner() {
 		return owner;

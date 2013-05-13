@@ -33,6 +33,7 @@
 		p:prefix="/WEB-INF/views/" p:suffix=".jsp" />
 
 	<bean name="userRepositoryDao" class="org.homebudget.dao.UserRepositoryDaoImpl" />
+	<bean name="accountRepositoryDao" class="org.homebudget.dao.AccountRepositoryDaoImpl" />
 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource"

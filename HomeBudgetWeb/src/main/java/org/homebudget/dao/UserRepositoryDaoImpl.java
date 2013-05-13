@@ -16,13 +16,6 @@ public class UserRepositoryDaoImpl {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public Account getAccount(long id) {
-
-		Account account = (Account) getSessionFactory().openSession().get(
-				Account.class, id);
-		return account;
-	}
-
 	public List<UserDetails> getAllUsers() {
 
 		Query q = getSessionFactory().openSession().createQuery(
@@ -42,6 +35,24 @@ public class UserRepositoryDaoImpl {
 		if (users.size() == 1)
 			return users.get(0);
 		return null;
+	}
+	
+	public Long getUserId(String username){
+		
+		Query q = getSessionFactory().openSession().createQuery(
+				"from USER_DETAILS where USER_USEERNAME=?");
+		q.setString(0, username);
+
+		List<UserDetails> users = (List<UserDetails>) q.list();
+		UserDetails user = null;
+
+		if (users.size() == 1) {
+			user = users.get(0);
+		} else {
+			return null;
+		}
+		
+		return user.getUserId();
 	}
 
 	public void addUser(UserDetails user, String role) {
