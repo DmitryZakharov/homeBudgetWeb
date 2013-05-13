@@ -11,6 +11,8 @@
             http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
 	<mvc:annotation-driven />
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" p:location="WEB-INF/config/homebudget.properties"/>
 
 	<import resource="datasource-config.xml" />
 
