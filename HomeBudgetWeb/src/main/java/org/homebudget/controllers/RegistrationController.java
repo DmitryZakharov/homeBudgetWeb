@@ -3,7 +3,7 @@ package org.homebudget.controllers;
 import java.util.Map;
 
 import javax.validation.Valid;
-import javax.inject.Inject;
+
 import org.homebudget.dao.UserRepositoryDaoImpl;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
@@ -24,7 +24,7 @@ public class RegistrationController {
 	private final Logger logger = LoggerFactory
 			.getLogger(RegistrationController.class);
 
-
+	@Autowired
 	private ReistrationValidation aReistrationValidation;
 
 	@Autowired
@@ -51,11 +51,4 @@ public class RegistrationController {
 		userRepositoryDao.addUser(aUserDetails, "ROLE_USER");
 		return "registrationsuccess";
 	}
-	
-	@Inject
-	public void setaReistrationValidation(
-			ReistrationValidation aReistrationValidation) {
-		this.aReistrationValidation = aReistrationValidation;
-	}
-
 }
