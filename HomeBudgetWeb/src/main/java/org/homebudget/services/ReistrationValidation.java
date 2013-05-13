@@ -23,6 +23,5 @@ public class ReistrationValidation {
           "lengthOfUser.registration.userName",
           "User Name must not more than 50 characters.");
     }
-    
   }
 }
