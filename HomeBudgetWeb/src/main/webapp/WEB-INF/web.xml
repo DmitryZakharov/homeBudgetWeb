@@ -20,12 +20,12 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
-		<context-param>
+	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 				/WEB-INF/config/homebudget-servlet.xml,
 				/WEB-INF/config/datasource-config.xml,
-				/WEB-INF/config/servlet-security.xml
+				/WEB-INF/config/homebudget-security.xml
 		</param-value>
 	</context-param>
 	

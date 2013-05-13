@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LoginController {
 
 	@Autowired
-	private UserRepositoryDaoImpl hibernateDaoImpl;
+	private UserRepositoryDaoImpl userRepositoryDao;
 
 	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
@@ -23,7 +23,7 @@ public class LoginController {
 				.getAuthentication().getPrincipal();
 		String nickname = user.getUsername();
 		
-		UserDetails userDetails  = hibernateDaoImpl.getUser(nickname);
+		UserDetails userDetails  = userRepositoryDao.getUser(nickname);
 
 		model.addAttribute("username", userDetails.getUserName());
 		model.addAttribute("usersurname", userDetails.getUserSurname());
@@ -55,11 +55,11 @@ public class LoginController {
 	}
 
 	public UserRepositoryDaoImpl getHibernateDaoImpl() {
-		return hibernateDaoImpl;
+		return userRepositoryDao;
 	}
 
 	public void setHibernateDaoImpl(UserRepositoryDaoImpl hibernateDaoImpl) {
-		this.hibernateDaoImpl = hibernateDaoImpl;
+		this.userRepositoryDao = hibernateDaoImpl;
 	}
 
 }
