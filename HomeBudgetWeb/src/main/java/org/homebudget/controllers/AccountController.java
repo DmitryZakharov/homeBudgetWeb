@@ -62,7 +62,7 @@ public class AccountController {
 		return "createAccount";
 	}
 
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/createAccount", method = RequestMethod.POST)
 	public ModelAndView addAccount(
 			@ModelAttribute("account") @Valid Account account,
 			BindingResult result) {
@@ -81,7 +81,7 @@ public class AccountController {
 			account.setOwner(owner);
 			accountRepositoryDaoImpl.addAccount(account);
 		}
-		return new ModelAndView("forward:");
+		return new ModelAndView("redirect:");
 	}
 
 }
