@@ -13,6 +13,9 @@
         </style>
     </head>
     <body onload='document.f.j_username.focus();'>
+        
+        
+        
         <h3>Login with Username and Password (Authentication with Database)</h3>
 
         <c:if test="${not empty error}">
