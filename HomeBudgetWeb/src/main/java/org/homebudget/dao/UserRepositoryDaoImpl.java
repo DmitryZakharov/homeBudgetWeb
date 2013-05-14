@@ -1,8 +1,6 @@
 package org.homebudget.dao;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -15,74 +13,74 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserRepositoryDaoImpl {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+	@Autowired
+	private SessionFactory sessionFactory;
 
-    public List<UserDetails> getAllUsers() {
+	public List<UserDetails> getAllUsers() {
 
-        Query q = getSessionFactory().openSession().createQuery(
-                "from USER_DETAILS");
+		Query q = getSessionFactory().openSession().createQuery(
+				"from USER_DETAILS");
 
-        return (List<UserDetails>) q.list();
+		return (List<UserDetails>) q.list();
 
-    }
+	}
 
-    public UserDetails getUser(String userNickname) {
+	public UserDetails getUser(String userNickname) {
 
-        Query q = getSessionFactory().openSession().createQuery(
-                "from USER_DETAILS where USER_USERNAME=?");
-        q.setString(0, userNickname);
-        List<UserDetails> users = (List<UserDetails>) q.list();
+		Query q = getSessionFactory().openSession().createQuery(
+				"from USER_DETAILS where USER_USERNAME=?");
+		q.setString(0, userNickname);
+		List<UserDetails> users = (List<UserDetails>) q.list();
 
-        if (users.size() == 1) {
-            return users.get(0);
-        }
-        return null;
-    }
-    
-    public UserRole getRole(Authority authority){
-         Query q = getSessionFactory().openSession().createQuery(
-                "from USER_ROLES where AUTHORITY=?");
-        q.setString(0, authority.name());
-        List<UserRole> userRoles = (List<UserRole>) q.list();
+		if (users.size() == 1) {
+			return users.get(0);
+		}
+		return null;
+	}
 
-        if (userRoles.size() == 1) {
-            return userRoles.get(0);
-        }
-        return null;
-    }
+	public UserRole getRole(Authority authority) {
+		Query q = getSessionFactory().openSession().createQuery(
+				"from USER_ROLES where AUTHORITY=?");
+		q.setString(0, authority.name());
+		List<UserRole> userRoles = (List<UserRole>) q.list();
 
-    public Long getUserId(String username) {
+		if (userRoles.size() == 1) {
+			return userRoles.get(0);
+		}
+		return null;
+	}
 
-        Query q = getSessionFactory().openSession().createQuery(
-                "from USER_DETAILS where USER_USEERNAME=?");
-        q.setString(0, username);
+	public Long getUserId(String username) {
 
-        List<UserDetails> users = (List<UserDetails>) q.list();
-        UserDetails user = null;
+		Query q = getSessionFactory().openSession().createQuery(
+				"from USER_DETAILS where USER_USEERNAME=?");
+		q.setString(0, username);
 
-        if (users.size() == 1) {
-            user = users.get(0);
-        } else {
-            return null;
-        }
+		List<UserDetails> users = (List<UserDetails>) q.list();
+		UserDetails user = null;
 
-        return user.getUserId();
-    }
+		if (users.size() == 1) {
+			user = users.get(0);
+		} else {
+			return null;
+		}
 
-    public void addUser(UserDetails user, Authority authority) {
-        UserRole uRole = new UserRole();
-        uRole.setAuthority(authority);
-        user.addUserRole(uRole);
-        getSessionFactory().openSession().save(uRole);
-        getSessionFactory().openSession().save(user);
-    }
+		return user.getUserId();
+	}
 
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
+	public void addUser(UserDetails user, Authority authority) {
+		UserRole uRole = new UserRole();
+		uRole.setAuthority(authority);
+		user.addUserRole(uRole);
+		getSessionFactory().openSession().save(uRole);
+		getSessionFactory().openSession().save(user);
+	}
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 }

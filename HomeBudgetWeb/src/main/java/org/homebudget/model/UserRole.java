@@ -20,6 +20,7 @@ public class UserRole {
     @GeneratedValue
     @Column(name = "USER_ROLE_ID")
     private long userRoleId;
+
     @Column(name = "AUTHORITY")
     private Authority authority;
 
