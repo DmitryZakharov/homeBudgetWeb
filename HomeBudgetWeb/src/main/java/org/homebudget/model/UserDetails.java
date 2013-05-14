@@ -30,7 +30,6 @@ public class UserDetails {
 	@Column(name = "USER_SURNAME")
 	private String userSurname;
 
-	@Size(min = 4, max = 20)
 	@Column(name = "PASSWORD")
 	private String password;
 
