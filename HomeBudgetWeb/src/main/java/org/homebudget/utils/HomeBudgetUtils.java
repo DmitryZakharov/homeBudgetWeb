@@ -1,6 +1,7 @@
 package org.homebudget.utils;
 
 import java.util.Date;
+
 import javax.annotation.Resource;
 
 import org.hibernate.SessionFactory;
@@ -11,93 +12,92 @@ import org.homebudget.model.Transaction;
 import org.homebudget.model.Transaction.TransactionType;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
-import org.homebudget.model.UserRole.Authority;
+import org.homebudget.model.UserRole.Role;
 import org.homebudget.services.PasswordService;
 import org.homebudget.services.UserManagementService;
 
 public class HomeBudgetUtils {
 
-    public final String HIBERNATE_CONFIG_FILE = "org/homebudget/utils/hibernate.cfg.xml";
-    private final org.hibernate.classic.Session session;
+	public final String HIBERNATE_CONFIG_FILE = "org/homebudget/utils/hibernate.cfg.xml";
+	private final org.hibernate.classic.Session session;
 
-    @Resource
-    UserManagementService userManagementService;
-    
-    
-    //TODO: replace with userManagementService.getRole();
-    UserRole userRole;
-    
-    public HomeBudgetUtils() {
-        SessionFactory sessionFactory = new Configuration().configure(
-                HIBERNATE_CONFIG_FILE).buildSessionFactory();
-        session = sessionFactory.openSession();
-    }
+	@Resource
+	UserManagementService userManagementService;
 
-    public void populateUsers(int number) {
+	// TODO: replace with userManagementService.getRole();
+	UserRole userRole;
 
+	public HomeBudgetUtils() {
+		SessionFactory sessionFactory = new Configuration().configure(
+				HIBERNATE_CONFIG_FILE).buildSessionFactory();
+		session = sessionFactory.openSession();
+	}
 
-        initUserRoles();
+	public void populateUsers(int number) {
 
-        for (int i = 0; i < number; i++) {
+		initUserRoles();
 
-            final UserDetails user = new UserDetails();
-            user.setUserName("Dmitry" + i);
-            user.setUserUsername(user.getUserName() + "_nick");
-            user.setUserSurname("Zakharov");
-            user.setEmail("some" + i + "@email.com");
-            Date birthday = new Date();
-            user.setUserBirthday(birthday);
-            user.setEnabled(1);
+		for (int i = 0; i < number; i++) {
 
-            try {
-                user.setPassword(PasswordService.getHash("123" + i));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+			final UserDetails user = new UserDetails();
+			user.setUserName("Dmitry" + i);
+			user.setUserUsername(user.getUserName() + "_nick");
+			user.setUserSurname("Zakharov");
+			user.setEmail("some" + i + "@email.com");
+			Date birthday = new Date();
+			user.setUserBirthday(birthday);
+			user.setEnabled(1);
 
-            final Account account = new Account();
-            account.setDateOfCreation(new Date());
-            account.setOwner(user);
-            account.setStartingBalance(0);
+			try {
+				user.setPassword(PasswordService.getHash("123" + i));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
-            final Transaction transaction = new Transaction();
-            transaction.setAmount(10);
+			final Account account = new Account();
+			account.setDateOfCreation(new Date());
+			account.setOwner(user);
+			account.setStartingBalance(0);
 
-            final Category category = new Category();
-            category.setCategory("work");
+			final Transaction transaction = new Transaction();
+			transaction.setAmount(10);
 
-            transaction.setCategory(category);
-            transaction.setDateOFTransaction(new Date());
-            transaction.setTransactionType(TransactionType.INCOME);
+			final Category category = new Category();
+			category.setCategory("work");
 
-            account.getTransactions().add(transaction);
+			transaction.setCategory(category);
+			transaction.setDateOFTransaction(new Date());
+			transaction.setTransactionType(TransactionType.INCOME);
 
-//            UserRole role = userManagementService.getRole(UserRole.Authority.USER_ROLE);
-            user.addUserRole(userRole);
+			account.getTransactions().add(transaction);
 
-            session.beginTransaction();
-            session.save(user);
-            session.save(category);
-            session.save(account);
+			// UserRole role =
+			// userManagementService.getRole(UserRole.Authority.USER_ROLE);
+			user.getUserRoles().add(userRole);
 
-            session.getTransaction().commit();
-        }
+			session.beginTransaction();
+			session.save(user);
+			session.save(category);
+			session.save(account);
 
-        session.close();
+			session.getTransaction().commit();
+		}
 
-    }
+		session.close();
 
-    private void initUserRoles() {
+	}
 
-        for (Authority authority : Authority.values()) {
-            session.beginTransaction();
-            UserRole role = new UserRole();
-            role.setAuthority(authority);
-            if(authority == Authority.USER_ROLE){
-                userRole = role;
-            }
-            session.save(role);
-            session.getTransaction().commit();
-        }
-    }
+	private void initUserRoles() {
+
+		for (Role role : Role.values()) {
+			session.beginTransaction();
+			UserRole uRole = new UserRole();
+			uRole.setUserRole(role);
+			if (role == Role.USER_ROLE) {
+				userRole = uRole;
+			}
+			session.save(uRole);
+			session.getTransaction().commit();
+		}
+	}
 }

@@ -9,17 +9,30 @@
 </head>
 <body>
 	simple page
-	<form:form method="POST" action="create.html">
+	<form:form method="POST" commandName="account" action="create.html">
 		<table>
 			<tr>
 				<td>new account information</td>
-				<td><form:label path="accountName">Account name:</form:label> <form:input
-						path="accountName" /></td>
-				<td><form:label path="dateOfCreation">Date of Creation:</form:label>
-					<form:input path="dateOfCreation" /></td>
-				<td><form:label path="startingBalance">Starting Balance:</form:label>
-					<form:input path="startingBalance" /></td>
-			</tr>
+				<td>
+					<form:label path="accountName">Account name:</form:label>
+					<form:input path="accountName" />
+					<font color="red"><form:errors path="accountName" /></font>
+				</td>
+				</tr>
+				<tr>
+				<td>
+					<form:label path="dateOfCreation">Date of Creation:</form:label>
+					<form:input path="dateOfCreation" />
+					<font color="red"><form:errors path="dateOfCreation" /></font>
+				</td>
+				</tr>
+				<tr>
+				<td>
+					<form:label path="startingBalance">Starting Balance:</form:label>
+					<form:input path="startingBalance" />					
+					<font color="red"><form:errors path="startingBalance" /></font>
+				</td>
+				</tr>
 			<tr>
 				<td colspan="3"><input type="submit" value="add account" /></td>
 			</tr>

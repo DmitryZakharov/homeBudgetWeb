@@ -17,26 +17,30 @@ import javax.persistence.Temporal;
 import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.NotBlank;
 
-@Entity( name = "ACCOUNT")
+@Entity(name = "ACCOUNT")
 public class Account {
 
 	@Id
 	@Column(name = "ACCOUNT_ID")
 	@GeneratedValue
 	private long accountId;
-	
-	@Column (name="ACCOUNT_NAME")
+
+	//@NotBlank (message = "{account.name.required}")
+	@Column(name = "ACCOUNT_NAME")
 	private String accountName;
 
+	//@NotBlank (message = "{account.creationdate.required}")
 	@Column(name = "CREATION_DATE")
-        @Temporal(javax.persistence.TemporalType.DATE)
+	@Temporal(javax.persistence.TemporalType.DATE)
 	private Date dateOfCreation;
 
 	@OneToOne
-	@JoinColumn(name="USER_ID")
+	@JoinColumn(name = "USER_ID")
 	private UserDetails owner;
 
+	// @NotBlank (message = "{account.startingbalance.required}")
 	@Column(name = "STARTING_BALANCE")
 	private float startingBalance;
 
@@ -53,7 +57,7 @@ public class Account {
 	public void setAccountId(long accountId) {
 		this.accountId = accountId;
 	}
-	
+
 	public String getAccountName() {
 		return accountName;
 	}
@@ -61,7 +65,6 @@ public class Account {
 	public void setAccountName(String accountName) {
 		this.accountName = accountName;
 	}
-
 
 	public UserDetails getOwner() {
 		return owner;

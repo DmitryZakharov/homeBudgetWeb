@@ -103,7 +103,7 @@
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>1.0.0.GA</version>
+			<version>${javax.validation.version}</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
@@ -111,6 +111,12 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>${org.hibernate.validator.version}</version>
 			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>${joda-time.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 	<build>
@@ -128,19 +134,20 @@
 		</plugins>
 	</build>
 	<properties>
-  		<jdk.version>1.6</jdk.version>
-  		<mysql.version>5.1.24</mysql.version>
-  		<junit.version>3.8.1</junit.version>
-  		<javassist.version>3.3</javassist.version>
-  		<javax.servlet.version>1.2</javax.servlet.version>
-  		<org.hibernate.javax.persistence.version>1.0.1.Final</org.hibernate.javax.persistence.version>
-  		<javax.servlet.version>2.5</javax.servlet.version>
-  		<jstl.version>1.2</jstl.version>
-  		<javax.transaction.version>1.1</javax.transaction.version>
+		<jdk.version>1.6</jdk.version>
+		<mysql.version>5.1.24</mysql.version>
+		<junit.version>3.8.1</junit.version>
+		<javassist.version>3.3</javassist.version>
+		<jstl.version>1.2</jstl.version>
+		<joda-time.version>1.6.2</joda-time.version>
+		<javax.transaction.version>1.1</javax.transaction.version>
+		<javax.servlet.version>2.5</javax.servlet.version>
+		<javax.validation.version>1.1.0.Final</javax.validation.version>
 		<org.springframework.version>3.1.4.RELEASE</org.springframework.version>
+		<org.springframework.security.version>3.1.4.RELEASE</org.springframework.security.version>
 		<org.hibernate.version>3.6.10.Final</org.hibernate.version>
 		<org.hibernate.validator.version>4.3.1.Final</org.hibernate.validator.version>
-		<org.springframework.security.version>3.1.4.RELEASE</org.springframework.security.version>
+		<org.hibernate.javax.persistence.version>1.0.1.Final</org.hibernate.javax.persistence.version>
 		<netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
 	</properties>
 </project>

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class UserManagmentController {
+public class UserManagementController {
 
 	@Autowired
 	@Qualifier("userRepositoryDao")
@@ -29,7 +29,7 @@ public class UserManagmentController {
 			@ModelAttribute("userDetails") UserDetails userDetails) {
 
 		if (userDetails.getUserName() != null) {
-			userRepositoryDao.addUser(userDetails, UserRole.Authority.USER_ROLE);
+			userRepositoryDao.addUser(userDetails, UserRole.Role.USER_ROLE);
 		}
 
 		System.out.println("User Name: " + userDetails.getUserName());

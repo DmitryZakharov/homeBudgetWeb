@@ -6,8 +6,8 @@ http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 http://www.springframework.org/schema/security
 http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-	<beans:import resource="datasource-config.xml" />	
-	
+	<beans:import resource="datasource-config.xml" />
+
 	<http auto-config="true" use-expressions="true">
 		<intercept-url pattern="/welcome*"
 			access="hasRole('USER_ROLE') or hasRole('ADMIN_ROLE')" />
@@ -20,14 +20,12 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 		<authentication-provider>
 			<password-encoder hash="sha-256" />
 			<jdbc-user-service data-source-ref="dataSource"
-
 				users-by-username-query="
-     select USER_USERNAME, PASSWORD,  ENABLED 
-     from USER_DETAILS where USER_USERNAME=?"
-
+	select USER_USERNAME, PASSWORD,  ENABLED 
+	from USER_DETAILS where USER_USERNAME=?"
 				authorities-by-username-query="
-     select u.USER_USERNAME, ur.authority from USER_DETAILS AS u, user_roles AS ur 
-     where u.USER_ROLE_ID = ur.USER_ROLE_ID and u.USER_USERNAME =?  " />
+	select USER_USERNAME, USER_ROLE_TYPE from USER_DETAILS as u, USER_ROLE as r, USER_USER_ROLE as u2r 
+	WHERE u.USER_ID = u2r.USER_ID and u2r.USER_ROLE_ID = r.USER_ROLE_ID and u.USER_USERNAME =?  " />
 		</authentication-provider>
 	</authentication-manager>
 

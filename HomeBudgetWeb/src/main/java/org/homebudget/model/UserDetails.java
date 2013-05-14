@@ -9,8 +9,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.Email;
 
 @Entity(name = "USER_DETAILS")
@@ -21,6 +24,7 @@ public class UserDetails {
 	@GeneratedValue
 	private long userId;
 
+//	@NotNull
 	@Column(name = "USER_USERNAME")
 	private String userUsername;
 
@@ -30,16 +34,19 @@ public class UserDetails {
 	@Column(name = "USER_SURNAME")
 	private String userSurname;
 
+//	@NotNull
 	@Column(name = "PASSWORD")
 	private String password;
 
 	@ManyToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name = "USER_ROLE_ID")
+	@JoinTable( name="USER_USER_ROLE", joinColumns=@JoinColumn(name="USER_ID"),
+		inverseJoinColumns=@JoinColumn(name="USER_ROLE_ID"))
 	private Set<UserRole> userRoles = new HashSet<UserRole>();
 
 	@Column(name = "ENABLED")
 	private int enabled;
 
+	@NotNull
 	@Email
 	@Column(name = "EMAIL")
 	private String email;
@@ -119,9 +126,4 @@ public class UserDetails {
 	public void setUserRoles(Set<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
-        
-        public void addUserRole(UserRole uRole){
-            this.userRoles.add(uRole);
-        }
-
 }

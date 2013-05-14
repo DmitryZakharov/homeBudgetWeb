@@ -9,8 +9,6 @@ import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
 import org.homebudget.services.PasswordService;
 import org.homebudget.services.RegistrationValidation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -22,21 +20,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/registration")
 public class RegistrationController {
 
-	private final Logger logger = LoggerFactory
-			.getLogger(RegistrationController.class);
+	// private final Logger logger = LoggerFactory
+	// .getLogger(RegistrationController.class);
 
 	@Autowired
-	private RegistrationValidation aReistrationValidation;
+	private RegistrationValidation aRegistrationValidation;
 
 	@Autowired
 	@Qualifier("userRepositoryDao")
 	private UserRepositoryDaoImpl userRepositoryDao;
 
 	@RequestMapping(method = RequestMethod.GET)
-	protected String showRegistration(Map model) throws Exception {
+	protected String showRegistration(Map<String, Object> model)
+			throws Exception {
 		UserDetails aUserDetails = new UserDetails();
 		UserRole aUserRole = new UserRole();
-		aUserRole.setAuthority(UserRole.Authority.USER_ROLE);
+		aUserRole.setUserRole(UserRole.Role.USER_ROLE);
 		model.put("userDetails", aUserDetails);
 		return "registration";
 	}
@@ -45,11 +44,11 @@ public class RegistrationController {
 	public String processRegistration(@Valid UserDetails aUserDetails,
 			BindingResult result) {
 
-		aReistrationValidation.validate(aUserDetails, result);
+		aRegistrationValidation.validate(aUserDetails, result);
 		if (result.hasErrors()) {
 			return "registration";
 		}
-		//password is replaced with hash after validation of the form.
+		// password is replaced with hash after validation of the form.
 		final String userPassword = aUserDetails.getPassword();
 		try {
 			String passwordHash = PasswordService.getHash(aUserDetails
@@ -60,7 +59,7 @@ public class RegistrationController {
 			aUserDetails.setPassword(userPassword);
 		}
 
-		userRepositoryDao.addUser(aUserDetails, UserRole.Authority.USER_ROLE);
+		userRepositoryDao.addUser(aUserDetails, UserRole.Role.USER_ROLE);
 		return "registrationsuccess";
 	}
 }

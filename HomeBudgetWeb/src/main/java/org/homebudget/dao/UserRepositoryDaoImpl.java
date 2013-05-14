@@ -3,10 +3,12 @@ package org.homebudget.dao;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
-import org.homebudget.model.UserRole.Authority;
+import org.homebudget.model.UserRole.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +24,6 @@ public class UserRepositoryDaoImpl {
 				"from USER_DETAILS");
 
 		return (List<UserDetails>) q.list();
-
 	}
 
 	public UserDetails getUser(String userNickname) {
@@ -38,17 +39,17 @@ public class UserRepositoryDaoImpl {
 		return null;
 	}
 
-	public UserRole getRole(Authority authority) {
-		Query q = getSessionFactory().openSession().createQuery(
-				"from USER_ROLES where AUTHORITY=?");
-		q.setString(0, authority.name());
-		List<UserRole> userRoles = (List<UserRole>) q.list();
-
-		if (userRoles.size() == 1) {
-			return userRoles.get(0);
-		}
-		return null;
-	}
+	// public UserRole getRole(Role role) {
+	// Query q = getSessionFactory().openSession().createQuery(
+	// "from USER_ROLES where ROLE=?");
+	// q.setString(0, role.roleName());
+	// List<UserRole> userRoles = (List<UserRole>) q.list();
+	//
+	// if (userRoles.size() == 1) {
+	// return userRoles.get(0);
+	// }
+	// return null;
+	// }
 
 	public Long getUserId(String username) {
 
@@ -68,12 +69,25 @@ public class UserRepositoryDaoImpl {
 		return user.getUserId();
 	}
 
-	public void addUser(UserDetails user, Authority authority) {
-		UserRole uRole = new UserRole();
-		uRole.setAuthority(authority);
-		user.addUserRole(uRole);
-		getSessionFactory().openSession().save(uRole);
-		getSessionFactory().openSession().save(user);
+	public void addUser(UserDetails user, Role role) {
+		
+		Query q = getSessionFactory().openSession().createQuery(
+				"from USER_ROLE where USER_ROLE_TYPE=?");
+		q.setString(0, role.name());
+
+		List<UserRole> roles = (List<UserRole>) q.list();
+		UserRole uRole;
+		if (roles.size() == 1) {
+			uRole = roles.get(0);
+		} else {
+			return;
+		}
+		Session session = getSessionFactory().openSession();
+		Transaction tr = session.beginTransaction();
+		user.getUserRoles().add(uRole);
+		session.save(user);
+		tr.commit();
+
 	}
 
 	public SessionFactory getSessionFactory() {
