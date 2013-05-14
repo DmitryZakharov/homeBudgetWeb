@@ -1,8 +1,8 @@
 package org.homebudget.utils;
 
 import java.util.Date;
+import javax.annotation.Resource;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.homebudget.model.Account;
@@ -11,69 +11,93 @@ import org.homebudget.model.Transaction;
 import org.homebudget.model.Transaction.TransactionType;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
+import org.homebudget.model.UserRole.Authority;
 import org.homebudget.services.PasswordService;
+import org.homebudget.services.UserManagementService;
 
 public class HomeBudgetUtils {
 
-	public static final String HIBERNATE_CONFIG_FILE = "org/homebudget/utils/hibernate.cfg.xml";
+    public final String HIBERNATE_CONFIG_FILE = "org/homebudget/utils/hibernate.cfg.xml";
+    private final org.hibernate.classic.Session session;
 
-	public static void populateUsers(int number) {
+    @Resource
+    UserManagementService userManagementService;
+    
+    
+    //TODO: replace with userManagementService.getRole();
+    UserRole userRole;
+    
+    public HomeBudgetUtils() {
+        SessionFactory sessionFactory = new Configuration().configure(
+                HIBERNATE_CONFIG_FILE).buildSessionFactory();
+        session = sessionFactory.openSession();
+    }
 
-		final SessionFactory sessionFactory = new Configuration().configure(
-				HIBERNATE_CONFIG_FILE).buildSessionFactory();
-		
-		final Session session = sessionFactory.openSession();
+    public void populateUsers(int number) {
 
-		
-		for (int i = 0; i < number; i++) {
 
-			final UserDetails user = new UserDetails();
-			user.setUserName("Dmitry" + i);
-			user.setUserUsername(user.getUserName() + "_nick");
-			user.setUserSurname("Zakharov");
-			user.setEmail("some" +i+"@email.com");
-			Date birthday = new Date();
-			user.setUserBirthday(birthday);
-			user.setEnabled(1);
-			
-			try {
-				user.setPassword(PasswordService.getHash("123" + i));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+        initUserRoles();
 
-			final Account account = new Account();
-			account.setDateOfCreation(new Date());
-			account.setOwner(user);
-			account.setStartingBalance(0);
+        for (int i = 0; i < number; i++) {
 
-			final Transaction transaction = new Transaction();
-			transaction.setAmount(10);
+            final UserDetails user = new UserDetails();
+            user.setUserName("Dmitry" + i);
+            user.setUserUsername(user.getUserName() + "_nick");
+            user.setUserSurname("Zakharov");
+            user.setEmail("some" + i + "@email.com");
+            Date birthday = new Date();
+            user.setUserBirthday(birthday);
+            user.setEnabled(1);
 
-			final Category category = new Category();
-			category.setCategory("work");
+            try {
+                user.setPassword(PasswordService.getHash("123" + i));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-			transaction.setCategory(category);
-			transaction.setDateOFTransaction(new Date());
-			transaction.setTransactionType(TransactionType.INCOME);
+            final Account account = new Account();
+            account.setDateOfCreation(new Date());
+            account.setOwner(user);
+            account.setStartingBalance(0);
 
-			account.getTransactions().add(transaction);
+            final Transaction transaction = new Transaction();
+            transaction.setAmount(10);
 
-			final UserRole role = new UserRole();
+            final Category category = new Category();
+            category.setCategory("work");
 
-			role.setAuthority("ROLE_USER");
-			user.setUserRole(role);
+            transaction.setCategory(category);
+            transaction.setDateOFTransaction(new Date());
+            transaction.setTransactionType(TransactionType.INCOME);
 
-			session.beginTransaction();
-			session.save(user);
-			session.save(category);
-			session.save(account);
-			session.save(role);
-			session.getTransaction().commit();
-		}
+            account.getTransactions().add(transaction);
 
-		session.close();
+//            UserRole role = userManagementService.getRole(UserRole.Authority.USER_ROLE);
+            user.addUserRole(userRole);
 
-	}
+            session.beginTransaction();
+            session.save(user);
+            session.save(category);
+            session.save(account);
 
+            session.getTransaction().commit();
+        }
+
+        session.close();
+
+    }
+
+    private void initUserRoles() {
+
+        for (Authority authority : Authority.values()) {
+            session.beginTransaction();
+            UserRole role = new UserRole();
+            role.setAuthority(authority);
+            if(authority == Authority.USER_ROLE){
+                userRole = role;
+            }
+            session.save(role);
+            session.getTransaction().commit();
+        }
+    }
 }

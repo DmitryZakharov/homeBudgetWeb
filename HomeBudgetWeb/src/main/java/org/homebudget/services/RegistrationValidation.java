@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 
-@Service("registrationValidator")
-public class ReistrationValidation {
+@Service
+public class RegistrationValidation {
      public boolean supports(Class<?> klass) {
     return UserDetails.class.isAssignableFrom(klass);
   }

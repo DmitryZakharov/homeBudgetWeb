@@ -1,16 +1,16 @@
 package org.homebudget.model;
 
 import java.util.Date;
-
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
-import javax.validation.constraints.Size;
-
 import org.hibernate.validator.constraints.Email;
 
 @Entity(name = "USER_DETAILS")
@@ -33,9 +33,9 @@ public class UserDetails {
 	@Column(name = "PASSWORD")
 	private String password;
 
-	@OneToOne
+	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name = "USER_ROLE_ID")
-	private UserRole userRole;
+	private Set<UserRole> userRoles = new HashSet<UserRole>();
 
 	@Column(name = "ENABLED")
 	private int enabled;
@@ -112,12 +112,16 @@ public class UserDetails {
 		this.email = email;
 	}
 
-	public UserRole getUserRole() {
-		return userRole;
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
 	}
 
-	public void setUserRole(UserRole userRole) {
-		this.userRole = userRole;
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
 	}
+        
+        public void addUserRole(UserRole uRole){
+            this.userRoles.add(uRole);
+        }
 
 }

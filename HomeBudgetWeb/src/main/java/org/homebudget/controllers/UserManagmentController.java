@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.homebudget.dao.UserRepositoryDaoImpl;
 import org.homebudget.model.UserDetails;
+import org.homebudget.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -28,7 +29,7 @@ public class UserManagmentController {
 			@ModelAttribute("userDetails") UserDetails userDetails) {
 
 		if (userDetails.getUserName() != null) {
-			userRepositoryDao.addUser(userDetails, "ROLE_USER");
+			userRepositoryDao.addUser(userDetails, UserRole.Authority.USER_ROLE);
 		}
 
 		System.out.println("User Name: " + userDetails.getUserName());

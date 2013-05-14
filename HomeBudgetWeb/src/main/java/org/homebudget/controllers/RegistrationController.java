@@ -8,7 +8,7 @@ import org.homebudget.dao.UserRepositoryDaoImpl;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
 import org.homebudget.services.PasswordService;
-import org.homebudget.services.ReistrationValidation;
+import org.homebudget.services.RegistrationValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class RegistrationController {
 			.getLogger(RegistrationController.class);
 
 	@Autowired
-	private ReistrationValidation aReistrationValidation;
+	private RegistrationValidation aReistrationValidation;
 
 	@Autowired
 	@Qualifier("userRepositoryDao")
@@ -36,7 +36,7 @@ public class RegistrationController {
 	protected String showRegistration(Map model) throws Exception {
 		UserDetails aUserDetails = new UserDetails();
 		UserRole aUserRole = new UserRole();
-		aUserRole.setAuthority("ROLE_USER");
+		aUserRole.setAuthority(UserRole.Authority.USER_ROLE);
 		model.put("userDetails", aUserDetails);
 		return "registration";
 	}
@@ -60,7 +60,7 @@ public class RegistrationController {
 			aUserDetails.setPassword(userPassword);
 		}
 
-		userRepositoryDao.addUser(aUserDetails, "ROLE_USER");
+		userRepositoryDao.addUser(aUserDetails, UserRole.Authority.USER_ROLE);
 		return "registrationsuccess";
 	}
 }

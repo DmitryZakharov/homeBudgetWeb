@@ -12,28 +12,30 @@ import javax.persistence.Id;
 @Entity(name = "USER_ROLES")
 public class UserRole {
 
-	@Id
-	@GeneratedValue
-	@Column(name = "USER_ROLE_ID")
-	private long userRoleId;
+    public static enum Authority {
+        ADMIN_ROLE, USER_ROLE, MANAGER_ROLE
+    };
+    
+    @Id
+    @GeneratedValue
+    @Column(name = "USER_ROLE_ID")
+    private long userRoleId;
+    @Column(name = "AUTHORITY")
+    private Authority authority;
 
-	@Column(name = "AUTHORITY")
-	private String authority;
+    public long getUserRoleId() {
+        return userRoleId;
+    }
 
-	public long getUserRoleId() {
-		return userRoleId;
-	}
+    public void setUserRoleId(long userRoleId) {
+        this.userRoleId = userRoleId;
+    }
 
-	public void setUserRoleId(long userRoleId) {
-		this.userRoleId = userRoleId;
-	}
+    public Authority getAuthority() {
+        return authority;
+    }
 
-	public String getAuthority() {
-		return authority;
-	}
-
-	public void setAuthority(String authority) {
-		this.authority = authority;
-	}
-
+    public void setAuthority(Authority authority) {
+        this.authority = authority;
+    }
 }
