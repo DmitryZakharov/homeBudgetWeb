@@ -11,6 +11,7 @@ import org.homebudget.model.Transaction;
 import org.homebudget.model.Transaction.TransactionType;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
+import org.homebudget.services.PasswordService;
 
 public class HomeBudgetUtils {
 
@@ -34,7 +35,12 @@ public class HomeBudgetUtils {
 			Date birthday = new Date();
 			user.setUserBirthday(birthday);
 			user.setEnabled(1);
-			user.setPassword("123" + i);
+			
+			try {
+				user.setPassword(PasswordService.getHash("123" + i));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
 			final Account account = new Account();
 			account.setDateOfCreation(new Date());

@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.homebudget.dao.UserRepositoryDaoImpl;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
+import org.homebudget.services.PasswordService;
 import org.homebudget.services.ReistrationValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,17 @@ public class RegistrationController {
 		if (result.hasErrors()) {
 			return "registration";
 		}
+		//password is replaced with hash after validation of the form.
+		final String userPassword = aUserDetails.getPassword();
+		try {
+			String passwordHash = PasswordService.getHash(aUserDetails
+					.getPassword());
+			aUserDetails.setPassword(passwordHash);
+		} catch (Exception e) {// with is a hack. Must be removed. If hashing
+								// fails, user must be notified.
+			aUserDetails.setPassword(userPassword);
+		}
+
 		userRepositoryDao.addUser(aUserDetails, "ROLE_USER");
 		return "registrationsuccess";
 	}
