@@ -29,16 +29,18 @@
 		</param-value>
 	</context-param>
 	
+
+	
 	<servlet-mapping>
 		<servlet-name>homebudget</servlet-name>
 		<url-pattern>*.html</url-pattern>
 	</servlet-mapping>
 
+
 	<servlet-mapping>
 		<servlet-name>homebudget</servlet-name>
 		<url-pattern>/resources/**</url-pattern>
 	</servlet-mapping>
-	
 	
     <!-- Spring Security -->
     <filter>
