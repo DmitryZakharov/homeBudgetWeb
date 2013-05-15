@@ -12,6 +12,7 @@ import org.homebudget.model.Transaction.TransactionType;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
 import org.homebudget.model.UserRole.Role;
+import org.homebudget.services.AccountManagementService;
 import org.homebudget.services.PasswordService;
 import org.homebudget.services.UserManagementService;
 import org.slf4j.Logger;
@@ -24,8 +25,12 @@ public class HomeBudgetInitializationService {
     public final String HIBERNATE_CONFIG_FILE = "org/homebudget/utils/hibernate.cfg.xml";
 //    private org.hibernate.classic.Session session;
     private final Logger logger = LoggerFactory.getLogger(getClass());
+  
     @Resource
     UserManagementService userManagementService;
+   
+    @Resource
+    AccountManagementService accountManagementService;
     
     
     // TODO: replace with userManagementService.getRole();
@@ -71,7 +76,6 @@ public class HomeBudgetInitializationService {
            
             
             userManagementService.saveUserDetails(user);
-            
             
 //            session.beginTransaction();
 //            session.save(user);
