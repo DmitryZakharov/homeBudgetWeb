@@ -3,8 +3,9 @@ package org.homebudget.controllers;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.Resource;
 
-import org.homebudget.dao.UserRepositoryDaoImpl;
+import org.homebudget.dao.UserRepository;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +21,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class UserManagementController {
 
-	@Autowired
-	@Qualifier("userRepositoryDao")
-	private UserRepositoryDaoImpl userRepositoryDao;
+	@Resource
+	private UserRepository userRepositoryDao;
 
 	@RequestMapping(value = "/addUser")
 	public String addNewUser(
 			@ModelAttribute("userDetails") UserDetails userDetails) {
 
 		if (userDetails.getUserName() != null) {
-			userRepositoryDao.addUser(userDetails, UserRole.Role.USER_ROLE);
+                        userDetails.addUserRole(UserRole.Role.USER_ROLE);
+			userRepositoryDao.save(userDetails);
 		}
 
 		System.out.println("User Name: " + userDetails.getUserName());
@@ -42,7 +43,7 @@ public class UserManagementController {
 	@RequestMapping(value = "/usersList")
 	public String showAllUsers(Model model) {
 
-		List<UserDetails> usersList = getHibernateDaoImpl().getAllUsers();
+		List<UserDetails> usersList = getHibernateDaoImpl().findAll();
 		System.out.println("counted users: " + usersList.size());
 
 		model.addAttribute("usersList", usersList);
@@ -56,11 +57,11 @@ public class UserManagementController {
 				dateFormat, false));
 	}
 
-	public UserRepositoryDaoImpl getHibernateDaoImpl() {
+	public UserRepository getHibernateDaoImpl() {
 		return userRepositoryDao;
 	}
 
-	public void setHibernateDaoImpl(UserRepositoryDaoImpl hibernateDaoImpl) {
+	public void setHibernateDaoImpl(UserRepository hibernateDaoImpl) {
 		this.userRepositoryDao = hibernateDaoImpl;
 	}
 }

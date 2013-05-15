@@ -2,11 +2,12 @@ package org.homebudget.controllers;
 
 import java.util.List;
 import java.util.Map;
+import javax.annotation.Resource;
 
 import javax.validation.Valid;
 
-import org.homebudget.dao.AccountRepositoryDaoImpl;
-import org.homebudget.dao.UserRepositoryDaoImpl;
+import org.homebudget.dao.AccountRepository;
+import org.homebudget.dao.UserRepository;
 import org.homebudget.model.Account;
 import org.homebudget.model.UserDetails;
 import org.homebudget.services.NewAccountValidation;
@@ -29,13 +30,11 @@ public class AccountController {
 	@Autowired
 	private NewAccountValidation aNewAccountValidation;
 
-	@Autowired
-	@Qualifier("accountRepositoryDao")
-	private AccountRepositoryDaoImpl accountRepositoryDaoImpl;
+	@Resource
+	private AccountRepository accountRepositoryDaoImpl;
 
-	@Autowired
-	@Qualifier("userRepositoryDao")
-	private UserRepositoryDaoImpl userRepositoryDaoImpl;
+	@Resource
+	private UserRepository userRepositoryDaoImpl;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showAccounts(ModelMap model) {
@@ -45,9 +44,9 @@ public class AccountController {
 
 		final String username = user.getUsername();
 
-		Long userId = userRepositoryDaoImpl.getUser(username).getUserId();
+		Long userId = userRepositoryDaoImpl.findByUserUsername(username).getUserId();
 
-		List<Account> accounts = accountRepositoryDaoImpl.getAccounts(userId);
+		List<Account> accounts = accountRepositoryDaoImpl.findByUserId(userId);
 
 		model.addAttribute("accounts", accounts);
 
@@ -77,9 +76,9 @@ public class AccountController {
 
 		if (account != null) {
 			final String username = user.getUsername();
-			final UserDetails owner = userRepositoryDaoImpl.getUser(username);
+			final UserDetails owner = userRepositoryDaoImpl.findByUserUsername(username);
 			account.setOwner(owner);
-			accountRepositoryDaoImpl.addAccount(account);
+			accountRepositoryDaoImpl.save(account);
 		}
 		return new ModelAndView("redirect:");
 	}

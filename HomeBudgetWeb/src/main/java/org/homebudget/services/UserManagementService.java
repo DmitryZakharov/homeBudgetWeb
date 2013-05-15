@@ -1,18 +1,32 @@
 package org.homebudget.services;
 
-import org.homebudget.dao.UserRepositoryDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import javax.annotation.Resource;
+import org.homebudget.dao.UserRepository;
+import org.homebudget.dao.UserRoleRepository;
+import org.homebudget.model.UserDetails;
+import org.homebudget.model.UserRole;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserManagementService {
 
-    @Autowired
-    @Qualifier("userRepositoryDao")
-    private UserRepositoryDaoImpl userRepositoryDaoImpl;
+    @Resource
+    private UserRepository userRepositoryDaoImpl;
     
-	// public UserRole getRole(Role role){
-	// return userRepositoryDaoImpl.getRole(role);
-	// }
+    @Resource
+    private UserRoleRepository userRoleRepository;
+
+    @Transactional
+    public void saveUserDetails(UserDetails userDetails) {
+        userRepositoryDaoImpl.save(userDetails);
+    }
+    
+    @Transactional
+    public void saveUserRole(UserRole userRole) {
+        userRoleRepository.save(userRole);
+    }
+    // public UserRole getRole(Role role){
+    // return userRepositoryDaoImpl.getRole(role);
+    // }
 }

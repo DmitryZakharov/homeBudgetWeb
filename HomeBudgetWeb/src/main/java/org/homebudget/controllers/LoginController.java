@@ -1,6 +1,6 @@
 package org.homebudget.controllers;
 
-import org.homebudget.dao.UserRepositoryDaoImpl;
+import org.homebudget.dao.UserRepository;
 import org.homebudget.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,7 +16,7 @@ public class LoginController {
 
 	@Autowired
 	@Qualifier("userRepositoryDao")
-	private UserRepositoryDaoImpl userRepositoryDao;
+	private UserRepository userRepositoryDao;
 
 	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
@@ -25,7 +25,7 @@ public class LoginController {
 				.getAuthentication().getPrincipal();
 		String nickname = user.getUsername();
 		
-		UserDetails userDetails  = userRepositoryDao.getUser(nickname);
+		UserDetails userDetails  = userRepositoryDao.findByUserUsername(nickname);
 
 		model.addAttribute("username", userDetails.getUserName());
 		model.addAttribute("usersurname", userDetails.getUserSurname());
@@ -56,11 +56,11 @@ public class LoginController {
 		return "login";
 	}
 
-	public UserRepositoryDaoImpl getHibernateDaoImpl() {
+	public UserRepository getHibernateDaoImpl() {
 		return userRepositoryDao;
 	}
 
-	public void setHibernateDaoImpl(UserRepositoryDaoImpl hibernateDaoImpl) {
+	public void setHibernateDaoImpl(UserRepository hibernateDaoImpl) {
 		this.userRepositoryDao = hibernateDaoImpl;
 	}
 

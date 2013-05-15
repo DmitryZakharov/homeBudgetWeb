@@ -4,7 +4,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.homebudget.dao.UserRepositoryDaoImpl;
+import org.homebudget.dao.UserRepository;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
 import org.homebudget.services.PasswordService;
@@ -28,7 +28,7 @@ public class RegistrationController {
 
 	@Autowired
 	@Qualifier("userRepositoryDao")
-	private UserRepositoryDaoImpl userRepositoryDao;
+	private UserRepository userRepositoryDao;
 
 	@RequestMapping(method = RequestMethod.GET)
 	protected String showRegistration(Map<String, Object> model)
@@ -58,8 +58,8 @@ public class RegistrationController {
 								// fails, user must be notified.
 			aUserDetails.setPassword(userPassword);
 		}
-
-		userRepositoryDao.addUser(aUserDetails, UserRole.Role.USER_ROLE);
+                aUserDetails.addUserRole(UserRole.Role.USER_ROLE);
+		userRepositoryDao.save(aUserDetails);
 		return "registrationsuccess";
 	}
 }

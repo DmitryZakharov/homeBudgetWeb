@@ -15,6 +15,7 @@ import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
+import org.homebudget.model.UserRole.Role;
 
 @Entity(name = "USER_DETAILS")
 public class UserDetails {
@@ -126,4 +127,10 @@ public class UserDetails {
 	public void setUserRoles(Set<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
+
+    public void addUserRole(Role role) {
+        UserRole uRole = new UserRole();
+        uRole.setUserRole(role);
+        this.userRoles.add(uRole);
+    }
 }

@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-        
+        <jsp:include page="../../../resources/bootstrap/css/bootstrap.css" />
         <link href="../../../resources/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <link href="../../../resources/bootstrap/css/layout.css" rel="stylesheet" type="text/css"/>
         
