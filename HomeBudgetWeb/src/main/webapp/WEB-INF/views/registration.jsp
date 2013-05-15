@@ -7,7 +7,7 @@
 <title>Registration</title>
 </head>
 <body>
-	<%--        <jsp:include page="layout/default.jsp" /> --%>
+	<jsp:include page="layout/default.jsp" />
 	<form:form method="Post" action="registration.html"
 		commandName="userDetails">
 		<table class="table table-striped">
