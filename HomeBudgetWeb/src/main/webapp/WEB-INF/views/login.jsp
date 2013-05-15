@@ -1,56 +1,107 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>Login Page</title>
-<style>
-.errorblock {
-	color: #ff0000;
-	background-color: #ffEEEE;
-	border: 3px solid #ff0000;
-	padding: 8px;
-	margin: 16px;
+<meta charset="utf-8">
+<title>Sign in &middot; Twitter Bootstrap</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Le styles -->
+<link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet">
+<style type="text/css">
+body {
+	padding-top: 40px;
+	padding-bottom: 40px;
+	background-color: #f5f5f5;
+}
+
+.form-signin {
+	max-width: 300px;
+	padding: 19px 29px 29px;
+	margin: 0 auto 20px;
+	background-color: #fff;
+	border: 1px solid #e5e5e5;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+.form-signin .form-signin-heading,.form-signin .checkbox {
+	margin-bottom: 10px;
+}
+
+.form-signin input[type="text"],.form-signin input[type="password"] {
+	font-size: 16px;
+	height: auto;
+	margin-bottom: 15px;
+	padding: 7px 9px;
 }
 </style>
+<link href="resources/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="resources/bootstrap/js/html5shiv.js"></script>
+    <![endif]-->
+
+<!-- Fav and touch icons -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144"
+	href="resources/bootstrap/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114"
+	href="resources/bootstrap/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"
+	href="resources/bootstrap/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed"
+	href="resources/bootstrap/ico/apple-touch-icon-57-precomposed.png">
+<link rel="shortcut icon" href="resources/bootstrap/ico/favicon.png">
 </head>
-<body onload='document.f.j_username.focus();'>
 
+<body>
 
+	<div class="container">
 
-	<h3>Login with Username and Password (Authentication with
-		Database)</h3>
+<%-- 		<c:if test="${not empty error}"> --%>
+<!-- 			<div class="errorblock"> -->
+<!-- 				Your login attempt was not successful, try again.<br /> Caused : -->
+<%-- 				${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message} --%>
+<!-- 			</div> -->
+<%-- 		</c:if> --%>
 
-	<c:if test="${not empty error}">
-		<div class="errorblock">
-			Your login attempt was not successful, try again.<br /> Caused :
-			${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
-		</div>
-	</c:if>
+		<form class="form-signin" name='f' action="<c:url value='j_spring_security_check' />" method='POST'>
+			<h2 class="form-signin-heading">Please sign in</h2>
+			<input type="text" name='j_username' class="input-block-level"		placeholder="User name"> 
+			<input type='password'	name='j_password' class="input-block-level" placeholder="Password">
+			<label class="checkbox"> <input type="checkbox"	value="remember-me">Remember me</label>
+			<button class="btn btn-large btn-primary" type="submit">Sign in</button>
+<!-- 		<input name="reset" type="reset" /> <a href="registration.html">Register</a> -->
+		</form>
 
-	<form name='f' action="<c:url value='j_spring_security_check' />"
-		method='POST'>
+	</div>
+	<!-- /container -->
 
-		<table>
-			<tr>
-				<td>User:</td>
-				<td><input type='text' name='j_username' value=''></td>
-			</tr>
-			<tr>
-				<td>Password:</td>
-				<td><input type='password' name='j_password' /></td>
-			</tr>
-			<tr>
-				<td colspan='2'><input name="submit" type="submit"
-					value="submit" /></td>
+	<!-- Le javascript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="resources/bootstrap/js/jquery.js"></script>
+	<script src="resources/bootstrap/js/bootstrap-transition.js"></script>
+	<script src="resources/bootstrap/js/bootstrap-alert.js"></script>
+	<script src="resources/bootstrap/js/bootstrap-modal.js"></script>
+	<script src="resources/bootstrap/js/bootstrap-dropdown.js"></script>
+	<script src="resources/bootstrap/js/bootstrap-scrollspy.js"></script>
+	<script src="resources/bootstrap/js/bootstrap-tab.js"></script>
+	<script src="resources/bootstrap/js/bootstrap-tooltip.js"></script>
+	<script src="resources/bootstrap/js/bootstrap-popover.js"></script>
+	<script src="resources/bootstrap/js/bootstrap-button.js"></script>
+	<script src="resources/bootstrap/js/bootstrap-collapse.js"></script>
+	<script src="resources/bootstrap/js/bootstrap-carousel.js"></script>
+	<script src="resources/bootstrap/js/bootstrap-typeahead.js"></script>
 
-				<td><a href="registration.html">Register</a></td>
-			</tr>
-			<tr>
-				<td colspan='2'><input name="reset" type="reset" /></td>
-			</tr>
-		</table>
-
-	</form>
 </body>
 </html>

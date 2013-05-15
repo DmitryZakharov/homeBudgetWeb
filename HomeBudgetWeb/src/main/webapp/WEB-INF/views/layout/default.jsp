@@ -3,12 +3,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-        <jsp:include page="../../../resources/bootstrap/css/bootstrap.css" />
-        <link href="../../../resources/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-        <link href="../../../resources/bootstrap/css/layout.css" rel="stylesheet" type="text/css"/>
         
-        <script language="JavaScript" type="text/JavaScript" src="../../../resources/scripts/jquery-1.9.1.js"/>
-        <script language="JavaScript" type="text/JavaScript" src="../../../resources/scripts/bootstrap.js"/>
+        <link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/bootstrap/css/layout.css" rel="stylesheet" type="text/css"/>
+        
+        <script language="JavaScript" type="text/JavaScript" src="resources/scripts/jquery-1.9.1.js"/>
+        <script language="JavaScript" type="text/JavaScript" src="resources/scripts/bootstrap.js"/>
 
         <title>JSP Page</title>
     </head>
