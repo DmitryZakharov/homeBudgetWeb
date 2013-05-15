@@ -1,5 +1,6 @@
 package org.homebudget.controllers;
 
+import javax.annotation.Resource;
 import org.homebudget.dao.UserRepository;
 import org.homebudget.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class LoginController {
 
-	@Autowired
-	@Qualifier("userRepositoryDao")
+	@Resource
 	private UserRepository userRepositoryDao;
 
 	@RequestMapping(value = "/welcome", method = RequestMethod.GET)

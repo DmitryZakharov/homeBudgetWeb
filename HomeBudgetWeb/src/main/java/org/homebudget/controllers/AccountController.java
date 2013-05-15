@@ -1,5 +1,6 @@
 package org.homebudget.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
@@ -46,7 +47,8 @@ public class AccountController {
 
 		Long userId = userRepositoryDaoImpl.findByUserUsername(username).getUserId();
 
-		List<Account> accounts = accountRepositoryDaoImpl.findByUserId(userId);
+		List<Account> accounts = new ArrayList<Account>();
+//                        accountRepositoryDaoImpl.findByUserId(userId);
 
 		model.addAttribute("accounts", accounts);
 

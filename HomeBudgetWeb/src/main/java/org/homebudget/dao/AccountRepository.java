@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long>{
-    public List<Account> findByUserId(Long userId);
+//    public List<Account> findByUserId(Long userId);
 
 //	@Autowired
 //	private SessionFactory sessionFactory;

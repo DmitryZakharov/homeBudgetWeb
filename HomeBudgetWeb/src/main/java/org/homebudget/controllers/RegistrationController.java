@@ -1,6 +1,7 @@
 package org.homebudget.controllers;
 
 import java.util.Map;
+import javax.annotation.Resource;
 
 import javax.validation.Valid;
 
@@ -26,8 +27,7 @@ public class RegistrationController {
 	@Autowired
 	private RegistrationValidation aRegistrationValidation;
 
-	@Autowired
-	@Qualifier("userRepositoryDao")
+	@Resource
 	private UserRepository userRepositoryDao;
 
 	@RequestMapping(method = RequestMethod.GET)
