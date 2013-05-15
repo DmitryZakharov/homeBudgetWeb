@@ -47,8 +47,7 @@ public class AccountController {
 
 		Long userId = userRepositoryDaoImpl.findByUserUsername(username).getUserId();
 
-		List<Account> accounts = new ArrayList<Account>();
-//                        accountRepositoryDaoImpl.findByUserId(userId);
+		List<Account> accounts = accountRepositoryDaoImpl.findByOwner(userId);
 
 		model.addAttribute("accounts", accounts);
 

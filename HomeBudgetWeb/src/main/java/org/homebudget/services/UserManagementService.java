@@ -5,6 +5,7 @@ import org.homebudget.dao.UserRepository;
 import org.homebudget.dao.UserRoleRepository;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
+import org.homebudget.model.UserRole.Role;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +27,9 @@ public class UserManagementService {
     public void saveUserRole(UserRole userRole) {
         userRoleRepository.save(userRole);
     }
-    // public UserRole getRole(Role role){
-    // return userRepositoryDaoImpl.getRole(role);
-    // }
+     
+//    public UserRole getRole(Role role){
+//        UserRole result = userRoleRepository.findByUserRole(role);
+//        return  result;
+//     }
 }

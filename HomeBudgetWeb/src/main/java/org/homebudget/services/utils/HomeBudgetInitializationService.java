@@ -36,7 +36,8 @@ public class HomeBudgetInitializationService {
 
     @PostConstruct
     public void executePopulation() {
-//        initSession();
+        logger.info("Create initial Population !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        //        initSession();
         populateUsers(10);
        
     }
