@@ -1,13 +1,10 @@
 package org.homebudget.services.utils;
 
-import java.io.File;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 
 import javax.annotation.Resource;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.homebudget.model.Account;
 import org.homebudget.model.Category;
 import org.homebudget.model.Transaction;
