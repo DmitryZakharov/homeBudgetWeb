@@ -6,9 +6,8 @@
 
 	<servlet>
 		<servlet-name>homebudget</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet
-		</servlet-class>
-		<init-param>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+			<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
 				/WEB-INF/config/homebudget-servlet.xml
@@ -20,16 +19,17 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
+	
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-				/WEB-INF/config/homebudget-servlet.xml,
+				/WEB-INF/config/homebudget-config.xml,
 				/WEB-INF/config/datasource-config.xml,
-				/WEB-INF/config/homebudget-security.xml
+				/WEB-INF/config/homebudget-security.xml,
+				/WEB-INF/config/persistence-config.xml
+				
 		</param-value>
 	</context-param>
-	
-
 	
 	<servlet-mapping>
 		<servlet-name>homebudget</servlet-name>

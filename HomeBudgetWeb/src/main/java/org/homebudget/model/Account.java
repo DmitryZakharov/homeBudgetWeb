@@ -17,7 +17,6 @@ import javax.persistence.Temporal;
 import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
-import org.hibernate.validator.constraints.NotBlank;
 
 @Entity(name = "ACCOUNT")
 public class Account {

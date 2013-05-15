@@ -1,10 +1,9 @@
 package org.homebudget.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Resource;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.homebudget.dao.AccountRepository;
@@ -13,7 +12,6 @@ import org.homebudget.model.Account;
 import org.homebudget.model.UserDetails;
 import org.homebudget.services.NewAccountValidation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -45,7 +43,8 @@ public class AccountController {
 
 		final String username = user.getUsername();
 
-		Long userId = userRepositoryDaoImpl.findByUserUsername(username).getUserId();
+		Long userId = userRepositoryDaoImpl.findByUserUsername(username)
+				.getUserId();
 
 		List<Account> accounts = accountRepositoryDaoImpl.findByOwner(userId);
 
@@ -77,7 +76,8 @@ public class AccountController {
 
 		if (account != null) {
 			final String username = user.getUsername();
-			final UserDetails owner = userRepositoryDaoImpl.findByUserUsername(username);
+			final UserDetails owner = userRepositoryDaoImpl
+					.findByUserUsername(username);
 			account.setOwner(owner);
 			accountRepositoryDaoImpl.save(account);
 		}
