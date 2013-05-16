@@ -111,6 +111,7 @@ public class HomeBudgetInitializationService {
 		try {
 			String password = "000" + i;
 			if(i==0){
+				user.setUserName(name);
 				user.setUserUsername("admin");
 				password = "admin";
 			}
