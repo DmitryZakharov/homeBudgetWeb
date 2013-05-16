@@ -39,18 +39,19 @@ public class HomeBudgetInitializationService {
 
 	@PostConstruct
 	private void executePopulation() {
-		System.out
-				.println("Create initial Population !!!!!!!!!!!!!!!!!!!!!!!!!!!! " + this);
+            int userCount = 0;
+            if(userRoleRepository != null){
+                userCount = userRoleRepository.findAll().size();
+                System.out.println("User Count: " + userCount);
+            }
+            if(userCount == 0){
+		System.out.println("Create initial Population !!!!!!!!!!!!!!!!!!!!!!!!!!!! " + this);
 		logger.info("Create initial Population !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-		if (!executed) {
 			populateUsers(10);
 			executed = true;
-
 		}else {
 			System.out.println("ALREADY CREATED MANY USERS!!!!!!!!!!!");
 		}
-
 	}
 
 	private void populateUsers(int number) {

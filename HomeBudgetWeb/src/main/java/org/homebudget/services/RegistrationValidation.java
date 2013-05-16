@@ -23,5 +23,10 @@ public class RegistrationValidation {
           "lengthOfUser.registration.userName",
           "User Name must not more than 50 characters.");
     }
+    String password = aUserDetails.getPassword();
+    String confPassword = aUserDetails.getConfpassword();
+    if(password.compareTo(confPassword)!=0){
+        errors.rejectValue(password, "Password and confirmation password don't match.");
+    }
   }
 }

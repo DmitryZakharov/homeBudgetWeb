@@ -5,9 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Registration</title>
+<link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
-	<jsp:include page="layout/default.jsp" />
 	<form:form method="Post" action="registration.html"
 		commandName="userDetails">
 		<table class="table table-striped">
@@ -40,24 +40,33 @@
 							path="password" /></FONT></td>
 			</tr>
 			<tr>
-				<td><form:password path="password" /></td>
+				<td><form:password  path="password" /></td>
+			</tr>
+                        
+                        <tr>
+				<td>Confirm Password:<FONT color="red"><form:errors
+							path="confpassword" /></FONT></td>
+			</tr>
+                        <tr>
+				<td><form:password  path="confpassword" /></td>
 			</tr>
 			<!-- USER EMAIL -->
 			<tr>
 				<td>Email:<FONT color="red"><form:errors path="email" /></FONT></td>
 			</tr>
 			<tr>
-				<td><form:input path="email" /></td>
+				<td><form:input type="email" path="email" /></td>
 			</tr>
 			<!-- USER BIRTHDAY -->
 			<tr>
 				<td>Date of birth:<FONT color="red"><form:errors
-							path="userBirthday" /></FONT></td>
+							path="dateString" /></FONT></td>
 			</tr>
 			<tr>
-				<td><form:input path="userBirthday" /></td>
+				<td><form:input type="date" path="dateString" /></td>
 			</tr>
-
+                        
+                      
 			<!-- USER SUBMISSION ACTION -->
 			<tr>
 				<td><input type="submit" value="Submit" /></td>

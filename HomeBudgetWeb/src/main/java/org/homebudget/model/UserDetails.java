@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
@@ -38,6 +39,12 @@ public class UserDetails {
 //	@NotNull
 	@Column(name = "PASSWORD")
 	private String password;
+        
+        @Transient
+        private String confpassword;
+        
+        @Transient
+        private String dateString;
 
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable( name="USER_USER_ROLE", joinColumns=@JoinColumn(name="USER_ID"),
@@ -55,6 +62,8 @@ public class UserDetails {
 	@Column(name = "DATE_OF_BIRTH")
 	@Temporal(javax.persistence.TemporalType.DATE)
 	private Date userBirthday;
+        
+
 
 	public long getUserId() {
 		return userId;
@@ -133,4 +142,22 @@ public class UserDetails {
         uRole.setUserRole(role);
         this.userRoles.add(uRole);
     }
+
+    public String getConfpassword() {
+        return confpassword;
+    }
+
+    public void setConfpassword(String confpassword) {
+        this.confpassword = confpassword;
+    }
+
+    public String getDateString() {
+        return dateString;
+    }
+
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
+    }
+    
+    
 }
