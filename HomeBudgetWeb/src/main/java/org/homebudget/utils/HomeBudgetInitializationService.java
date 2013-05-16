@@ -61,8 +61,15 @@ public class HomeBudgetInitializationService {
 		UserRole uRole = userRoleRepository
 				.findByUserRole(UserRole.Role.USER_ROLE);
 		for (int i = 0; i < number; i++) {
-			UserDetails user = createTestUser(i);
-			logger.info("Creating user: " + user.getUserName());
+                    String name = "";    
+                    if(i==0){
+                            name = "Michael";
+                        }
+                        else{
+                            name = "Dmitry";
+                        }
+                        UserDetails user = createTestUser(i, name);
+                        logger.info("Creating user: " + user.getUserName());
 
 			Account account = createTestAccount(user);
 			logger.info("Creating account: " + account.getAccountName());
@@ -91,11 +98,11 @@ public class HomeBudgetInitializationService {
 		}
 	}
 
-	private UserDetails createTestUser(int i) {
+	private UserDetails createTestUser(int i, String name) {
 		final UserDetails user = new UserDetails();
-		user.setUserName("Dmitry" + i);
+		user.setUserName(name + i);
 		user.setUserUsername(user.getUserName() + "_nick");
-		user.setUserSurname("Zakharov");
+		user.setUserSurname("Doe");
 		user.setEmail("some" + i + "@email.com");
 		Date birthday = new Date();
 		user.setUserBirthday(birthday);

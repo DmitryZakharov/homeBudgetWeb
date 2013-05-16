@@ -26,62 +26,60 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/account")
 public class AccountController {
 
-	@Autowired
-	private NewAccountValidation aNewAccountValidation;
+    @Autowired
+    private NewAccountValidation aNewAccountValidation;
+    @Resource
+    private AccountRepository accountRepositoryDaoImpl;
+    @Resource
+    private UserRepository userRepositoryDaoImpl;
 
-	@Resource
-	private AccountRepository accountRepositoryDaoImpl;
+    @RequestMapping(method = RequestMethod.GET)
+    public String showAccounts(ModelMap model) {
 
-	@Resource
-	private UserRepository userRepositoryDaoImpl;
+        final User user = (User) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String showAccounts(ModelMap model) {
+        final String username = user.getUsername();
+        UserDetails userDetails = userRepositoryDaoImpl.findByUserUsername(username);
 
-		final User user = (User) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
+        Long userId = userDetails
+                .getUserId();
 
-		final String username = user.getUsername();
+        List<Account> accounts = accountRepositoryDaoImpl.findByOwner(userDetails);
 
-		Long userId = userRepositoryDaoImpl.findByUserUsername(username)
-				.getUserId();
+        model.addAttribute("accounts", accounts);
 
-		List<Account> accounts = accountRepositoryDaoImpl.findByOwner(userId);
+        return "account";
 
-		model.addAttribute("accounts", accounts);
+    }
 
-		return "account";
+    @RequestMapping(value = "/createAccount", method = RequestMethod.GET)
+    public String showContacts(Map<String, Object> model) {
+        Account account = new Account();
+        model.put("account", account);
+        return "createAccount";
+    }
 
-	}
+    @RequestMapping(value = "/createAccount", method = RequestMethod.POST)
+    public ModelAndView addAccount(
+            @ModelAttribute("account") @Valid Account account,
+            BindingResult result) {
 
-	@RequestMapping(value = "/createAccount", method = RequestMethod.GET)
-	public String showContacts(Map<String, Object> model) {
-		Account account = new Account();
-		model.put("account", account);
-		return "createAccount";
-	}
+        final User user = (User) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
 
-	@RequestMapping(value = "/createAccount", method = RequestMethod.POST)
-	public ModelAndView addAccount(
-			@ModelAttribute("account") @Valid Account account,
-			BindingResult result) {
+        aNewAccountValidation.validate(account, result);
+        if (result.hasErrors()) {
+            return new ModelAndView("createAccount");
+        }
 
-		final User user = (User) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
-
-		aNewAccountValidation.validate(account, result);
-		if (result.hasErrors()) {
-			return new ModelAndView("createAccount");
-		}
-
-		if (account != null) {
-			final String username = user.getUsername();
-			final UserDetails owner = userRepositoryDaoImpl
-					.findByUserUsername(username);
-			account.setOwner(owner);
-			accountRepositoryDaoImpl.save(account);
-		}
-		return new ModelAndView("redirect:");
-	}
-
+        if (account != null) {
+            final String username = user.getUsername();
+            final UserDetails owner = userRepositoryDaoImpl
+                    .findByUserUsername(username);
+            account.setOwner(owner);
+            accountRepositoryDaoImpl.save(account);
+        }
+        return new ModelAndView("redirect:");
+    }
 }
