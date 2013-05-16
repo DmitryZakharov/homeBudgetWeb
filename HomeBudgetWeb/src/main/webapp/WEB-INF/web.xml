@@ -3,6 +3,10 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
 	<display-name>Home Budget</display-name>
+	
+	<welcome-file-list>
+        <welcome-file>login.html</welcome-file>
+    </welcome-file-list>
 
 	<servlet>
 		<servlet-name>homebudget</servlet-name>
