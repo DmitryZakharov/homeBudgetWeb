@@ -80,7 +80,7 @@ body {
 			<input type='password'	name='j_password' class="input-block-level" placeholder="Password">
 			<label class="checkbox"> <input type="checkbox"	value="remember-me">Remember me</label>
 			<button class="btn btn-large btn-primary" type="submit">Sign in</button>
-<!-- 		<input name="reset" type="reset" /> <a href="registration.html">Register</a> -->
+			 <a href="registration.html">Register</a>
 		</form>
 
 	</div>
