@@ -4,6 +4,11 @@
 
 	<display-name>Home Budget</display-name>
 	
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>/WEB-INF/config/log4j.xml</param-value>
+    </context-param>
+    
 	<welcome-file-list>
         <welcome-file>login.html</welcome-file>
     </welcome-file-list>
@@ -20,9 +25,12 @@
 	</servlet>
 
 	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
 	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 	
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -31,6 +39,7 @@
 				/WEB-INF/config/datasource-config.xml,
 				/WEB-INF/config/homebudget-security.xml,
 				/WEB-INF/config/persistence-config.xml
+<!-- 				/WEB-INF/config/log4j.xml -->
 				
 		</param-value>
 	</context-param>
