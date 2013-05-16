@@ -80,6 +80,6 @@ public class AccountController {
             account.setOwner(owner);
             accountRepositoryDaoImpl.save(account);
         }
-        return new ModelAndView("redirect:");
+        return new ModelAndView("redirect:../account.html");
     }
 }

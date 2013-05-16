@@ -101,6 +101,7 @@ public class HomeBudgetInitializationService {
 	private UserDetails createTestUser(int i, String name) {
 		final UserDetails user = new UserDetails();
 		user.setUserName(name + i);
+		
 		user.setUserUsername(user.getUserName() + "_nick");
 		user.setUserSurname("Doe");
 		user.setEmail("some" + i + "@email.com");
@@ -108,7 +109,12 @@ public class HomeBudgetInitializationService {
 		user.setUserBirthday(birthday);
 		user.setEnabled(1);
 		try {
-			user.setPassword(PasswordService.getHash("123" + i));
+			String password = "000" + i;
+			if(i==0){
+				user.setUserUsername("admin");
+				password = "admin";
+			}
+			user.setPassword(PasswordService.getHash(password));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
