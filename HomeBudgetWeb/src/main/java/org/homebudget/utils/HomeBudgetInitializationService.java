@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.homebudget.dao.UserRoleRepository;
 import org.homebudget.model.Account;
 import org.homebudget.model.Category;
@@ -16,15 +17,12 @@ import org.homebudget.model.UserRole.Role;
 import org.homebudget.services.AccountManagementService;
 import org.homebudget.services.PasswordService;
 import org.homebudget.services.UserManagementService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class HomeBudgetInitializationService {
 
-	private final Logger logger = LoggerFactory
-			.getLogger(HomeBudgetInitializationService.class);
+	private static final Logger logger = Logger.getLogger(HomeBudgetInitializationService.class);
 
 	@Resource
 	UserManagementService userManagementService;
