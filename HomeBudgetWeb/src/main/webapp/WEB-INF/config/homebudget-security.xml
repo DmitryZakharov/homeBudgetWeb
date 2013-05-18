@@ -8,14 +8,24 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<beans:import resource="datasource-config.xml" />
 
+	<http pattern="/resources/**" security="none" />
+<!-- 	<http pattern="/styles/**" security="none" /> -->
+<!-- 	<http pattern="/scripts/**" security="none" /> -->
+<!-- 	<http pattern="/login*" security="none" /> -->
+
 	<http auto-config="true" use-expressions="true">
-		<intercept-url pattern="/welcome*"
+<!-- 		<intercept-url pattern="/resources/**" access="permitAll" /> -->
+<!-- 		<intercept-url pattern="/scripts/**" access="permitAll" /> -->
+<!-- 		<intercept-url pattern="/styles/**" access="permitAll" /> -->
+		<intercept-url pattern="/**"
 			access="hasRole('USER_ROLE') or hasRole('ADMIN_ROLE')" />
 		<form-login login-page="/login.html" default-target-url="/welcome.html"
 			authentication-failure-url="/loginfailed.html" />
 		<logout logout-success-url="/logout.html" />
-		<remember-me   key="userKey" token-validity-seconds="100"></remember-me>
+		<remember-me key="userKey" token-validity-seconds="100"></remember-me>
 	</http>
+
+
 
 	<authentication-manager>
 		<authentication-provider>

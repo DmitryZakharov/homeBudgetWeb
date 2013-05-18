@@ -1,10 +1,9 @@
 package org.homebudget.controllers;
 
 import javax.annotation.Resource;
+
 import org.homebudget.dao.UserRepository;
 import org.homebudget.model.UserDetails;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -24,8 +23,9 @@ public class LoginController {
 		User user = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
 		String nickname = user.getUsername();
-		
-		UserDetails userDetails  = userRepositoryDao.findByUserUsername(nickname);
+
+		UserDetails userDetails = userRepositoryDao
+				.findByUserUsername(nickname);
 
 		model.addAttribute("username", userDetails.getUserName());
 		model.addAttribute("usersurname", userDetails.getUserSurname());
