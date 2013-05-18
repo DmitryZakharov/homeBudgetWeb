@@ -32,9 +32,9 @@
 	</table>
 
 
- <display:table  name="paginatedList"  >
-    <display:column property="accountName" title="AccountName" sortable="true" style="width:300px "/>
-</display:table>
+<%--  <display:table  name="paginatedList"  > --%>
+<%--     <display:column property="accountName" title="AccountName" sortable="true" style="width:300px "/> --%>
+<%-- </display:table> --%>
 
 
 
