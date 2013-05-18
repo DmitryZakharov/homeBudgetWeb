@@ -14,7 +14,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 		<form-login login-page="/login.html" default-target-url="/welcome.html"
 			authentication-failure-url="/loginfailed.html" />
 		<logout logout-success-url="/logout.html" />
-		<remember-me   key="userKey" token-validity-seconds="2419200"></remember-me>
+		<remember-me   key="userKey" token-validity-seconds="100"></remember-me>
 	</http>
 
 	<authentication-manager>
