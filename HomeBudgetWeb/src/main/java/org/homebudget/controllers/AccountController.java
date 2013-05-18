@@ -35,6 +35,8 @@ public class AccountController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showAccounts(ModelMap model) {
+		
+		
 
 		final User user = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
