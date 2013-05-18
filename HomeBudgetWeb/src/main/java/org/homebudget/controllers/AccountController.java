@@ -1,5 +1,7 @@
 package org.homebudget.controllers;
 
+import info.joseluismartin.dao.Page;
+
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +13,7 @@ import org.homebudget.dao.UserRepository;
 import org.homebudget.model.Account;
 import org.homebudget.model.UserDetails;
 import org.homebudget.services.NewAccountValidation;
+import org.homebudget.springmvc.PaginatedListAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -34,10 +37,12 @@ public class AccountController {
     private UserRepository userRepositoryDaoImpl;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String showAccounts(ModelMap model) {
+    public String showAccounts(@ModelAttribute("paginatedList") PaginatedListAdapter paginatedList, ModelMap model) {
 
         final User user = (User) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
+        
+       final Page<Account> page = (Page<Account>) paginatedList.getModel();
 
         final String username = user.getUsername();
         UserDetails userDetails = userRepositoryDaoImpl.findByUserUsername(username);

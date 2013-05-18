@@ -1,8 +1,11 @@
+<%@page import="org.homebudget.springmvc.PaginatedListAdapter"%>
+<%@page import="org.displaytag.pagination.PaginatedList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+<% request.setAttribute( "paginatedList", new PaginatedListAdapter() ); %>
 <%@ page isELIgnored="false" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -28,16 +31,10 @@
 		</c:forEach>
 	</table>
 
-	<display:table name="ListwithMap" id="currentElement">
-		<display:column sortable="false" titleKey="dropdown.name"
-			style="width: 15%">
-			<select name="s" id="s">
-				<c:forEach items="${accounts}" var="account">
-					<c:out value="${account.accountName}" />
-				</c:forEach>
-			</select>
-		</display:column>
-	</display:table>
+
+ <display:table  name="paginatedList"  >
+    <display:column property="accountName" title="AccountName" sortable="true" style="width:300px "/>
+</display:table>
 
 
 
