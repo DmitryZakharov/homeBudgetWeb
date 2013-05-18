@@ -5,8 +5,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Registration</title>
-        <link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet">
-        <link href="resources/styles/layout.css" rel="stylesheet">
+        <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="styles/layout.css" rel="stylesheet">
     </head>
     <body>
 

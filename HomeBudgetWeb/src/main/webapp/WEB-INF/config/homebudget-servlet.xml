@@ -10,8 +10,8 @@
 
 	<context:component-scan base-package="org.homebudget" />
 
-	<mvc:resources mapping="/resources/**" location="/resources/" />
-<!-- 	<mvc:resources mapping="/resources/scripts/**" location="/scripts/" /> -->
-<!-- 	<mvc:resources mapping="/resources/styles/**" location="/styles/" /> -->
-<!-- 	<mvc:resources mapping="/resources/images/**" location="/images/" /> -->
+		<mvc:resources mapping="/bootstrap/**" location="/resources/bootstrap/" />
+		<mvc:resources mapping="/scripts/**" location="/resources/scripts/" />
+	<mvc:resources mapping="/styles/**" location="/resources/styles/" />
+	<mvc:resources mapping="/images/**" location="/resources/images/" />
 </beans>
