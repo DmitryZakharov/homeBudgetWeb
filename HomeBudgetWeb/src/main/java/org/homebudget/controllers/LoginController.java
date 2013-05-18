@@ -16,29 +16,30 @@ public class LoginController {
 
 	@Resource
 	private UserRepository userRepositoryDao;
-
-	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
+	
+	
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
 
-		User user = (User) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
-		String nickname = user.getUsername();
+//		User user = (User) SecurityContextHolder.getContext()
+//				.getAuthentication().getPrincipal();
+//		String nickname = user.getUsername();
+//
+//		UserDetails userDetails = userRepositoryDao
+//				.findByUserUsername(nickname);
 
-		UserDetails userDetails = userRepositoryDao
-				.findByUserUsername(nickname);
-
-		model.addAttribute("username", userDetails.getUserName());
-		model.addAttribute("usersurname", userDetails.getUserSurname());
-		model.addAttribute("message",
-				"Spring Security login + database example");
-		return "hello";
+//		model.addAttribute("username", userDetails.getUserName());
+//		model.addAttribute("usersurname", userDetails.getUserSurname());
+//		model.addAttribute("message",
+//				"Spring Security login + database example");
+		return "main";
 
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
 	public String login(ModelMap model) {
 
-		return "login";
+		return "welcome";
 
 	}
 
@@ -46,14 +47,14 @@ public class LoginController {
 	public String loginerror(ModelMap model) {
 
 		model.addAttribute("error", "true");
-		return "login";
+		return "welcome";
 
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(ModelMap model) {
 
-		return "login";
+		return "welcome";
 	}
 
 	public UserRepository getHibernateDaoImpl() {
