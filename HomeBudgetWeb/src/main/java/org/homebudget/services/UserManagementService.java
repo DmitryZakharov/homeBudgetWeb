@@ -52,7 +52,7 @@ public class UserManagementService {
         aUserDetails.addUserRole(UserRole.Role.USER_ROLE);
         //TODO: set to 0, when email confirmation is implemented
         aUserDetails.setEnabled(1);
-       // mailConfirmationService.sendConfirmation(aUserDetails);
+        mailConfirmationService.sendConfirmation(aUserDetails);
         saveUserDetails(aUserDetails);
     }
      
@@ -65,7 +65,7 @@ public class UserManagementService {
         try {
             birthday = format.parse(dateString);
         } catch (ParseException ex) {
-            System.err.println("Datestring could not be parsed " + dateString);
+            gLogger.error("Datestring could not be parsed " + dateString);
         }
         return birthday;
     }
