@@ -10,6 +10,8 @@ import org.homebudget.dao.UserRepository;
 import org.homebudget.dao.UserRoleRepository;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +54,8 @@ public class UserManagementService {
         aUserDetails.addUserRole(UserRole.Role.USER_ROLE);
         //TODO: set to 0, when email confirmation is implemented
         aUserDetails.setEnabled(1);
-        mailConfirmationService.sendConfirmation(aUserDetails);
+        sendConfirmationMail(aUserDetails);
+
         saveUserDetails(aUserDetails);
     }
      
@@ -74,4 +77,10 @@ public class UserManagementService {
 //        UserRole result = userRoleRepository.findByUserRole(role);
 //        return  result;
 //     }
+
+    private void sendConfirmationMail(UserDetails aUserDetails) {
+//                ApplicationContext context = new ClassPathXmlApplicationContext("homebudget-mail.xml");
+//                MailConfirmationService service = (MailConfirmationService) context.getBean("mailMail");
+                mailConfirmationService.sendConfirmation(aUserDetails);
+    }
 }
