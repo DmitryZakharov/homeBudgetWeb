@@ -3,26 +3,26 @@ package org.homebudget.services;
 import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.homebudget.model.UserDetails;
-import org.springframework.mail.*;
+import org.springframework.mail.MailException;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class MailConfirmationService {
 
+    private static final Logger logger = Logger.getLogger(MailConfirmationService.class);
+    
     @Resource
     private MailSender mailSender;
     
-
     private SimpleMailMessage message;
-    
-    private static final Logger logger = Logger
-			.getLogger(MailConfirmationService.class);
 
-    public MailConfirmationService(){
+    public MailConfirmationService() {
         this.message = new SimpleMailMessage();
     }
-    
-   
+
     public void sendConfirmation(UserDetails userDetails) {
         message.setTo(userDetails.getEmail());
         message.setSubject("Homebudget registration. The last step");
@@ -59,6 +59,4 @@ public class MailConfirmationService {
     public void setMessage(SimpleMailMessage message) {
         this.message = message;
     }
-    
-    
 }
