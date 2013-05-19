@@ -3,9 +3,6 @@ package org.homebudget.controllers;
 import javax.annotation.Resource;
 
 import org.homebudget.dao.UserRepository;
-import org.homebudget.model.UserDetails;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,22 +13,21 @@ public class LoginController {
 
 	@Resource
 	private UserRepository userRepositoryDao;
-	
-	
+
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
 
-//		User user = (User) SecurityContextHolder.getContext()
-//				.getAuthentication().getPrincipal();
-//		String nickname = user.getUsername();
-//
-//		UserDetails userDetails = userRepositoryDao
-//				.findByUserUsername(nickname);
+		// User user = (User) SecurityContextHolder.getContext()
+		// .getAuthentication().getPrincipal();
+		// String nickname = user.getUsername();
+		//
+		// UserDetails userDetails = userRepositoryDao
+		// .findByUserUsername(nickname);
 
-//		model.addAttribute("username", userDetails.getUserName());
-//		model.addAttribute("usersurname", userDetails.getUserSurname());
-//		model.addAttribute("message",
-//				"Spring Security login + database example");
+		// model.addAttribute("username", userDetails.getUserName());
+		// model.addAttribute("usersurname", userDetails.getUserSurname());
+		// model.addAttribute("message",
+		// "Spring Security login + database example");
 		return "main";
 
 	}
@@ -54,7 +50,7 @@ public class LoginController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(ModelMap model) {
 
-		return "welcome";
+		return "forward:/welcome.html";
 	}
 
 	public UserRepository getHibernateDaoImpl() {

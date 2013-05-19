@@ -15,18 +15,14 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 	<!-- <http pattern="/images/**" security="none" /> -->
 
 
-	<!-- NON STATIC SECURE ACCESS, WATCH OUT WHATCHA DOING!!!!!-->
+	<!-- NON STATIC SECURE ACCESS, WATCH OUT WHATCHA DOING!!!!! -->
 	<http auto-config="true" use-expressions="true">
-		<intercept-url pattern="/welcome*" access="permitAll" />
-		<intercept-url pattern="/**"
-			access="hasRole('USER_ROLE') or hasRole('ADMIN_ROLE')" />
-		<form-login login-page="/welcome.html" default-target-url="/main.html"
+		<intercept-url pattern="/**" />
+		<form-login login-page="/welcome" default-target-url="/main.html"
 			authentication-failure-url="/loginfailed.html" />
-		<logout logout-success-url="/logout.html" />
+		<logout logout-success-url="/welcome.html" />
 		<remember-me key="userKey" token-validity-seconds="100000000"></remember-me>
 	</http>
-
-
 
 	<authentication-manager>
 		<authentication-provider>

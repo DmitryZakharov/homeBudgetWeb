@@ -12,11 +12,56 @@
 
     <!-- Le styles -->
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
     <style type="text/css">
+      /* Sticky footer styles
+      -------------------------------------------------- */
+      html,
       body {
-        padding-top: 60px;
-        padding-bottom: 40px;
+        height: 100%;
+        /* The html and body elements cannot have any padding or margin. */
       }
+
+      /* Wrapper for page content to push down footer */
+      #wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        /* Negative indent footer by it's height */
+        margin: 0 auto -30px;
+      }
+
+      /* Set the fixed height of the footer here */
+      #push,
+      #footer {
+        height: 30px;
+      }
+      #footer {
+        background-color: #f5f5f5;
+      }
+
+      /* Lastly, apply responsive CSS fixes as necessary */
+      @media (max-width: 1200px) {
+        #footer {
+          margin-left: -5px;
+          margin-right: -5px;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+
+      /* Custom page CSS
+      -------------------------------------------------- */
+      /* Not required for template or sticky footer method. */
+
+      .container {
+        width: auto;
+        max-width: 1200px;
+      }
+      .container .credit {
+        margin: 5px 0;
+      }
+
     </style>
     <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -35,6 +80,7 @@
 
   <body>
 
+<div id=wrap>
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -88,15 +134,10 @@
       <!-- Example row of columns -->
       <div class="row">
         <div class="span4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
+          <h2>Warms</h2>
+          <p>Did you know that worms are hermaphrodites ?</p>
+          <p><a class="btn" href="http://en.wikipedia.org/wiki/Worm">Learn more &raquo;</a></p>
         </div>
-        <div class="span4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
-       </div>
         <div class="span4">
           <h2>Have no Account ?</h2>
           <p><a class="btn" href="#">Register now &raquo;</a></p>
@@ -104,10 +145,13 @@
       </div>
 
       <hr>
-
-      <footer>
-        <p>&copy; DIMI 2013</p>
-      </footer>
     </div> <!-- /container -->
+      <div id="push"></div>
+</div>
+    <div id="footer">
+      <div class="container">
+        <p class="muted credit">&copy; DIMI 2013</p>
+      </div>
+      </div>
   </body>
 </html>
