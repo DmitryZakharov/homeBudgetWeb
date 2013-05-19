@@ -38,7 +38,8 @@
 				/WEB-INF/config/homebudget-config.xml,
 				/WEB-INF/config/datasource-config.xml,
 				/WEB-INF/config/homebudget-security.xml,
-				/WEB-INF/config/persistence-config.xml
+				/WEB-INF/config/persistence-config.xml,
+                                /WEB-INF/config/homebudget-mail.xml
 <!-- 				/WEB-INF/config/log4j.xml -->
 				
 		</param-value>
