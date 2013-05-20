@@ -17,16 +17,17 @@ public class MailConfirmationService {
     @Resource
     private MailSender mailSender;
     
-    private SimpleMailMessage message;
+    @Resource
+    private SimpleMailMessage simpleMailMessage;
 
     public MailConfirmationService() {
-        this.message = new SimpleMailMessage();
+        this.simpleMailMessage = new SimpleMailMessage();
     }
 
     public void sendConfirmation(UserDetails userDetails) {
-        message.setTo(userDetails.getEmail());
-        message.setSubject("Homebudget registration. The last step");
-        message.setText(
+        simpleMailMessage.setTo(userDetails.getEmail());
+        simpleMailMessage.setSubject("Homebudget registration. The last step");
+        simpleMailMessage.setText(
                 "Dear "
                 + userDetails.getUserName() + " "
                 + userDetails.getUserSurname()
@@ -35,7 +36,7 @@ public class MailConfirmationService {
                 + "Please click the link below to complete your registration.\n"
                 + "<<Very pretty link>>");
         try {
-            mailSender.send(message);
+            mailSender.send(simpleMailMessage);
             logger.info("Confirmation E-Mail was successfully sent to :" + userDetails.getEmail());
 
         } catch (MailException ex) {
@@ -52,11 +53,11 @@ public class MailConfirmationService {
         this.mailSender = mailSender;
     }
 
-    public SimpleMailMessage getMessage() {
-        return message;
-    }
+	public SimpleMailMessage getSimpleMailMessage() {
+		return simpleMailMessage;
+	}
 
-    public void setMessage(SimpleMailMessage message) {
-        this.message = message;
-    }
+	public void setSimpleMailMessage(SimpleMailMessage simpleMailMessage) {
+		this.simpleMailMessage = simpleMailMessage;
+	}
 }
