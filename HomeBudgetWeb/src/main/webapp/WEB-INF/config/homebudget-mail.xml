@@ -21,10 +21,6 @@ http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
  
 <bean id="simpleMailMessage" class="org.springframework.mail.SimpleMailMessage" />
 
-<bean id="mailMail" class="org.homebudget.services.MailConfirmationService">
-	<property name="mailSender" ref="mailSender" />
-	<property name="simpleMailMessage" ref="simpleMailMessage">
-	</property>
-</bean>
+<bean id="mailMail" class="org.homebudget.services.MailConfirmationService"/>
  
 </beans>
