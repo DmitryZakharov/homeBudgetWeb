@@ -20,9 +20,6 @@ public class MailConfirmationService {
     @Resource
     private SimpleMailMessage simpleMailMessage;
 
-    public MailConfirmationService() {
-        this.simpleMailMessage = new SimpleMailMessage();
-    }
 
     public void sendConfirmation(UserDetails userDetails) {
         simpleMailMessage.setTo(userDetails.getEmail());
