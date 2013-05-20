@@ -10,8 +10,8 @@
     </context-param>
     
 	<welcome-file-list>
-        <welcome-file>welcome.html</welcome-file>
-    </welcome-file-list>
+	    <welcome-file>/WEB-INF/views/welcome.jsp</welcome-file>
+	</welcome-file-list>
 
 	<servlet>
 		<servlet-name>homebudget</servlet-name>
