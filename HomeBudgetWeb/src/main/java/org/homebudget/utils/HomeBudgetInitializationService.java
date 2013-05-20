@@ -22,7 +22,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class HomeBudgetInitializationService {
 
-	private static final Logger logger = Logger.getLogger(HomeBudgetInitializationService.class);
+	private static final Logger logger = Logger
+			.getLogger(HomeBudgetInitializationService.class);
 
 	@Resource
 	UserManagementService userManagementService;
@@ -37,18 +38,17 @@ public class HomeBudgetInitializationService {
 
 	@PostConstruct
 	private void executePopulation() {
-            int userCount = 0;
-            if(userRoleRepository != null){
-                userCount = userRoleRepository.findAll().size();
-                System.out.println("User Count: " + userCount);
-            }
-            if(userCount == 0){
-		System.out.println("Create initial Population !!!!!!!!!!!!!!!!!!!!!!!!!!!! " + this);
 		logger.info("Create initial Population !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		int userCount = 0;
+		if (userRoleRepository != null) {
+			userCount = userRoleRepository.findAll().size();
+			logger.info("User Count: " + userCount);
+		}
+		if (!executed) {
 			populateUsers(10);
 			executed = true;
-		}else {
-			System.out.println("ALREADY CREATED MANY USERS!!!!!!!!!!!");
+		} else {
+			logger.info("ALREADY CREATED MANY USERS!!!!!!!!!!!");
 		}
 	}
 
@@ -59,15 +59,14 @@ public class HomeBudgetInitializationService {
 		UserRole uRole = userRoleRepository
 				.findByUserRole(UserRole.Role.USER_ROLE);
 		for (int i = 0; i < number; i++) {
-                    String name = "";    
-                    if(i==0){
-                            name = "Michael";
-                        }
-                        else{
-                            name = "Dmitry";
-                        }
-                        UserDetails user = createTestUser(i, name);
-                        logger.info("Creating user: " + user.getUserName());
+			String name = "";
+			if (i == 0) {
+				name = "Michael";
+			} else {
+				name = "Dmitry";
+			}
+			UserDetails user = createTestUser(i, name);
+			logger.info("Creating user: " + user.getUserName());
 
 			Account account = createTestAccount(user);
 			logger.info("Creating account: " + account.getAccountName());
@@ -99,7 +98,7 @@ public class HomeBudgetInitializationService {
 	private UserDetails createTestUser(int i, String name) {
 		final UserDetails user = new UserDetails();
 		user.setUserName(name + i);
-		
+
 		user.setUserUsername(user.getUserName() + "_nick");
 		user.setUserSurname("Doe");
 		user.setEmail("some" + i + "@email.com");
@@ -108,7 +107,7 @@ public class HomeBudgetInitializationService {
 		user.setEnabled(1);
 		try {
 			String password = "000" + i;
-			if(i==0){
+			if (i == 0) {
 				user.setUserName(name);
 				user.setUserUsername("admin");
 				password = "admin";

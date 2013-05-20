@@ -39,9 +39,8 @@
 				/WEB-INF/config/homebudget-config.xml,
 				/WEB-INF/config/datasource-config.xml,
 				/WEB-INF/config/homebudget-security.xml,
+                /WEB-INF/config/homebudget-mail.xml,
 				/WEB-INF/config/persistence-config.xml
-<!-- 				/WEB-INF/config/log4j.xml -->
-				
 		</param-value>
 	</context-param>
 	
@@ -50,12 +49,6 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-
-<!-- 	<servlet-mapping> -->
-<!-- 		<servlet-name>homebudget</servlet-name> -->
-<!-- 		<url-pattern>/resources/**</url-pattern> -->
-<!-- 	</servlet-mapping> -->
-	
     <!-- Spring Security -->
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
