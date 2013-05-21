@@ -34,6 +34,11 @@ public class UserManagementService {
 	public void saveUserDetails(UserDetails userDetails) {
 		userRepositoryDao.save(userDetails);
 	}
+        
+        @Transactional
+	public void deleteUserDetails(UserDetails userDetails) {
+		userRepositoryDao.delete(userDetails);
+	}
 
 	@Transactional
 	public void saveUserRole(UserRole userRole) {

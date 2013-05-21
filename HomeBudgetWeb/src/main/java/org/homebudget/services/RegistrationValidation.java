@@ -53,7 +53,7 @@ public class RegistrationValidation {
         }
         
         Collection<UserDetails> result = service.getUserByEmail(email);
-        if(result != null){
+        if(result != null && !result.isEmpty()){
             errors.rejectValue("email", "registration.email.notunique");
         }
     }
@@ -78,8 +78,9 @@ public class RegistrationValidation {
                     "registration.user_username.size");
         }
         Collection<UserDetails> result = service.getUserByUsername(userUsername);
-        if(result != null){
+        if(result != null && !result.isEmpty()){
             errors.rejectValue("userUsername", "registration.user_username.notunique");
         }
+        
     }
 }

@@ -30,6 +30,7 @@ public class RegistrationValidationTest extends TestConfigurator{
     @Resource
     UserManagementService service;
 
+
     /**
      * Test of validate method, of class RegistrationValidation.
      */
@@ -56,6 +57,7 @@ public class RegistrationValidationTest extends TestConfigurator{
         instance.validate(target, errors);
         assertTrue(errors.hasErrors());
         assertNotNull(errors.getFieldError("email"));
+        service.deleteUserDetails(target);
     }
     
     @Test
@@ -70,6 +72,7 @@ public class RegistrationValidationTest extends TestConfigurator{
         instance.validate(target, errors);
         assertTrue(errors.hasErrors());
         assertNotNull(errors.getFieldError("userUsername"));
+        service.deleteUserDetails(target);
     }
     
     @Test
@@ -85,5 +88,21 @@ public class RegistrationValidationTest extends TestConfigurator{
         instance.validate(target, errors);
         assertTrue(errors.hasErrors());
         assertNotNull(errors.getFieldError("password"));
+    }
+    
+    @Test
+    public void testValidUser() {
+        System.out.println("testValidUser");
+        UserDetails target = new UserDetails();
+        target.setEmail(VALID_EMAIL);
+        target.setUserUsername(VALID_USERNAME);
+        target.setPassword("password");
+        target.setConfpassword("password");
+      
+        Errors errors = new BeanPropertyBindingResult(target, "userDetails");
+        
+        instance.validate(target, errors);
+        assertFalse(errors.hasErrors());
+        
     }
 }
