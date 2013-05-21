@@ -73,6 +73,13 @@ public class UserManagementService {
 		return birthday;
 	}
 
+        public UserDetails getUserByUsername(String userName){
+            return userRepositoryDao.findByUserUsername(userName);
+        }
+        
+        public UserDetails getUserByEmail(String email){
+            return userRepositoryDao.findByEmail(email);
+        }
 	// public UserRole getRole(Role role){
 	// UserRole result = userRoleRepository.findByUserRole(role);
 	// return result;
