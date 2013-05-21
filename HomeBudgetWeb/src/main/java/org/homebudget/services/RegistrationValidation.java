@@ -1,5 +1,6 @@
 package org.homebudget.services;
 
+import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Resource;
@@ -28,7 +29,9 @@ public class RegistrationValidation {
                 
         String password = aUserDetails.getPassword();
         String confPassword = aUserDetails.getConfpassword();
-        if (password.compareTo(confPassword) != 0) {
+        if (password == null || 
+                confPassword == null || 
+                password.compareTo(confPassword) != 0) {
             errors.rejectValue("password", "registration.password.dont_match");
         }
 
@@ -49,7 +52,7 @@ public class RegistrationValidation {
             errors.rejectValue("email", "registration.email.invalid");
         }
         
-        UserDetails result = service.getUserByEmail(email);
+        Collection<UserDetails> result = service.getUserByEmail(email);
         if(result != null){
             errors.rejectValue("email", "registration.email.notunique");
         }
@@ -64,14 +67,17 @@ public class RegistrationValidation {
          
           ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password",
                 "registration.password.empty");
+          ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confpassword",
+                "registration.password.empty");
+          
     }
 
     private void validateUserUsername(String userUsername, Errors errors) {
-        if ((userUsername.length()) > 50) {
+        if (userUsername == null || (userUsername.length()) > 50) {
             errors.rejectValue("userUsername",
                     "registration.user_username.size");
         }
-        UserDetails result = service.getUserByUsername(userUsername);
+        Collection<UserDetails> result = service.getUserByUsername(userUsername);
         if(result != null){
             errors.rejectValue("userUsername", "registration.user_username.notunique");
         }

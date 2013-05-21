@@ -5,26 +5,16 @@
 package org.homebudget.services;
 
 
-import java.util.Date;
+import java.util.List;
 import org.homebudget.dao.UserRepository;
 import org.homebudget.model.UserDetails;
+import org.homebudget.test.config.TestConfigurator;
 import static org.junit.Assert.*;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import static org.mockito.Mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({
-    "classpath:/config/homebudget-servlet.xml",
-    "classpath:/config/datasource-config.xml",
-    "classpath:/config/persistence-config.xml",
-    "classpath:/config/homebudget-mail.xml"
-    })
-public class UserManagementServiceTest {
+public class UserManagementServiceTest extends TestConfigurator{
     
     @Autowired
     UserManagementService service;
@@ -46,11 +36,14 @@ public class UserManagementServiceTest {
         userDetails.setUserUsername("testUser");
 
         service.saveUserDetails(userDetails);
-        UserDetails result = repository.findByUserUsername(userDetails.getUserUsername());
-        assertEquals(userDetails.getEmail(), result.getEmail());
-        assertEquals(userDetails.getUserName(), result.getUserName());
+        List<UserDetails> result = repository.findByUserUsername(userDetails.getUserUsername());
+        assertEquals(1, result.size());
+        assertEquals(userDetails.getEmail(), result.get(0).getEmail());
+        assertEquals(userDetails.getUserName(), result.get(0).getUserName());
         
     }
+    
+    
 
    
 }

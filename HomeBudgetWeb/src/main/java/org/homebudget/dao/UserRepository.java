@@ -1,5 +1,6 @@
 package org.homebudget.dao;
 
+import java.util.List;
 import org.homebudget.model.UserDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,7 +17,7 @@ public interface UserRepository extends JpaRepository<UserDetails, Long>{
         // getAllUsers findAll();
         
         //getUser(String userNickname)
-        public UserDetails findByUserUsername(String userName);
+        public List<UserDetails> findByUserUsername(String userName);
         
-        public UserDetails findByEmail(String email);
+        public List<UserDetails> findByEmail(String email);
 }

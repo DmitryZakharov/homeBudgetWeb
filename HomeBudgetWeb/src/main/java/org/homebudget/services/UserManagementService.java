@@ -3,6 +3,7 @@ package org.homebudget.services;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.annotation.Resource;
@@ -73,11 +74,11 @@ public class UserManagementService {
 		return birthday;
 	}
 
-        public UserDetails getUserByUsername(String userName){
+        public Collection<UserDetails> getUserByUsername(String userName){
             return userRepositoryDao.findByUserUsername(userName);
         }
         
-        public UserDetails getUserByEmail(String email){
+        public Collection<UserDetails> getUserByEmail(String email){
             return userRepositoryDao.findByEmail(email);
         }
 	// public UserRole getRole(Role role){
