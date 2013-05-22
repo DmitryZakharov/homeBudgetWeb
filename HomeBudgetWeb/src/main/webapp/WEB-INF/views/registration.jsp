@@ -1,21 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Registration</title>
-        <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
-        <link href="styles/layout.css" rel="stylesheet">
-    </head>
-    <body>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
+<t:welcometemplate>
 
-
-<div class="container">
-        <form:form method="Post" action="registration.html"
+<jsp:body>
+    <div class="container-fluid">
+    <div class="row-fluid">
+    <div class="span2">
+    <!--Sidebar content-->
+    </div>
+    <div class="span10">
+  <form:form method="Post" action="registration.html"
                    commandName="userDetails">
             <h2 class="registration-header">Please Register Yourself</h2>
-            <table class="center-table">
+            <table class="offset3">
                 <!-- USER USERNAME -->
                 <tr>
 
@@ -31,8 +30,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><form:input type="text" class="input-small" placeholder="Name" path="userName"/> 
-                        <form:input type="text" class="input-small" placeholder="Surname" path="userSurname"/>
+                    <td><form:input type="text" class="span4 well" placeholder="Name" path="userName"/> 
+                        <form:input type="text" class="span4 well" placeholder="Surname" path="userSurname"/>
                     </td>
                 </tr>
                 <tr>
@@ -41,8 +40,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><form:password class="input-small" placeholder="Password" path="password"/> 
-                        <form:password class="input-small" placeholder="Confirm" path="confpassword"/>
+                    <td><form:password class="span4 well" placeholder="Password" path="password"/> 
+                        <form:password class="span4 well" placeholder="Confirm" path="confpassword"/>
                     </td>
                 </tr>
                 <tr>
@@ -62,17 +61,16 @@
                     <td><form:input type="date" class="input" placeholder="Date of birth" path="dateString"/> 
                     </td>
                 </tr>
-                
-              
-
                 <!-- USER SUBMISSION ACTION -->
                 <tr>
-                    <td><input class="btn btn-primary registration-submit" type="submit" value="Submit" /></td>
+                    <td><input class="btn btn-primary registration-submit" type="submit" value="register me" /></td>
                 </tr>
             </table>
         </form:form>
-</div>
-    </body>
-</html>
+    </div>
+    </div>
+    </div>
+    
+</jsp:body>
 
-
+</t:welcometemplate>
