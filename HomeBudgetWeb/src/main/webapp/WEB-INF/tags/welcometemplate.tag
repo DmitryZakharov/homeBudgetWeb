@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  <head>
     <meta charset="utf-8">
     <title>Home Budget</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,8 +11,8 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
     <style type="text/css">
       /* Sticky footer styles
       -------------------------------------------------- */
@@ -64,7 +63,7 @@
       }
 
     </style>
-    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -115,12 +114,14 @@
       </div>
     </div>
   <div id=wrap>
-    <div class="row-fluid">
+<!-- shifter for the main page f rom top, so it's not covered by header -->
+<div class="row-fluid">
 <div class="span12"></div>
 </div>
 <div class="row-fluid">
 <div class="span12"></div>
 </div>
+<!-- end of the shifter -->
     <div id="body">
       <jsp:doBody/>
     </div>
