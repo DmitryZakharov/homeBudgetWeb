@@ -1,20 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <t:welcometemplate>
-
-<jsp:body>
     <div class="container-fluid">
     <div class="row-fluid">
-    <div class="span2">
-    <!--Sidebar content-->
-    </div>
-    <div class="span10">
-  <form:form method="Post" action="registration.html"
+    <div class="span10 offset3">
+            <div class="bs-docs-example">
+ <form:form  method="Post" action="registration.html"
                    commandName="userDetails">
-            <h2 class="registration-header">Please Register Yourself</h2>
-            <table class="offset3">
+                               <h2 class="registration-header offset2" >Please Register Yourself</h2>
+                   
+            <table class="offset2">
+            
                 <!-- USER USERNAME -->
                 <tr>
 
@@ -67,10 +64,8 @@
                 </tr>
             </table>
         </form:form>
+          </div>
     </div>
     </div>
     </div>
-    
-</jsp:body>
-
 </t:welcometemplate>
