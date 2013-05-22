@@ -8,6 +8,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Embeddable
 public class Transaction {
@@ -17,6 +19,7 @@ public class Transaction {
 	};
 
 	@Column(name="DATE_OF_TRANSACTION")
+        @Temporal(TemporalType.DATE)
 	private Date dateOFTransaction;
 
 	@OneToOne
@@ -29,6 +32,13 @@ public class Transaction {
 	@Enumerated(EnumType.STRING)
 	@Column (name="TRANSACTION_TYPE")
 	private TransactionType transactionType;
+        
+        @Column(name="COMMENT")
+        private String comment;
+        
+        @OneToOne
+        @JoinColumn(name="RESOURCE_ID")
+        private BinaryResource transactionImage;
 
 	public Date getDateOFTransaction() {
 		return dateOFTransaction;
@@ -61,5 +71,23 @@ public class Transaction {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public BinaryResource getTransactionImage() {
+        return transactionImage;
+    }
+
+    public void setTransactionImage(BinaryResource transactionImage) {
+        this.transactionImage = transactionImage;
+    }
+        
+        
 
 }
