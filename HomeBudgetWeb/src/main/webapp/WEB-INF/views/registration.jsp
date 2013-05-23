@@ -51,11 +51,11 @@
                 </tr>
                 
                 <tr>
-                    <td><form:errors class="text-error" path="dateString" /> 
+                    <td><form:errors class="text-error" path="userBirthday" /> 
                     </td>
                 </tr>
                 <tr>
-                    <td><form:input type="date" class="input" placeholder="Date of birth" path="dateString"/> 
+                    <td><form:input type="date" class="input"  id="datepicker"  placeholder="Date of birth" path="userBirthday"/> 
                     </td>
                 </tr>
                 <!-- USER SUBMISSION ACTION -->

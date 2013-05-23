@@ -46,9 +46,7 @@ public class UserManagementService {
 	}
 
 	public void registerUser(UserDetails aUserDetails) {
-		String dateString = aUserDetails.getDateString();
-		Date birthday = getBirthdayFromString(dateString);
-		aUserDetails.setUserBirthday(birthday);
+
 		final String userPassword = aUserDetails.getPassword();
 		try {
 			String passwordHash = PasswordService.getHash(aUserDetails

@@ -14,6 +14,15 @@
     <!-- Le styles -->
     <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    
+     <link href="<%=request.getContextPath()%>/styles/layout.css" rel="stylesheet">
+     <link href="<%=request.getContextPath()%>/styles/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+     <script src="<%=request.getContextPath()%>/scripts/jquery-1.9.1.js"></script>
+	 <script src="<%=request.getContextPath()%>/scripts/jquery-ui-1.10.3.custom.js"></script>
+<!--          <script type="text/javascript" src="scripts/homebudget.js"></script> -->
+
+        
+        
     <style type="text/css">
       /* Sticky footer styles
       -------------------------------------------------- */
