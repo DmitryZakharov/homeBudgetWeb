@@ -1,5 +1,6 @@
 package org.homebudget.controllers;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,10 +56,11 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/createAccount", method = RequestMethod.GET)
-	public String showContacts(Map<String, Object> model) {
+	public ModelAndView showContacts() {
 		Account account = new Account();
+		Map<String, Object> model = new HashMap<String, Object>(); 
 		model.put("account", account);
-		return "createAccount";
+		return new ModelAndView("createAccount", model);
 	}
 
 	@RequestMapping(value = "/createAccount", method = RequestMethod.POST)

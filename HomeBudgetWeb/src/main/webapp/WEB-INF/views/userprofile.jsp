@@ -1,16 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
-<t:welcometemplate>
-    <div class="container-fluid">
-    <div class="row-fluid">
-    <div class="span10 offset3">
-            <div class="bs-docs-example">
- <form:form  method="Post" action="registration.html"
+<t:maintemplate>
+ <jsp:body>
+    <div class="container">
+           <div class="bs-docs-example">
+ <form:form  method="Post" action="updateDetails.html"
                    commandName="userDetails">
-                               <h2 class="registration-header offset2" >Please Register Yourself</h2>
-                   
-            <table class="offset2">
+                               <h2 class="registration-header" >User Details</h2>
+            <table>
             
                 <!-- USER USERNAME -->
                 <tr>
@@ -60,12 +58,12 @@
                 </tr>
                 <!-- USER SUBMISSION ACTION -->
                 <tr>
-                    <td><input class="btn btn-primary registration-submit" type="submit" value="register me" /></td>
+                    <td><input class="btn btn-primary registration-submit" type="submit" value="update" /></td>
                 </tr>
             </table>
         </form:form>
           </div>
-    </div>
-    </div>
-    </div>
-</t:welcometemplate>
+
+    </div> <!-- /container -->
+    </jsp:body>
+</t:maintemplate>
