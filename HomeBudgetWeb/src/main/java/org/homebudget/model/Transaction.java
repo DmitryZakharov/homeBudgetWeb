@@ -1,11 +1,13 @@
 package org.homebudget.model;
 
 import java.util.Date;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -22,7 +24,7 @@ public class Transaction {
         @Temporal(TemporalType.DATE)
 	private Date dateOFTransaction;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name="CATEGORY_ID")
 	private Category category;
 
@@ -36,7 +38,7 @@ public class Transaction {
         @Column(name="COMMENT")
         private String comment;
         
-        @OneToOne
+        @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
         @JoinColumn(name="RESOURCE_ID")
         private BinaryResource transactionImage;
 
