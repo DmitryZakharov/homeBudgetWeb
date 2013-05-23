@@ -41,7 +41,7 @@ public class AccountController {
 
 		final String username = user.getUsername();
 		UserDetails userDetails = userRepositoryDaoImpl
-				.findByUserUsername(username);
+				.findByUserUsername(username).get(0);
 
 		Long userId = userDetails.getUserId();
 
@@ -77,7 +77,7 @@ public class AccountController {
 		if (account != null) {
 			final String username = user.getUsername();
 			final UserDetails owner = userRepositoryDaoImpl
-					.findByUserUsername(username);
+					.findByUserUsername(username).get(0);
 			account.setOwner(owner);
 			accountRepositoryDaoImpl.save(account);
 		}

@@ -8,7 +8,11 @@
 
 	<mvc:annotation-driven />
 
-	<context:component-scan base-package="org.homebudget" />
+        <bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		p:location="classpath:/config/homebudget.properties" />
+        
+	<context:component-scan base-package="org.homebudget.services" />
 
 		<mvc:resources mapping="/bootstrap/**" location="/resources/bootstrap/" />
 		<mvc:resources mapping="/scripts/**" location="/resources/scripts/" />
