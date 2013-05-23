@@ -33,7 +33,7 @@ public class UserManagementService {
 	public void saveUserDetails(UserDetails userDetails) {
 		userRepositoryDao.save(userDetails);
 	}
-
+	
 	@Transactional
 	public void saveUserRole(UserRole userRole) {
 		userRoleRepository.save(userRole);

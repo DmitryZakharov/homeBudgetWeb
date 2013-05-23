@@ -125,6 +125,8 @@
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>
+              <li class="nav-header">Personal settings</li>
+              <li><a href="userProfile.html">Change account</a></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
