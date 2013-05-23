@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.homebudget.dao.UserRepository;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
+import org.homebudget.services.UserManagementService;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -29,6 +30,9 @@ public class UserManagementController {
 
 	@Resource
 	private UserRepository userRepositoryDao;
+	
+	@Resource
+	private UserManagementService userManagementService;
 
 	@RequestMapping(value = "/addUser")
 	public String addNewUser(
@@ -71,16 +75,14 @@ public class UserManagementController {
 		
 		
 		@RequestMapping(value = "/updateDetails", method = RequestMethod.POST)
-		public ModelAndView updateUserDetails(@Valid UserDetails aUserDetails, BindingResult result, Map<String, Object> model) {
+		public ModelAndView updateUserDetails(@Valid UserDetails newUserDetails, BindingResult result, Map<String, Object> model) {
 
 			final User user = (User) SecurityContextHolder.getContext()
 					.getAuthentication().getPrincipal();
-			UserDetails aUserDetailsOld = userRepositoryDao.findByUserUsername(user.getUsername());
+			UserDetails oldUserDetails = userRepositoryDao.findByUserUsername(user.getUsername());
+			getUserManagementService().updateUserDetails(oldUserDetails, newUserDetails);
 			
-			aUserDetailsOld.setUserName("someNewName");
-			userRepositoryDao.save(aUserDetailsOld);
-			
-	        model.put("userDetails", aUserDetailsOld);
+	        model.put("userDetails", oldUserDetails);
 	        
 			return new ModelAndView("userprofile");
 	}
@@ -110,5 +112,13 @@ public class UserManagementController {
 
 	public void setHibernateDaoImpl(UserRepository hibernateDaoImpl) {
 		this.userRepositoryDao = hibernateDaoImpl;
+	}
+
+	public UserManagementService getUserManagementService() {
+		return userManagementService;
+	}
+
+	public void setUserManagementService(UserManagementService userManagementService) {
+		this.userManagementService = userManagementService;
 	}
 }

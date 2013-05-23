@@ -72,6 +72,28 @@ public class UserManagementService {
 		}
 		return birthday;
 	}
+	
+	public void updateUserDetails(UserDetails oldUserDetails, UserDetails newUserDetails){
+		
+		oldUserDetails.setUserName(newUserDetails.getUserName());
+		oldUserDetails.setUserSurname(newUserDetails.getUserSurname());
+		oldUserDetails.setUserUsername(newUserDetails.getUserUsername());
+		final String userPassword = newUserDetails.getPassword();
+		try {
+			final String passwordHash = PasswordService.getHash(newUserDetails
+					.getPassword());
+			oldUserDetails.setPassword(passwordHash);
+		} catch (Exception e) {// with is a hack. Must be removed. If hashing
+			// fails, user must be notified.
+			oldUserDetails.setPassword(userPassword);
+		}
+		oldUserDetails.setPassword(newUserDetails.getPassword());
+		oldUserDetails.setEmail(newUserDetails.getEmail());
+		oldUserDetails.setUserBirthday(newUserDetails.getUserBirthday());
+		
+		userRepositoryDao.save(oldUserDetails);
+		
+	}
 
 	// public UserRole getRole(Role role){
 	// UserRole result = userRoleRepository.findByUserRole(role);
