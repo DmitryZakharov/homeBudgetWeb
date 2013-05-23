@@ -15,31 +15,5 @@ import org.springframework.stereotype.Repository;
 public interface AccountRepository extends JpaRepository<Account, Long>{
     public List<Account> findByOwner(UserDetails user);
 
-//	@Autowired
-//	private SessionFactory sessionFactory;
-//
-//	public List<Account> getAccounts(Long userId) {
-//
-//		final Query q = getSessionFactory().openSession().createQuery(
-//				"from ACCOUNT where USER_ID=?");
-//		q.setLong(0, userId);
-//
-//		final List<Account> accounts = (List<Account>) q.list();
-//
-//		return accounts;
-//	}
-//
-//	public void addAccount(Account account) {
-//
-//		getSessionFactory().openSession().save(account);
-//	}
-//
-//	public SessionFactory getSessionFactory() {
-//		return sessionFactory;
-//	}
-//
-//	public void setSessionFactory(SessionFactory sessionFactory) {
-//		this.sessionFactory = sessionFactory;
-//	}
-
+    
 }
