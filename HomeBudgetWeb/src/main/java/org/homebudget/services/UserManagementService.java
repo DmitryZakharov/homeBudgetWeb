@@ -1,9 +1,5 @@
 package org.homebudget.services;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.annotation.Resource;
 
@@ -40,9 +36,7 @@ public class UserManagementService {
 	}
 
 	public void registerUser(UserDetails aUserDetails) {
-		String dateString = aUserDetails.getDateString();
-		Date birthday = getBirthdayFromString(dateString);
-		aUserDetails.setUserBirthday(birthday);
+
 		final String userPassword = aUserDetails.getPassword();
 		try {
 			String passwordHash = PasswordService.getHash(aUserDetails
@@ -59,22 +53,5 @@ public class UserManagementService {
 		saveUserDetails(aUserDetails);
 	}
 
-	private Date getBirthdayFromString(String dateString) {
-		// password is replaced with hash after validation of the form.
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		System.out.println("DateString read: " + dateString);
-		gLogger.info("DateString read: " + dateString);
-		Date birthday = null;
-		try {
-			birthday = format.parse(dateString);
-		} catch (ParseException ex) {
-			gLogger.error("Datestring could not be parsed " + dateString);
-		}
-		return birthday;
-	}
-
-	// public UserRole getRole(Role role){
-	// UserRole result = userRoleRepository.findByUserRole(role);
-	// return result;
-	// }
+	
 }

@@ -37,8 +37,7 @@ public class UserDetails {
     private String password;
     @Transient
     private String confpassword;
-    @Transient
-    private String dateString;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable( name = "USER_USER_ROLE", joinColumns =
     @JoinColumn(name = "USER_ID"),
@@ -141,11 +140,5 @@ public class UserDetails {
         this.userRoles.add(uRole);
     }
 
-    public String getDateString() {
-        return dateString;
-    }
-
-    public void setDateString(String dateString) {
-        this.dateString = dateString;
-    }
+   
 }

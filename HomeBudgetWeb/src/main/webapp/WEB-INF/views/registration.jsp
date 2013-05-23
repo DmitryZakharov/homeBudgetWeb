@@ -7,6 +7,13 @@
         <title>Registration</title>
         <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
         <link href="styles/layout.css" rel="stylesheet">
+        <link href="styles/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+        <script src="scripts/jquery-1.9.1.js"></script>
+	<script src="scripts/jquery-ui-1.10.3.custom.js"></script>
+        <script type="text/javascript" src="scripts/homebudget.js"></script>
+	
+	
+        
     </head>
     <body>
 
@@ -55,11 +62,12 @@
                 </tr>
                 
                 <tr>
-                    <td><form:errors class="text-error" path="dateString" /> 
+                    <td><form:errors class="text-error" path="userBirthday" /> 
                     </td>
                 </tr>
                 <tr>
-                    <td><form:input type="date" class="input" placeholder="Date of birth" path="dateString"/> 
+                    <td>
+                         <input type="text" id="datepicker" class="input" placeholder="Date of birth" path="userBirthday"/>
                     </td>
                 </tr>
                 
