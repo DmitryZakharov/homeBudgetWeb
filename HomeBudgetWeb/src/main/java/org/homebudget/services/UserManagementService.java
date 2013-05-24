@@ -19,8 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserManagementService {
 
-	private static final Logger gLogger = Logger.getLogger(UserManagementService.class);
-	
+	private static final Logger gLogger = Logger
+			.getLogger(UserManagementService.class);
+
 	@Resource
 	private UserRepository userRepositoryDao;
 
@@ -34,8 +35,8 @@ public class UserManagementService {
 	public void saveUserDetails(UserDetails userDetails) {
 		userRepositoryDao.save(userDetails);
 	}
-        
-        @Transactional
+
+	@Transactional
 	public void deleteUserDetails(UserDetails userDetails) {
 		userRepositoryDao.delete(userDetails);
 	}
@@ -77,18 +78,17 @@ public class UserManagementService {
 		return birthday;
 	}
 
-        public Collection<UserDetails> getUserByUsername(String userName){
-            return userRepositoryDao.findByUserUsername(userName);
-        }
-        
-        public Collection<UserDetails> getUserByEmail(String email){
-            return userRepositoryDao.findByEmail(email);
-        }
-        
-        
-        	
-	public void updateUserDetails(UserDetails oldUserDetails, UserDetails newUserDetails){
-		
+	public Collection<UserDetails> getUserByUsername(String userName) {
+		return userRepositoryDao.findByUserUsername(userName);
+	}
+
+	public Collection<UserDetails> getUserByEmail(String email) {
+		return userRepositoryDao.findByEmail(email);
+	}
+
+	public void updateUserDetails(UserDetails oldUserDetails,
+			UserDetails newUserDetails) {
+
 		oldUserDetails.setUserName(newUserDetails.getUserName());
 		oldUserDetails.setUserSurname(newUserDetails.getUserSurname());
 		oldUserDetails.setUserUsername(newUserDetails.getUserUsername());
@@ -101,12 +101,11 @@ public class UserManagementService {
 			// fails, user must be notified.
 			oldUserDetails.setPassword(userPassword);
 		}
-		oldUserDetails.setPassword(newUserDetails.getPassword());
 		oldUserDetails.setEmail(newUserDetails.getEmail());
 		oldUserDetails.setUserBirthday(newUserDetails.getUserBirthday());
-		
+
 		userRepositoryDao.save(oldUserDetails);
-		
+
 	}
 	// public UserRole getRole(Role role){
 	// UserRole result = userRoleRepository.findByUserRole(role);

@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.homebudget.dao.UserRepository;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
+import org.homebudget.services.PasswordService;
 import org.homebudget.services.UserManagementService;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,7 +31,7 @@ public class UserManagementController {
 
 	@Resource
 	private UserRepository userRepositoryDao;
-	
+
 	@Resource
 	private UserManagementService userManagementService;
 
@@ -39,7 +40,7 @@ public class UserManagementController {
 			@ModelAttribute("userDetails") UserDetails userDetails) {
 
 		if (userDetails.getUserName() != null) {
-                        userDetails.addUserRole(UserRole.Role.USER_ROLE);
+			userDetails.addUserRole(UserRole.Role.USER_ROLE);
 			userRepositoryDao.save(userDetails);
 		}
 
@@ -49,42 +50,45 @@ public class UserManagementController {
 				+ userDetails.getUserBirthday());
 		return "addUser";
 	}
-	
-		@RequestMapping(value = "/userProfile", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/userProfile", method = RequestMethod.GET)
 	public ModelAndView showUserProfile(Map<String, Object> model) {
 
 		final User user = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
-		UserDetails aUserDetails = userRepositoryDao.findByUserUsername(user.getUsername()).get(0);
-	        model.put("userDetails", aUserDetails);
-		
+		UserDetails aUserDetails = userRepositoryDao.findByUserUsername(
+				user.getUsername()).get(0);
+		model.put("userDetails", aUserDetails);
+
 		return new ModelAndView("userprofile");
 	}
-	
-	
+
 	@RequestMapping(value = "/updateDetails", method = RequestMethod.GET)
 	public ModelAndView showUserDetails(Map<String, Object> model) {
 
 		final User user = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
-		UserDetails aUserDetails = userRepositoryDao.findByUserUsername(user.getUsername()).get(0);
-	        model.put("userDetails", aUserDetails);
-		
+		UserDetails aUserDetails = userRepositoryDao.findByUserUsername(
+				user.getUsername()).get(0);
+		model.put("userDetails", aUserDetails);
+
 		return new ModelAndView("userprofile");
 	}
-		
-		
-		@RequestMapping(value = "/updateDetails", method = RequestMethod.POST)
-		public String updateUserDetails(@Valid UserDetails newUserDetails, BindingResult result, Map<String, Object> model) {
 
-			final User user = (User) SecurityContextHolder.getContext()
-					.getAuthentication().getPrincipal();
-			UserDetails oldUserDetails = userRepositoryDao.findByUserUsername(user.getUsername()).get(0);
-			getUserManagementService().updateUserDetails(oldUserDetails, newUserDetails);
-			
-	        model.put("userDetails", oldUserDetails);
-	        
-			return ("redirect:updateDetails");
+	@RequestMapping(value = "/updateDetails", method = RequestMethod.POST)
+	public String updateUserDetails(@Valid UserDetails newUserDetails,
+			BindingResult result, Map<String, Object> model) {
+
+		final User user = (User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		UserDetails oldUserDetails = userRepositoryDao.findByUserUsername(
+				user.getUsername()).get(0);
+		getUserManagementService().updateUserDetails(oldUserDetails,
+				newUserDetails);
+
+		model.put("userDetails", oldUserDetails);
+
+		return ("redirect:updateDetails");
 	}
 
 	@RequestMapping(value = "/usersList")
@@ -111,12 +115,13 @@ public class UserManagementController {
 	public void setHibernateDaoImpl(UserRepository hibernateDaoImpl) {
 		this.userRepositoryDao = hibernateDaoImpl;
 	}
-	
-		public UserManagementService getUserManagementService() {
+
+	public UserManagementService getUserManagementService() {
 		return userManagementService;
 	}
 
-	public void setUserManagementService(UserManagementService userManagementService) {
+	public void setUserManagementService(
+			UserManagementService userManagementService) {
 		this.userManagementService = userManagementService;
 	}
 }
