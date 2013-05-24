@@ -75,7 +75,7 @@ public class UserManagementController {
 		
 		
 		@RequestMapping(value = "/updateDetails", method = RequestMethod.POST)
-		public ModelAndView updateUserDetails(@Valid UserDetails newUserDetails, BindingResult result, Map<String, Object> model) {
+		public String updateUserDetails(@Valid UserDetails newUserDetails, BindingResult result, Map<String, Object> model) {
 
 			final User user = (User) SecurityContextHolder.getContext()
 					.getAuthentication().getPrincipal();
@@ -84,7 +84,7 @@ public class UserManagementController {
 			
 	        model.put("userDetails", oldUserDetails);
 	        
-			return new ModelAndView("userprofile");
+			return ("redirect:updateDetails");
 	}
 
 	@RequestMapping(value = "/usersList")

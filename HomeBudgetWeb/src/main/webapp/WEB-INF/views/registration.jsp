@@ -55,7 +55,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><form:input type="date" class="input"  id="datepicker"  placeholder="Date of birth" path="userBirthday"/> 
+                    <td><form:input type="text" class="input"  id="datepicker"  placeholder="Date of birth" path="userBirthday"/> 
                     </td>
                 </tr>
                 <!-- USER SUBMISSION ACTION -->
