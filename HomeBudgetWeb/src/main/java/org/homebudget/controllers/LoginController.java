@@ -1,7 +1,5 @@
 package org.homebudget.controllers;
 
-import javax.annotation.Resource;
-import org.homebudget.dao.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,9 +7,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class LoginController {
-
-   @Resource
-   private UserRepository userRepositoryDao;
 
    @RequestMapping(value = "/main", method = RequestMethod.GET)
    public String printWelcome(ModelMap model) {
@@ -50,16 +45,6 @@ public class LoginController {
    public String logout(ModelMap model) {
 
       return "forward:/welcome.html";
-   }
-
-   public UserRepository getHibernateDaoImpl() {
-
-      return userRepositoryDao;
-   }
-
-   public void setHibernateDaoImpl(UserRepository hibernateDaoImpl) {
-
-      this.userRepositoryDao = hibernateDaoImpl;
    }
 
 }
