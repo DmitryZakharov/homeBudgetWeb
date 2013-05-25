@@ -14,9 +14,11 @@
                             <div class="controls">
                                 <div class="input-prepend">
                                     <span class="add-on"><i class="icon-user"></i></span>
-                                    <form:errors class="text-error" path="userUsername" />
                                     <form:input type="text" class="input-xlarge" id="uname" name="uname"
                                         placeholder="User Name" path="userUsername" />
+                                </div>
+                                <div class="text">
+                                    <form:errors class="text-error" path="userUsername" />
                                 </div>
                             </div>
                         </div>
@@ -25,9 +27,11 @@
                             <div class="controls">
                                 <div class="input-prepend">
                                     <span class="add-on"><i class="icon-user"></i></span>
-                                    <form:errors class="text-error" path="userName" />
                                     <form:input type="text" class="input-xlarge" id="fname" name="fname"
                                         placeholder="First Name" path="userName" />
+                                </div>
+                                <div class="text">
+                                    <form:errors class="text-error" path="userName" />
                                 </div>
                             </div>
                         </div>
@@ -36,9 +40,11 @@
                             <div class="controls">
                                 <div class="input-prepend">
                                     <span class="add-on"><i class="icon-user"></i></span>
-                                    <form:errors class="text-error" path="userSurname" />
                                     <form:input type="text" class="input-xlarge" id="lname" name="lname"
                                         placeholder="Last Name" path="userSurname" />
+                                </div>
+                                <div class="text">
+                                    <form:errors class="text-error" path="userSurname" />
                                 </div>
                             </div>
                         </div>
@@ -48,22 +54,24 @@
                             <div class="controls">
                                 <div class="input-prepend">
                                     <span class="add-on"><i class="icon-gift"></i></span>
-                                    <form:errors class="text-error" path="userBirthday" />
                                     <form:input type="text" class="input-xlarge" id="datepicker" name="birthday"
                                         placeholder="Date of birth" path="userBirthday" />
                                 </div>
+                                <div class="text">
+                                    <form:errors class="text-error" path="userBirthday" />
+                                </div>
                             </div>
                         </div>
-
-
                         <div class="control-group">
                             <label class="control-label">Email</label>
                             <div class="controls">
                                 <div class="input-prepend">
                                     <span class="add-on"><i class="icon-envelope"></i></span>
-                                    <form:errors class="text-error" path="email" />
                                     <form:input type="email" class="input-xlarge" id="email" name="email"
                                         placeholder="E-mail" path="email" />
+                                </div>
+                                <div class="text">
+                                    <form:errors class="text-error" path="email" />
                                 </div>
                             </div>
                         </div>
@@ -72,9 +80,11 @@
                             <div class="controls">
                                 <div class="input-prepend">
                                     <span class="add-on"><i class="icon-lock"></i></span>
-                                    <form:errors class="text-error" path="password" />
                                     <form:password id="passwd" class="input-xlarge" name="passwd" placeholder="Password"
                                         path="password" />
+                                </div>
+                                <div class="text">
+                                    <form:errors class="text-error" path="password" />
                                 </div>
                             </div>
                         </div>
@@ -83,9 +93,12 @@
                             <div class="controls">
                                 <div class="input-prepend">
                                     <span class="add-on"><i class="icon-lock"></i></span>
-                                    <form:errors class="text-error" path="confpassword" />
+
                                     <form:password id="conpasswd" class="input-xlarge" name="conpasswd"
                                         placeholder="Confirm" path="confpassword" />
+                                </div>
+                                <div class="text">
+                                    <form:errors class="text-error" path="confpassword" />
                                 </div>
                             </div>
                         </div>
