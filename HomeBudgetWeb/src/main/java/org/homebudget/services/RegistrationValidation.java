@@ -12,76 +12,75 @@ import org.springframework.validation.ValidationUtils;
 @Service
 public class RegistrationValidation {
 
-    @Resource
-    UserManagementService service;
+   @Resource
+   UserManagementService service;
 
-    public boolean supports(Class<?> klass) {
+   public boolean supports(Class<?> klass) {
 
-        return UserDetails.class.isAssignableFrom(klass);
-    }
+      return UserDetails.class.isAssignableFrom(klass);
+   }
 
-    public void validate(Object target, Errors errors) {
+   public void validate(Object target, Errors errors) {
 
-        UserDetails aUserDetails = (UserDetails) target;
+      UserDetails aUserDetails = (UserDetails) target;
 
-        validateEmptyFields(errors);
+      validateEmptyFields(errors);
 
-        String userUsername = aUserDetails.getUserUsername();
-        validateUserUsername(userUsername, errors);
+      String userUsername = aUserDetails.getUserUsername();
+      validateUserUsername(userUsername, errors);
 
-        String password = aUserDetails.getPassword();
-        String confPassword = aUserDetails.getConfpassword();
-        if (password == null || confPassword == null || password.compareTo(confPassword) != 0) {
-            errors.rejectValue("password", "registration.password.dont_match");
-        }
+      String password = aUserDetails.getPassword();
+      String confPassword = aUserDetails.getConfpassword();
+      if (password == null || confPassword == null || password.compareTo(confPassword) != 0) {
+         errors.rejectValue("password", "registration.password.dont_match");
+      }
 
-        String email = aUserDetails.getEmail();
-        validateEmail(email, errors);
+      String email = aUserDetails.getEmail();
+      validateEmail(email, errors);
 
-    }
+   }
 
-    private void validateEmail(String email, Errors errors) {
+   private void validateEmail(String email, Errors errors) {
 
-        Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
-        Matcher m = p.matcher(email);
+      Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
+      Matcher m = p.matcher(email);
 
-        // check whether any match is found
-        boolean matchFound = m.matches();
+      // check whether any match is found
+      boolean matchFound = m.matches();
 
-        if (!matchFound) {
-            errors.rejectValue("email", "registration.email.invalid");
-        }
+      if (!matchFound) {
+         errors.rejectValue("email", "registration.email.invalid");
+      }
 
-        Collection<UserDetails> result = service.getUserByEmail(email);
-        if (result != null && !result.isEmpty()) {
-            errors.rejectValue("email", "registration.email.notunique");
-        }
-    }
+      Collection<UserDetails> result = service.getUserByEmail(email);
+      if (result != null && !result.isEmpty()) {
+         errors.rejectValue("email", "registration.email.notunique");
+      }
+   }
 
-    private void validateEmptyFields(Errors errors) {
+   private void validateEmptyFields(Errors errors) {
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userUsername",
-                "registration.userUsername.empty");
+      ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userUsername",
+            "registration.userUsername.empty");
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "registration.email.empty");
+      ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "registration.email.empty");
 
-        ValidationUtils
-                .rejectIfEmptyOrWhitespace(errors, "password", "registration.password.empty");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confpassword",
-                "registration.password.empty");
+      ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "registration.password.empty");
+      ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confpassword",
+            "registration.password.empty");
 
-    }
+   }
 
-    private void validateUserUsername(String userUsername, Errors errors) {
+   private void validateUserUsername(String userUsername, Errors errors) {
 
-        if (userUsername == null || (userUsername.length()) > 50) {
-            errors.rejectValue("userUsername", "registration.user_username.size");
-        }
-        Collection<UserDetails> result = service.getUserByUsername(userUsername);
-        if (result != null && !result.isEmpty()) {
-            errors.rejectValue("userUsername", "registration.user_username.notunique");
-        }
+      if (userUsername == null || (userUsername.length()) > 50) {
+         errors.rejectValue("userUsername", "registration.user_username.size");
+      }
+      Collection<UserDetails> result = service.getUserByUsername(userUsername);
+      if (result != null && !result.isEmpty()) {
+         errors.rejectValue("userUsername", "registration.user_username.notunique");
+      }
 
-    }
+   }
 
 }

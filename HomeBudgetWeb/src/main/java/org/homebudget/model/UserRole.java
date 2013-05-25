@@ -14,60 +14,60 @@ import javax.persistence.Id;
 @Entity(name = "USER_ROLE")
 public class UserRole {
 
-    public enum Role {
+   public enum Role {
 
-        ADMIN_ROLE("ROLE_ADMIN", 3), MANAGER_ROLE("ROLE_MANAGER", 2), USER_ROLE("ROLE_USER", 1), ANONYMOUS_ROLE(
-                "ROLE_ANONYMOUS", 0);
+      ADMIN_ROLE("ROLE_ADMIN", 3), MANAGER_ROLE("ROLE_MANAGER", 2), USER_ROLE("ROLE_USER", 1), ANONYMOUS_ROLE(
+            "ROLE_ANONYMOUS", 0);
 
-        private final int    order;
+      private final int order;
 
-        private final String roleName;
+      private final String roleName;
 
-        private Role(final String roleName, final int order) {
+      private Role(final String roleName, final int order) {
 
-            this.roleName = roleName;
-            this.order = order;
-        }
+         this.roleName = roleName;
+         this.order = order;
+      }
 
-        public int order() {
+      public int order() {
 
-            return order;
-        }
+         return order;
+      }
 
-        public String roleName() {
+      public String roleName() {
 
-            return roleName;
-        }
+         return roleName;
+      }
 
-    };
+   };
 
-    @Id
-    @GeneratedValue
-    @Column(name = "USER_ROLE_ID")
-    private long userRoleId;
+   @Id
+   @GeneratedValue
+   @Column(name = "USER_ROLE_ID")
+   private long userRoleId;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "USER_ROLE_TYPE")
-    private Role userRole;
+   @Enumerated(EnumType.STRING)
+   @Column(name = "USER_ROLE_TYPE")
+   private Role userRole;
 
-    public long getUserRoleId() {
+   public long getUserRoleId() {
 
-        return userRoleId;
-    }
+      return userRoleId;
+   }
 
-    public void setUserRoleId(long userRoleId) {
+   public void setUserRoleId(long userRoleId) {
 
-        this.userRoleId = userRoleId;
-    }
+      this.userRoleId = userRoleId;
+   }
 
-    public Role getUserRole() {
+   public Role getUserRole() {
 
-        return userRole;
-    }
+      return userRole;
+   }
 
-    public void setUserRole(Role userRole) {
+   public void setUserRole(Role userRole) {
 
-        this.userRole = userRole;
-    }
+      this.userRole = userRole;
+   }
 
 }

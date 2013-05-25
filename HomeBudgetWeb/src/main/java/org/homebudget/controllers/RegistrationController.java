@@ -23,41 +23,41 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/registration")
 public class RegistrationController {
 
-    private static final Logger    gLogger = Logger.getLogger(RegistrationController.class);
+   private static final Logger gLogger = Logger.getLogger(RegistrationController.class);
 
-    @Autowired
-    private RegistrationValidation aRegistrationValidation;
+   @Autowired
+   private RegistrationValidation aRegistrationValidation;
 
-    @Resource
-    private UserManagementService  userManagementService;
+   @Resource
+   private UserManagementService userManagementService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    protected String showRegistration(Map<String, Object> model) throws Exception {
+   @RequestMapping(method = RequestMethod.GET)
+   protected String showRegistration(Map<String, Object> model) throws Exception {
 
-        UserDetails aUserDetails = new UserDetails();
-        UserRole aUserRole = new UserRole();
-        aUserRole.setUserRole(UserRole.Role.USER_ROLE);
-        model.put("userDetails", aUserDetails);
-        return "registration";
-    }
+      UserDetails aUserDetails = new UserDetails();
+      UserRole aUserRole = new UserRole();
+      aUserRole.setUserRole(UserRole.Role.USER_ROLE);
+      model.put("userDetails", aUserDetails);
+      return "registration";
+   }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String processRegistration(@Valid UserDetails aUserDetails, BindingResult result) {
+   @RequestMapping(method = RequestMethod.POST)
+   public String processRegistration(@Valid UserDetails aUserDetails, BindingResult result) {
 
-        aRegistrationValidation.validate(aUserDetails, result);
-        if (result.hasErrors()) {
-            return "registration";
-        }
-        userManagementService.registerUser(aUserDetails);
-        return "registrationsuccess";
+      aRegistrationValidation.validate(aUserDetails, result);
+      if (result.hasErrors()) {
+         return "registration";
+      }
+      userManagementService.registerUser(aUserDetails);
+      return "registrationsuccess";
 
-    }
+   }
 
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
+   @InitBinder
+   protected void initBinder(WebDataBinder binder) {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-    }
+      SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+      binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+   }
 
 }

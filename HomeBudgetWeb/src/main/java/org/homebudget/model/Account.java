@@ -20,92 +20,92 @@ import org.hibernate.annotations.Type;
 @Entity(name = "ACCOUNT")
 public class Account {
 
-    @Id
-    @Column(name = "ACCOUNT_ID")
-    @GeneratedValue
-    private long                    accountId;
+   @Id
+   @Column(name = "ACCOUNT_ID")
+   @GeneratedValue
+   private long accountId;
 
-    // @NotBlank (message = "{account.name.required}")
-    @Column(name = "ACCOUNT_NAME")
-    private String                  accountName;
+   // @NotBlank (message = "{account.name.required}")
+   @Column(name = "ACCOUNT_NAME")
+   private String accountName;
 
-    // @NotBlank (message = "{account.creationdate.required}")
-    @Column(name = "CREATION_DATE")
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date                    dateOfCreation;
+   // @NotBlank (message = "{account.creationdate.required}")
+   @Column(name = "CREATION_DATE")
+   @Temporal(javax.persistence.TemporalType.DATE)
+   private Date dateOfCreation;
 
-    @OneToOne
-    @JoinColumn(name = "USER_ID")
-    private UserDetails             owner;
+   @OneToOne
+   @JoinColumn(name = "USER_ID")
+   private UserDetails owner;
 
-    // @NotBlank (message = "{account.startingbalance.required}")
-    @Column(name = "STARTING_BALANCE")
-    private float                   startingBalance;
+   // @NotBlank (message = "{account.startingbalance.required}")
+   @Column(name = "STARTING_BALANCE")
+   private float startingBalance;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @JoinTable(name = "TRANSACTIONS", joinColumns = @JoinColumn(name = "ACCOUNT_ID"))
-    @GenericGenerator(name = "hilo-gen", strategy = "hilo")
-    @CollectionId(columns = { @Column(name = "TRANSACTION_ID") }, generator = "hilo-gen", type = @Type(type = "long"))
-    private Collection<Transaction> transactions = new ArrayList<Transaction>();
+   @ElementCollection(fetch = FetchType.EAGER)
+   @JoinTable(name = "TRANSACTIONS", joinColumns = @JoinColumn(name = "ACCOUNT_ID"))
+   @GenericGenerator(name = "hilo-gen", strategy = "hilo")
+   @CollectionId(columns = { @Column(name = "TRANSACTION_ID") }, generator = "hilo-gen", type = @Type(type = "long"))
+   private Collection<Transaction> transactions = new ArrayList<Transaction>();
 
-    public long getAccountId() {
+   public long getAccountId() {
 
-        return accountId;
-    }
+      return accountId;
+   }
 
-    public void setAccountId(long accountId) {
+   public void setAccountId(long accountId) {
 
-        this.accountId = accountId;
-    }
+      this.accountId = accountId;
+   }
 
-    public String getAccountName() {
+   public String getAccountName() {
 
-        return accountName;
-    }
+      return accountName;
+   }
 
-    public void setAccountName(String accountName) {
+   public void setAccountName(String accountName) {
 
-        this.accountName = accountName;
-    }
+      this.accountName = accountName;
+   }
 
-    public UserDetails getOwner() {
+   public UserDetails getOwner() {
 
-        return owner;
-    }
+      return owner;
+   }
 
-    public void setOwner(UserDetails owner) {
+   public void setOwner(UserDetails owner) {
 
-        this.owner = owner;
-    }
+      this.owner = owner;
+   }
 
-    public float getStartingBalance() {
+   public float getStartingBalance() {
 
-        return startingBalance;
-    }
+      return startingBalance;
+   }
 
-    public void setStartingBalance(float startingBalance) {
+   public void setStartingBalance(float startingBalance) {
 
-        this.startingBalance = startingBalance;
-    }
+      this.startingBalance = startingBalance;
+   }
 
-    public Date getDateOfCreation() {
+   public Date getDateOfCreation() {
 
-        return dateOfCreation;
-    }
+      return dateOfCreation;
+   }
 
-    public void setDateOfCreation(Date dateOfCreation) {
+   public void setDateOfCreation(Date dateOfCreation) {
 
-        this.dateOfCreation = dateOfCreation;
-    }
+      this.dateOfCreation = dateOfCreation;
+   }
 
-    public Collection<Transaction> getTransactions() {
+   public Collection<Transaction> getTransactions() {
 
-        return transactions;
-    }
+      return transactions;
+   }
 
-    public void setTransactions(Collection<Transaction> transactions) {
+   public void setTransactions(Collection<Transaction> transactions) {
 
-        this.transactions = transactions;
-    }
+      this.transactions = transactions;
+   }
 
 }

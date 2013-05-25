@@ -13,66 +13,66 @@ import org.springframework.core.io.Resource;
 @Entity(name = "BINARY_RESOURCE")
 public class BinaryResource implements java.io.Serializable {
 
-    @Id
-    @Column(name = "RESOURCE_ID")
-    @GeneratedValue
-    private Long   resourceId;
+   @Id
+   @Column(name = "RESOURCE_ID")
+   @GeneratedValue
+   private Long resourceId;
 
-    @Lob
-    @Column(name = "RESOURCE")
-    private byte[] resource;
+   @Lob
+   @Column(name = "RESOURCE")
+   private byte[] resource;
 
-    public BinaryResource() {
+   public BinaryResource() {
 
-    }
+   }
 
-    public BinaryResource(Resource resource) {
+   public BinaryResource(Resource resource) {
 
-        this.resource = getBytesFromResource(resource);
-    }
+      this.resource = getBytesFromResource(resource);
+   }
 
-    public Long getResourceId() {
+   public Long getResourceId() {
 
-        return resourceId;
-    }
+      return resourceId;
+   }
 
-    public void setResourceId(Long resourceId) {
+   public void setResourceId(Long resourceId) {
 
-        this.resourceId = resourceId;
-    }
+      this.resourceId = resourceId;
+   }
 
-    public byte[] getResource() {
+   public byte[] getResource() {
 
-        return resource;
-    }
+      return resource;
+   }
 
-    public void setResource(byte[] resource) {
+   public void setResource(byte[] resource) {
 
-        this.resource = resource;
-    }
+      this.resource = resource;
+   }
 
-    private byte[] getBytesFromResource(Resource resource) {
+   private byte[] getBytesFromResource(Resource resource) {
 
-        byte[] result = {};
-        InputStream inputStream = null;
-        try {
-            inputStream = resource.getInputStream();
-            result = IOUtils.toByteArray(inputStream);
-        }
-        catch (Exception ex) {
+      byte[] result = {};
+      InputStream inputStream = null;
+      try {
+         inputStream = resource.getInputStream();
+         result = IOUtils.toByteArray(inputStream);
+      }
+      catch (Exception ex) {
+         ex.printStackTrace();
+      }
+      finally {
+         try {
+            if (inputStream != null) {
+               inputStream.close();
+            }
+         }
+         catch (IOException ex) {
             ex.printStackTrace();
-        }
-        finally {
-            try {
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-            }
-            catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return result;
-    }
+         }
+      }
+      return result;
+   }
 
 }

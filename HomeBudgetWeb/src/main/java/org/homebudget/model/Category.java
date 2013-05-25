@@ -8,32 +8,32 @@ import javax.persistence.Id;
 @Entity(name = "CATEGORY")
 public class Category {
 
-    @Id
-    @Column(name = "CATEGORY_ID")
-    @GeneratedValue
-    private int    categoryId;
+   @Id
+   @Column(name = "CATEGORY_ID")
+   @GeneratedValue
+   private int categoryId;
 
-    @Column(name = "CATEGORY_NAME")
-    private String category;
+   @Column(name = "CATEGORY_NAME")
+   private String category;
 
-    public int getCategoryId() {
+   public int getCategoryId() {
 
-        return categoryId;
-    }
+      return categoryId;
+   }
 
-    public void setCategoryId(int categoryId) {
+   public void setCategoryId(int categoryId) {
 
-        this.categoryId = categoryId;
-    }
+      this.categoryId = categoryId;
+   }
 
-    public String getCategory() {
+   public String getCategory() {
 
-        return category;
-    }
+      return category;
+   }
 
-    public void setCategory(String category) {
+   public void setCategory(String category) {
 
-        this.category = category;
-    }
+      this.category = category;
+   }
 
 }

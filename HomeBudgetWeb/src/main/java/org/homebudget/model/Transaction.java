@@ -15,92 +15,92 @@ import javax.persistence.TemporalType;
 @Embeddable
 public class Transaction {
 
-    public static enum TransactionType {
+   public static enum TransactionType {
 
-        INCOME, OUTCOME
+      INCOME, OUTCOME
 
-    };
+   };
 
-    @Column(name = "DATE_OF_TRANSACTION")
-    @Temporal(TemporalType.DATE)
-    private Date            dateOFTransaction;
+   @Column(name = "DATE_OF_TRANSACTION")
+   @Temporal(TemporalType.DATE)
+   private Date dateOFTransaction;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "CATEGORY_ID")
-    private Category        category;
+   @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @JoinColumn(name = "CATEGORY_ID")
+   private Category category;
 
-    @Column(name = "AMOUNT")
-    private float           amount;
+   @Column(name = "AMOUNT")
+   private float amount;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "TRANSACTION_TYPE")
-    private TransactionType transactionType;
+   @Enumerated(EnumType.STRING)
+   @Column(name = "TRANSACTION_TYPE")
+   private TransactionType transactionType;
 
-    @Column(name = "COMMENT")
-    private String          comment;
+   @Column(name = "COMMENT")
+   private String comment;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "RESOURCE_ID")
-    private BinaryResource  transactionImage;
+   @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @JoinColumn(name = "RESOURCE_ID")
+   private BinaryResource transactionImage;
 
-    public Date getDateOFTransaction() {
+   public Date getDateOFTransaction() {
 
-        return dateOFTransaction;
-    }
+      return dateOFTransaction;
+   }
 
-    public void setDateOFTransaction(Date dateOFTransaction) {
+   public void setDateOFTransaction(Date dateOFTransaction) {
 
-        this.dateOFTransaction = dateOFTransaction;
-    }
+      this.dateOFTransaction = dateOFTransaction;
+   }
 
-    public float getAmount() {
+   public float getAmount() {
 
-        return amount;
-    }
+      return amount;
+   }
 
-    public void setAmount(float amount) {
+   public void setAmount(float amount) {
 
-        this.amount = amount;
-    }
+      this.amount = amount;
+   }
 
-    public TransactionType getTransactionType() {
+   public TransactionType getTransactionType() {
 
-        return transactionType;
-    }
+      return transactionType;
+   }
 
-    public void setTransactionType(TransactionType transactionType) {
+   public void setTransactionType(TransactionType transactionType) {
 
-        this.transactionType = transactionType;
-    }
+      this.transactionType = transactionType;
+   }
 
-    public Category getCategory() {
+   public Category getCategory() {
 
-        return category;
-    }
+      return category;
+   }
 
-    public void setCategory(Category category) {
+   public void setCategory(Category category) {
 
-        this.category = category;
-    }
+      this.category = category;
+   }
 
-    public String getComment() {
+   public String getComment() {
 
-        return comment;
-    }
+      return comment;
+   }
 
-    public void setComment(String comment) {
+   public void setComment(String comment) {
 
-        this.comment = comment;
-    }
+      this.comment = comment;
+   }
 
-    public BinaryResource getTransactionImage() {
+   public BinaryResource getTransactionImage() {
 
-        return transactionImage;
-    }
+      return transactionImage;
+   }
 
-    public void setTransactionImage(BinaryResource transactionImage) {
+   public void setTransactionImage(BinaryResource transactionImage) {
 
-        this.transactionImage = transactionImage;
-    }
+      this.transactionImage = transactionImage;
+   }
 
 }

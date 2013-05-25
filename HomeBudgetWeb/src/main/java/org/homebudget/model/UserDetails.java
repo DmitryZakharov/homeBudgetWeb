@@ -20,151 +20,151 @@ import org.homebudget.model.UserRole.Role;
 @Entity(name = "USER_DETAILS")
 public class UserDetails {
 
-    @Id
-    @Column(name = "USER_ID")
-    @GeneratedValue
-    private long          userId;
+   @Id
+   @Column(name = "USER_ID")
+   @GeneratedValue
+   private long userId;
 
-    // @NotNull
+   // @NotNull
 
-    @Column(name = "USER_USERNAME")
-    private String        userUsername;
+   @Column(name = "USER_USERNAME")
+   private String userUsername;
 
-    @Column(name = "USER_NAME")
-    private String        userName;
+   @Column(name = "USER_NAME")
+   private String userName;
 
-    @Column(name = "USER_SURNAME")
-    private String        userSurname;
+   @Column(name = "USER_SURNAME")
+   private String userSurname;
 
-    // @NotNull
+   // @NotNull
 
-    @Column(name = "PASSWORD")
-    private String        password;
+   @Column(name = "PASSWORD")
+   private String password;
 
-    @Transient
-    private String        confpassword;
+   @Transient
+   private String confpassword;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "USER_USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ROLE_ID"))
-    private Set<UserRole> userRoles = new HashSet<UserRole>();
+   @ManyToMany(cascade = CascadeType.ALL)
+   @JoinTable(name = "USER_USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ROLE_ID"))
+   private Set<UserRole> userRoles = new HashSet<UserRole>();
 
-    @Column(name = "ENABLED")
-    private int           enabled;
+   @Column(name = "ENABLED")
+   private int enabled;
 
-    @NotNull
-    @Email
-    @Column(name = "EMAIL")
-    private String        email;
+   @NotNull
+   @Email
+   @Column(name = "EMAIL")
+   private String email;
 
-    @Column(name = "DATE_OF_BIRTH")
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date          userBirthday;
+   @Column(name = "DATE_OF_BIRTH")
+   @Temporal(javax.persistence.TemporalType.DATE)
+   private Date userBirthday;
 
-    public long getUserId() {
+   public long getUserId() {
 
-        return userId;
-    }
+      return userId;
+   }
 
-    public void setUserId(long userId) {
+   public void setUserId(long userId) {
 
-        this.userId = userId;
-    }
+      this.userId = userId;
+   }
 
-    public String getUserUsername() {
+   public String getUserUsername() {
 
-        return userUsername;
-    }
+      return userUsername;
+   }
 
-    public void setUserUsername(String userUsername) {
+   public void setUserUsername(String userUsername) {
 
-        this.userUsername = userUsername;
-    }
+      this.userUsername = userUsername;
+   }
 
-    public String getUserName() {
+   public String getUserName() {
 
-        return userName;
-    }
+      return userName;
+   }
 
-    public void setUserName(String userName) {
+   public void setUserName(String userName) {
 
-        this.userName = userName;
-    }
+      this.userName = userName;
+   }
 
-    public String getUserSurname() {
+   public String getUserSurname() {
 
-        return userSurname;
-    }
+      return userSurname;
+   }
 
-    public void setUserSurname(String userSurname) {
+   public void setUserSurname(String userSurname) {
 
-        this.userSurname = userSurname;
-    }
+      this.userSurname = userSurname;
+   }
 
-    public Date getUserBirthday() {
+   public Date getUserBirthday() {
 
-        return userBirthday;
-    }
+      return userBirthday;
+   }
 
-    public void setUserBirthday(Date userBirthday) {
+   public void setUserBirthday(Date userBirthday) {
 
-        this.userBirthday = userBirthday;
-    }
+      this.userBirthday = userBirthday;
+   }
 
-    public String getPassword() {
+   public String getPassword() {
 
-        return password;
-    }
+      return password;
+   }
 
-    public void setPassword(String password) {
+   public void setPassword(String password) {
 
-        this.password = password;
-    }
+      this.password = password;
+   }
 
-    public String getConfpassword() {
+   public String getConfpassword() {
 
-        return confpassword;
-    }
+      return confpassword;
+   }
 
-    public void setConfpassword(String confpassword) {
+   public void setConfpassword(String confpassword) {
 
-        this.confpassword = confpassword;
-    }
+      this.confpassword = confpassword;
+   }
 
-    public int getEnabled() {
+   public int getEnabled() {
 
-        return enabled;
-    }
+      return enabled;
+   }
 
-    public void setEnabled(int enabled) {
+   public void setEnabled(int enabled) {
 
-        this.enabled = enabled;
-    }
+      this.enabled = enabled;
+   }
 
-    public String getEmail() {
+   public String getEmail() {
 
-        return email;
-    }
+      return email;
+   }
 
-    public void setEmail(String email) {
+   public void setEmail(String email) {
 
-        this.email = email;
-    }
+      this.email = email;
+   }
 
-    public Set<UserRole> getUserRoles() {
+   public Set<UserRole> getUserRoles() {
 
-        return userRoles;
-    }
+      return userRoles;
+   }
 
-    public void setUserRoles(Set<UserRole> userRoles) {
+   public void setUserRoles(Set<UserRole> userRoles) {
 
-        this.userRoles = userRoles;
-    }
+      this.userRoles = userRoles;
+   }
 
-    public void addUserRole(Role role) {
+   public void addUserRole(Role role) {
 
-        UserRole uRole = new UserRole();
-        uRole.setUserRole(role);
-        this.userRoles.add(uRole);
-    }
+      UserRole uRole = new UserRole();
+      uRole.setUserRole(role);
+      this.userRoles.add(uRole);
+   }
 
 }

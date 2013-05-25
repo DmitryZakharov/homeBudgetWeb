@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountManagementService {
 
-    @Resource
-    private AccountRepository accountRepository;
+   @Resource
+   private AccountRepository accountRepository;
 
-    public void saveAccount(Account account) {
+   public void saveAccount(Account account) {
 
-        accountRepository.save(account);
-    }
+      accountRepository.save(account);
+   }
 
 }

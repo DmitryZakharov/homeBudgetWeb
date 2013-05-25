@@ -25,62 +25,62 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/account")
 public class AccountController {
 
-    @Autowired
-    private NewAccountValidation aNewAccountValidation;
+   @Autowired
+   private NewAccountValidation aNewAccountValidation;
 
-    @Resource
-    private AccountRepository    accountRepositoryDaoImpl;
+   @Resource
+   private AccountRepository accountRepositoryDaoImpl;
 
-    @Resource
-    private UserRepository       userRepositoryDaoImpl;
+   @Resource
+   private UserRepository userRepositoryDaoImpl;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String showAccounts(ModelMap model) {
+   @RequestMapping(method = RequestMethod.GET)
+   public String showAccounts(ModelMap model) {
 
-        final User user = (User) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
+      final User user = (User) SecurityContextHolder.getContext().getAuthentication()
+            .getPrincipal();
 
-        final String username = user.getUsername();
-        UserDetails userDetails = userRepositoryDaoImpl.findByUserUsername(username).get(0);
+      final String username = user.getUsername();
+      UserDetails userDetails = userRepositoryDaoImpl.findByUserUsername(username).get(0);
 
-        Long userId = userDetails.getUserId();
+      Long userId = userDetails.getUserId();
 
-        List<Account> accounts = accountRepositoryDaoImpl.findByOwner(userDetails);
+      List<Account> accounts = accountRepositoryDaoImpl.findByOwner(userDetails);
 
-        model.addAttribute("accounts", accounts);
+      model.addAttribute("accounts", accounts);
 
-        return "account";
+      return "account";
 
-    }
+   }
 
-    @RequestMapping(value = "/createAccount", method = RequestMethod.GET)
-    public ModelAndView showContacts() {
+   @RequestMapping(value = "/createAccount", method = RequestMethod.GET)
+   public ModelAndView showContacts() {
 
-        Account account = new Account();
-        Map<String, Object> model = new HashMap<String, Object>();
-        model.put("account", account);
-        return new ModelAndView("createAccount", model);
-    }
+      Account account = new Account();
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("account", account);
+      return new ModelAndView("createAccount", model);
+   }
 
-    @RequestMapping(value = "/createAccount", method = RequestMethod.POST)
-    public ModelAndView addAccount(@ModelAttribute("account") @Valid Account account,
-            BindingResult result) {
+   @RequestMapping(value = "/createAccount", method = RequestMethod.POST)
+   public ModelAndView addAccount(@ModelAttribute("account") @Valid Account account,
+         BindingResult result) {
 
-        final User user = (User) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
+      final User user = (User) SecurityContextHolder.getContext().getAuthentication()
+            .getPrincipal();
 
-        aNewAccountValidation.validate(account, result);
-        if (result.hasErrors()) {
-            return new ModelAndView("createAccount");
-        }
+      aNewAccountValidation.validate(account, result);
+      if (result.hasErrors()) {
+         return new ModelAndView("createAccount");
+      }
 
-        if (account != null) {
-            final String username = user.getUsername();
-            final UserDetails owner = userRepositoryDaoImpl.findByUserUsername(username).get(0);
-            account.setOwner(owner);
-            accountRepositoryDaoImpl.save(account);
-        }
-        return new ModelAndView("redirect:../account.html");
-    }
+      if (account != null) {
+         final String username = user.getUsername();
+         final UserDetails owner = userRepositoryDaoImpl.findByUserUsername(username).get(0);
+         account.setOwner(owner);
+         accountRepositoryDaoImpl.save(account);
+      }
+      return new ModelAndView("redirect:../account.html");
+   }
 
 }

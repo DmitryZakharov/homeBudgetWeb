@@ -11,20 +11,20 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:/config/homebudget-servlet.xml",
-        "classpath:/config/datasource-config.xml", "classpath:/config/persistence-config.xml",
-        "classpath:/config/homebudget-mail.xml" })
+      "classpath:/config/datasource-config.xml", "classpath:/config/persistence-config.xml",
+      "classpath:/config/homebudget-mail.xml" })
 public class TestConfigurator {
 
-    public TestConfigurator() {
+   public TestConfigurator() {
 
-    }
+   }
 
-    /**
-     * Stub test to avoid no runnable methods
-     */
-    @Test
-    public void test() {
+   /**
+    * Stub test to avoid no runnable methods
+    */
+   @Test
+   public void test() {
 
-    }
+   }
 
 }
