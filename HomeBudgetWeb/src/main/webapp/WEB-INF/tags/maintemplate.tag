@@ -5,6 +5,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- base is used for links so that they can be resolved properly -->
+<base
+    href="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/" />
+
 <meta charset="utf-8">
 <title>Home Budget</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,13 +16,13 @@
 <meta name="author" content="">
 
 <!-- Le styles -->
-<link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
 <%--      <link href="<%=request.getContextPath()%>/styles/layout.css" rel="stylesheet"> --%>
-<link href="<%=request.getContextPath()%>/styles/jquery-ui-1.10.3.custom.css" rel="stylesheet">
-<script src="<%=request.getContextPath()%>/scripts/jquery-1.9.1.js"></script>
-<script src="<%=request.getContextPath()%>/scripts/jquery-ui-1.10.3.custom.js"></script>
+<link href="styles/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+<script src="scripts/jquery-1.9.1.js"></script>
+<script src="scripts/jquery-ui-1.10.3.custom.js"></script>
 <script type="text/javascript" src="scripts/homebudget.js"></script>
 
 
@@ -71,7 +75,7 @@ html,body {
 	margin: 5px 0;
 }
 </style>
-<link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -92,9 +96,9 @@ html,body {
                 <div class="nav-collapse collapse">
                     <p class="navbar-text pull-right ">
                         <span style="padding: 0px 10px;"><i
-                            onclick="location.href = '<%=request.getContextPath()%>/j_spring_security_logout';"
+                            onclick="location.href = 'j_spring_security_logout';"
                             class="icon-off icon-white"></i></span> <a
-                            href="<c:url value="<%=request.getContextPath()%>/j_spring_security_logout" />"> Logout</a>
+                            href="<c:url value="j_spring_security_logout" />"> Logout</a>
                     </p>
                     <p class="navbar-text pull-right">
                         Logged in as <a href="#" class="navbar-link"><security:authentication
@@ -127,7 +131,7 @@ html,body {
                     <div class="well sidebar-nav">
                         <ul class="nav nav-list">
                             <li class="nav-header">Manage Accounts</li>
-                            <li><a href="<%=request.getContextPath()%>/account/createAccount.html">add new
+                            <li><a href="account/createAccount.html">add new
                                     account</a></li>
                             <li class="nav-header">Plan expences</li>
                             <li><a href="#">Link</a></li>
@@ -136,7 +140,7 @@ html,body {
                             <li><a href="#">Link</a></li>
                             <li><a href="#">Link</a></li>
                             <li class="nav-header">Personal settings</li>
-                            <li><a href="<%=request.getContextPath()%>/userProfile.html">Change account</a></li>
+                            <li><a href="userProfile.html">Change account</a></li>
                         </ul>
                     </div>
                     <!--/.well -->
