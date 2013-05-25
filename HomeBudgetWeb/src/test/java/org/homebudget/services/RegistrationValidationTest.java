@@ -13,31 +13,33 @@ import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 
 /**
- *
+ * 
  * @author Michael Wolowyk
  */
 public class RegistrationValidationTest extends TestConfigurator {
 
-    public static final String INVALID_EMAIL = "blub.blub";
+    public static final String INVALID_EMAIL  = "blub.blub";
 
-    public static final String VALID_EMAIL = "blub@blub.com";
+    public static final String VALID_EMAIL    = "blub@blub.com";
 
     public static final String VALID_USERNAME = "JohnDoe";
 
     public RegistrationValidationTest() {
+
     }
 
     @Resource
     RegistrationValidation instance;
 
     @Resource
-    UserManagementService service;
+    UserManagementService  service;
 
     /**
      * Test of validate method, of class RegistrationValidation.
      */
     @Test
     public void testValidateEmailFormat() {
+
         System.out.println("testValidateEmailFormat");
         UserDetails target = new UserDetails();
         target.setEmail(INVALID_EMAIL);
@@ -50,6 +52,7 @@ public class RegistrationValidationTest extends TestConfigurator {
 
     @Test
     public void testValidateEmailUniqueness() {
+
         System.out.println("testValidateEmailUniqueness");
         UserDetails target = new UserDetails();
         target.setEmail(VALID_EMAIL);
@@ -64,6 +67,7 @@ public class RegistrationValidationTest extends TestConfigurator {
 
     @Test
     public void testValidateUserNameUniqueness() {
+
         System.out.println("testValidateUserNameUniqueness");
         UserDetails target = new UserDetails();
         target.setUserUsername(VALID_USERNAME);
@@ -79,6 +83,7 @@ public class RegistrationValidationTest extends TestConfigurator {
 
     @Test
     public void testValidatePassword() {
+
         System.out.println("testValidatePassword");
         UserDetails target = new UserDetails();
         target.setEmail(VALID_EMAIL);
@@ -94,6 +99,7 @@ public class RegistrationValidationTest extends TestConfigurator {
 
     @Test
     public void testValidUser() {
+
         System.out.println("testValidUser");
         UserDetails target = new UserDetails();
         target.setEmail(VALID_EMAIL);

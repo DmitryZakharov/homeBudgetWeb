@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Repository for Users
- *
+ * 
  * @see http://static.springsource.org/spring-data/data-jpa/docs/current/reference/htmlsingle/#jpa.query-methods
  * @see http://static.springsource.org/spring-data/commons/docs/current/reference/html/repositories.html
  */
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserRepository extends JpaRepository<UserDetails, Long> {
 
     // getAllUsers findAll();
-    //getUser(String userNickname)
+    // getUser(String userNickname)
     public List<UserDetails> findByUserUsername(String userName);
 
     public List<UserDetails> findByEmail(String email);

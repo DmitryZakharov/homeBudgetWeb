@@ -53,10 +53,12 @@ public class LoginController {
     }
 
     public UserRepository getHibernateDaoImpl() {
+
         return userRepositoryDao;
     }
 
     public void setHibernateDaoImpl(UserRepository hibernateDaoImpl) {
+
         this.userRepositoryDao = hibernateDaoImpl;
     }
 

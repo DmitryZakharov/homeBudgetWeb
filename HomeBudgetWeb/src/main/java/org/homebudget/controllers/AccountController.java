@@ -29,25 +29,23 @@ public class AccountController {
     private NewAccountValidation aNewAccountValidation;
 
     @Resource
-    private AccountRepository accountRepositoryDaoImpl;
+    private AccountRepository    accountRepositoryDaoImpl;
 
     @Resource
-    private UserRepository userRepositoryDaoImpl;
+    private UserRepository       userRepositoryDaoImpl;
 
     @RequestMapping(method = RequestMethod.GET)
     public String showAccounts(ModelMap model) {
 
-        final User user = (User) SecurityContextHolder.getContext()
-            .getAuthentication().getPrincipal();
+        final User user = (User) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
 
         final String username = user.getUsername();
-        UserDetails userDetails = userRepositoryDaoImpl
-            .findByUserUsername(username).get(0);
+        UserDetails userDetails = userRepositoryDaoImpl.findByUserUsername(username).get(0);
 
         Long userId = userDetails.getUserId();
 
-        List<Account> accounts = accountRepositoryDaoImpl
-            .findByOwner(userDetails);
+        List<Account> accounts = accountRepositoryDaoImpl.findByOwner(userDetails);
 
         model.addAttribute("accounts", accounts);
 
@@ -57,6 +55,7 @@ public class AccountController {
 
     @RequestMapping(value = "/createAccount", method = RequestMethod.GET)
     public ModelAndView showContacts() {
+
         Account account = new Account();
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("account", account);
@@ -64,12 +63,11 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/createAccount", method = RequestMethod.POST)
-    public ModelAndView addAccount(
-        @ModelAttribute("account") @Valid Account account,
-        BindingResult result) {
+    public ModelAndView addAccount(@ModelAttribute("account") @Valid Account account,
+            BindingResult result) {
 
-        final User user = (User) SecurityContextHolder.getContext()
-            .getAuthentication().getPrincipal();
+        final User user = (User) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
 
         aNewAccountValidation.validate(account, result);
         if (result.hasErrors()) {
@@ -78,8 +76,7 @@ public class AccountController {
 
         if (account != null) {
             final String username = user.getUsername();
-            final UserDetails owner = userRepositoryDaoImpl
-                .findByUserUsername(username).get(0);
+            final UserDetails owner = userRepositoryDaoImpl.findByUserUsername(username).get(0);
             account.setOwner(owner);
             accountRepositoryDaoImpl.save(account);
         }

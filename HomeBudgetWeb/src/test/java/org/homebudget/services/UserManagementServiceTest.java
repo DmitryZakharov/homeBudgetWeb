@@ -18,13 +18,14 @@ public class UserManagementServiceTest extends TestConfigurator {
     UserManagementService service;
 
     @Autowired
-    UserRepository repository;
+    UserRepository        repository;
 
     /**
      * Test of saveUserDetails method, of class UserManagementService.
      */
     @Test
     public void testSaveUserDetails() {
+
         System.out.println("saveUserDetails");
         UserDetails userDetails = new UserDetails();
         userDetails.setEmail("test@test.com");

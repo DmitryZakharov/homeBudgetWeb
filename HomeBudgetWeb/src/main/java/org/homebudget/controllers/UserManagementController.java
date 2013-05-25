@@ -29,14 +29,13 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserManagementController {
 
     @Resource
-    private UserRepository userRepositoryDao;
+    private UserRepository        userRepositoryDao;
 
     @Resource
     private UserManagementService userManagementService;
 
     @RequestMapping(value = "/addUser")
-    public String addNewUser(
-        @ModelAttribute("userDetails") UserDetails userDetails) {
+    public String addNewUser(@ModelAttribute("userDetails") UserDetails userDetails) {
 
         if (userDetails.getUserName() != null) {
             userDetails.addUserRole(UserRole.Role.USER_ROLE);
@@ -45,18 +44,16 @@ public class UserManagementController {
 
         System.out.println("User Name: " + userDetails.getUserName());
         System.out.println("User Surname: " + userDetails.getUserSurname());
-        System.out.println("User Date of Birth: "
-            + userDetails.getUserBirthday());
+        System.out.println("User Date of Birth: " + userDetails.getUserBirthday());
         return "addUser";
     }
 
     @RequestMapping(value = "/userProfile", method = RequestMethod.GET)
     public ModelAndView showUserProfile(Map<String, Object> model) {
 
-        final User user = (User) SecurityContextHolder.getContext()
-            .getAuthentication().getPrincipal();
-        UserDetails aUserDetails = userRepositoryDao.findByUserUsername(
-            user.getUsername()).get(0);
+        final User user = (User) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        UserDetails aUserDetails = userRepositoryDao.findByUserUsername(user.getUsername()).get(0);
         model.put("userDetails", aUserDetails);
 
         return new ModelAndView("userprofile");
@@ -65,25 +62,23 @@ public class UserManagementController {
     @RequestMapping(value = "/updateDetails", method = RequestMethod.GET)
     public ModelAndView showUserDetails(Map<String, Object> model) {
 
-        final User user = (User) SecurityContextHolder.getContext()
-            .getAuthentication().getPrincipal();
-        UserDetails aUserDetails = userRepositoryDao.findByUserUsername(
-            user.getUsername()).get(0);
+        final User user = (User) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        UserDetails aUserDetails = userRepositoryDao.findByUserUsername(user.getUsername()).get(0);
         model.put("userDetails", aUserDetails);
 
         return new ModelAndView("userprofile");
     }
 
     @RequestMapping(value = "/updateDetails", method = RequestMethod.POST)
-    public String updateUserDetails(@Valid UserDetails newUserDetails,
-        BindingResult result, Map<String, Object> model) {
+    public String updateUserDetails(@Valid UserDetails newUserDetails, BindingResult result,
+            Map<String, Object> model) {
 
-        final User user = (User) SecurityContextHolder.getContext()
-            .getAuthentication().getPrincipal();
-        UserDetails oldUserDetails = userRepositoryDao.findByUserUsername(
-            user.getUsername()).get(0);
-        getUserManagementService().updateUserDetails(oldUserDetails,
-            newUserDetails);
+        final User user = (User) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        UserDetails oldUserDetails = userRepositoryDao.findByUserUsername(user.getUsername())
+                .get(0);
+        getUserManagementService().updateUserDetails(oldUserDetails, newUserDetails);
 
         model.put("userDetails", oldUserDetails);
 
@@ -102,25 +97,28 @@ public class UserManagementController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(
-            dateFormat, false));
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
 
     public UserRepository getHibernateDaoImpl() {
+
         return userRepositoryDao;
     }
 
     public void setHibernateDaoImpl(UserRepository hibernateDaoImpl) {
+
         this.userRepositoryDao = hibernateDaoImpl;
     }
 
     public UserManagementService getUserManagementService() {
+
         return userManagementService;
     }
 
-    public void setUserManagementService(
-        UserManagementService userManagementService) {
+    public void setUserManagementService(UserManagementService userManagementService) {
+
         this.userManagementService = userManagementService;
     }
 

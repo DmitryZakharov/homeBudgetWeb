@@ -12,10 +12,12 @@ public class ResourceLoaderService implements ResourceLoaderAware {
 
     @Override
     public void setResourceLoader(ResourceLoader resourceLoader) {
+
         this.resourceLoader = resourceLoader;
     }
 
     public Resource getResource(String location) {
+
         return resourceLoader.getResource(location);
     }
 

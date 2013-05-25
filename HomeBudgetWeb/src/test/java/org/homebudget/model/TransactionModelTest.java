@@ -20,28 +20,29 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({
-    "classpath:/config/homebudget-servlet.xml",
-    "classpath:/config/datasource-config.xml",
-    "classpath:/config/persistence-config.xml",
-    "classpath:/config/homebudget-mail.xml"})
+@ContextConfiguration({ "classpath:/config/homebudget-servlet.xml",
+        "classpath:/config/datasource-config.xml", "classpath:/config/persistence-config.xml",
+        "classpath:/config/homebudget-mail.xml" })
 public class TransactionModelTest {
 
     @Before
     public void setUp() {
+
     }
 
     @Autowired
-    AccountRepository repository;
+    AccountRepository  repository;
 
     @Autowired
     ApplicationContext applicationContext;
 
     public TransactionModelTest() {
+
     }
 
     @Test
     public void saveTransactionWithImage() {
+
         Account account = new Account();
         account.setAccountName("my account");
 
@@ -57,10 +58,9 @@ public class TransactionModelTest {
         transaction.setTransactionType(Transaction.TransactionType.INCOME);
 
         ResourceLoaderService resourceLoader = (ResourceLoaderService) applicationContext
-            .getBean("resourceLoaderService");
+                .getBean("resourceLoaderService");
 
-        Resource resource = resourceLoader
-            .getResource("classpath:docs/foto2.jpg");
+        Resource resource = resourceLoader.getResource("classpath:docs/foto2.jpg");
 
         BinaryResource image = new BinaryResource(resource);
         transaction.setTransactionImage(image);
@@ -72,14 +72,14 @@ public class TransactionModelTest {
 
             List<Account> accounts = repository.findAll();
             assertEquals(1, accounts.size());
-            List<Transaction> foundTransactions = (List<Transaction>) accounts
-                .get(0).getTransactions();
+            List<Transaction> foundTransactions = (List<Transaction>) accounts.get(0)
+                    .getTransactions();
             assertEquals(1, foundTransactions.size());
             Transaction result = foundTransactions.get(0);
-            assertEquals(
-                transaction.getTransactionImage().getResource().length,
-                result.getTransactionImage().getResource().length);
-        } finally {
+            assertEquals(transaction.getTransactionImage().getResource().length, result
+                    .getTransactionImage().getResource().length);
+        }
+        finally {
             repository.delete(account);
         }
 

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Repository for UserRoles
- *
+ * 
  * @see http://static.springsource.org/spring-data/data-jpa/docs/current/reference/htmlsingle/#jpa.query-methods
  * @see http://static.springsource.org/spring-data/commons/docs/current/reference/html/repositories.html
  */

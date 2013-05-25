@@ -20,22 +20,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class HomeBudgetInitializationService {
 
-    private static final Logger logger = Logger
-        .getLogger(HomeBudgetInitializationService.class);
+    private static final Logger logger   = Logger.getLogger(HomeBudgetInitializationService.class);
 
     @Resource
-    UserManagementService userManagementService;
+    UserManagementService       userManagementService;
 
     @Resource
-    AccountManagementService accountManagementService;
+    AccountManagementService    accountManagementService;
 
     @Resource
-    UserRoleRepository userRoleRepository;
+    UserRoleRepository          userRoleRepository;
 
-    private boolean executed = false;
+    private boolean             executed = false;
 
     @PostConstruct
     private void executePopulation() {
+
         logger.info("Create initial Population !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         int userCount = 0;
         if (userRoleRepository != null) {
@@ -45,22 +45,24 @@ public class HomeBudgetInitializationService {
         if (!executed) {
             populateUsers(10);
             executed = true;
-        } else {
+        }
+        else {
             logger.info("ALREADY CREATED MANY USERS!!!!!!!!!!!");
         }
     }
 
     private void populateUsers(int number) {
+
         logger.info("initialize database with " + number + " users");
         initUserRoles();
 
-        UserRole uRole = userRoleRepository
-            .findByUserRole(UserRole.Role.USER_ROLE);
+        UserRole uRole = userRoleRepository.findByUserRole(UserRole.Role.USER_ROLE);
         for (int i = 0; i < number; i++) {
             String name = "";
             if (i == 0) {
                 name = "Michael";
-            } else {
+            }
+            else {
                 name = "Dmitry";
             }
             UserDetails user = createTestUser(i, name);
@@ -94,6 +96,7 @@ public class HomeBudgetInitializationService {
     }
 
     private UserDetails createTestUser(int i, String name) {
+
         final UserDetails user = new UserDetails();
         user.setUserName(name + i);
 
@@ -111,7 +114,8 @@ public class HomeBudgetInitializationService {
                 password = "admin";
             }
             user.setPassword(PasswordService.getHash(password));
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -119,6 +123,7 @@ public class HomeBudgetInitializationService {
     }
 
     private Transaction createTestTransaction(final Category category) {
+
         final Transaction transaction = new Transaction();
         transaction.setAmount(10);
         transaction.setCategory(category);
@@ -129,6 +134,7 @@ public class HomeBudgetInitializationService {
     }
 
     private Account createTestAccount(UserDetails user) {
+
         final Account account = new Account();
         account.setDateOfCreation(new Date());
         account.setOwner(user);
@@ -137,6 +143,7 @@ public class HomeBudgetInitializationService {
     }
 
     private Category createTestCategory() {
+
         Category category = new Category();
         category.setCategory("work");
         return category;

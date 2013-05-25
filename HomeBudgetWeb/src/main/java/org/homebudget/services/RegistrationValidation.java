@@ -16,10 +16,12 @@ public class RegistrationValidation {
     UserManagementService service;
 
     public boolean supports(Class<?> klass) {
+
         return UserDetails.class.isAssignableFrom(klass);
     }
 
     public void validate(Object target, Errors errors) {
+
         UserDetails aUserDetails = (UserDetails) target;
 
         validateEmptyFields(errors);
@@ -29,23 +31,21 @@ public class RegistrationValidation {
 
         String password = aUserDetails.getPassword();
         String confPassword = aUserDetails.getConfpassword();
-        if (password == null
-            || confPassword == null
-            || password.compareTo(confPassword) != 0) {
+        if (password == null || confPassword == null || password.compareTo(confPassword) != 0) {
             errors.rejectValue("password", "registration.password.dont_match");
         }
 
         String email = aUserDetails.getEmail();
         validateEmail(email, errors);
 
-
     }
 
     private void validateEmail(String email, Errors errors) {
+
         Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
         Matcher m = p.matcher(email);
 
-        //check  whether any match is found 
+        // check whether any match is found
         boolean matchFound = m.matches();
 
         if (!matchFound) {
@@ -59,23 +59,23 @@ public class RegistrationValidation {
     }
 
     private void validateEmptyFields(Errors errors) {
+
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userUsername",
-            "registration.userUsername.empty");
+                "registration.userUsername.empty");
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email",
-            "registration.email.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "registration.email.empty");
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password",
-            "registration.password.empty");
+        ValidationUtils
+                .rejectIfEmptyOrWhitespace(errors, "password", "registration.password.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confpassword",
-            "registration.password.empty");
+                "registration.password.empty");
 
     }
 
     private void validateUserUsername(String userUsername, Errors errors) {
+
         if (userUsername == null || (userUsername.length()) > 50) {
-            errors.rejectValue("userUsername",
-                "registration.user_username.size");
+            errors.rejectValue("userUsername", "registration.user_username.size");
         }
         Collection<UserDetails> result = service.getUserByUsername(userUsername);
         if (result != null && !result.isEmpty()) {

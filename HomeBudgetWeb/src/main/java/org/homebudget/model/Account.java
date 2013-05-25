@@ -23,79 +23,88 @@ public class Account {
     @Id
     @Column(name = "ACCOUNT_ID")
     @GeneratedValue
-    private long accountId;
+    private long                    accountId;
 
-    //@NotBlank (message = "{account.name.required}")
+    // @NotBlank (message = "{account.name.required}")
     @Column(name = "ACCOUNT_NAME")
-    private String accountName;
+    private String                  accountName;
 
-    //@NotBlank (message = "{account.creationdate.required}")
+    // @NotBlank (message = "{account.creationdate.required}")
     @Column(name = "CREATION_DATE")
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dateOfCreation;
+    private Date                    dateOfCreation;
 
     @OneToOne
     @JoinColumn(name = "USER_ID")
-    private UserDetails owner;
+    private UserDetails             owner;
 
     // @NotBlank (message = "{account.startingbalance.required}")
     @Column(name = "STARTING_BALANCE")
-    private float startingBalance;
+    private float                   startingBalance;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @JoinTable(name = "TRANSACTIONS", joinColumns =
-        @JoinColumn(name = "ACCOUNT_ID"))
+    @JoinTable(name = "TRANSACTIONS", joinColumns = @JoinColumn(name = "ACCOUNT_ID"))
     @GenericGenerator(name = "hilo-gen", strategy = "hilo")
-    @CollectionId(columns = {
-        @Column(name = "TRANSACTION_ID")}, generator = "hilo-gen", type =
-        @Type(type = "long"))
+    @CollectionId(columns = { @Column(name = "TRANSACTION_ID") }, generator = "hilo-gen", type = @Type(type = "long"))
     private Collection<Transaction> transactions = new ArrayList<Transaction>();
 
     public long getAccountId() {
+
         return accountId;
     }
 
     public void setAccountId(long accountId) {
+
         this.accountId = accountId;
     }
 
     public String getAccountName() {
+
         return accountName;
     }
 
     public void setAccountName(String accountName) {
+
         this.accountName = accountName;
     }
 
     public UserDetails getOwner() {
+
         return owner;
     }
 
     public void setOwner(UserDetails owner) {
+
         this.owner = owner;
     }
 
     public float getStartingBalance() {
+
         return startingBalance;
     }
 
     public void setStartingBalance(float startingBalance) {
+
         this.startingBalance = startingBalance;
     }
 
     public Date getDateOfCreation() {
+
         return dateOfCreation;
     }
 
     public void setDateOfCreation(Date dateOfCreation) {
+
         this.dateOfCreation = dateOfCreation;
     }
 
     public Collection<Transaction> getTransactions() {
+
         return transactions;
     }
 
     public void setTransactions(Collection<Transaction> transactions) {
+
         this.transactions = transactions;
     }
 

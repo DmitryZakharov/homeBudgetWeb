@@ -11,24 +11,28 @@ public class Category {
     @Id
     @Column(name = "CATEGORY_ID")
     @GeneratedValue
-    private int categoryId;
+    private int    categoryId;
 
     @Column(name = "CATEGORY_NAME")
     private String category;
 
     public int getCategoryId() {
+
         return categoryId;
     }
 
     public void setCategoryId(int categoryId) {
+
         this.categoryId = categoryId;
     }
 
     public String getCategory() {
+
         return category;
     }
 
     public void setCategory(String category) {
+
         this.category = category;
     }
 

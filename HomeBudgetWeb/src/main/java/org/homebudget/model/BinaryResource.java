@@ -16,49 +16,59 @@ public class BinaryResource implements java.io.Serializable {
     @Id
     @Column(name = "RESOURCE_ID")
     @GeneratedValue
-    private Long resourceId;
+    private Long   resourceId;
 
     @Lob
     @Column(name = "RESOURCE")
     private byte[] resource;
 
     public BinaryResource() {
+
     }
 
     public BinaryResource(Resource resource) {
+
         this.resource = getBytesFromResource(resource);
     }
 
     public Long getResourceId() {
+
         return resourceId;
     }
 
     public void setResourceId(Long resourceId) {
+
         this.resourceId = resourceId;
     }
 
     public byte[] getResource() {
+
         return resource;
     }
 
     public void setResource(byte[] resource) {
+
         this.resource = resource;
     }
 
     private byte[] getBytesFromResource(Resource resource) {
+
         byte[] result = {};
         InputStream inputStream = null;
         try {
             inputStream = resource.getInputStream();
             result = IOUtils.toByteArray(inputStream);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
+        }
+        finally {
             try {
                 if (inputStream != null) {
                     inputStream.close();
                 }
-            } catch (IOException ex) {
+            }
+            catch (IOException ex) {
                 ex.printStackTrace();
             }
         }

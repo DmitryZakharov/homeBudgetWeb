@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 public class PasswordService {
 
     public static String getHash(String value) throws Exception {
+
         final MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(value.getBytes());
         byte byteData[] = md.digest();

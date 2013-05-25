@@ -13,10 +13,12 @@ public class PaginatedListAdapter implements PaginatedList {
     private Page<?> model;
 
     public PaginatedListAdapter() {
+
         this(new Page(10));
     }
 
     public PaginatedListAdapter(Page<?> model) {
+
         this.model = model;
     }
 
@@ -24,6 +26,7 @@ public class PaginatedListAdapter implements PaginatedList {
      * {@inheritDoc}
      */
     public int getFullListSize() {
+
         return model.getCount();
     }
 
@@ -31,6 +34,7 @@ public class PaginatedListAdapter implements PaginatedList {
      * {@inheritDoc}
      */
     public List getList() {
+
         return model.getData();
     }
 
@@ -38,6 +42,7 @@ public class PaginatedListAdapter implements PaginatedList {
      * {@inheritDoc}
      */
     public int getObjectsPerPage() {
+
         return model.getPageSize();
     }
 
@@ -45,6 +50,7 @@ public class PaginatedListAdapter implements PaginatedList {
      * {@inheritDoc}
      */
     public int getPageNumber() {
+
         return model.getPage();
     }
 
@@ -52,6 +58,7 @@ public class PaginatedListAdapter implements PaginatedList {
      * {@inheritDoc}
      */
     public String getSearchId() {
+
         return null;
     }
 
@@ -59,6 +66,7 @@ public class PaginatedListAdapter implements PaginatedList {
      * {@inheritDoc}
      */
     public String getSortCriterion() {
+
         return model.getSortName();
     }
 
@@ -66,35 +74,41 @@ public class PaginatedListAdapter implements PaginatedList {
      * {@inheritDoc}
      */
     public SortOrderEnum getSortDirection() {
+
         return model.getOrder() == Page.Order.ASC ? SortOrderEnum.ASCENDING
-            : SortOrderEnum.DESCENDING;
+                : SortOrderEnum.DESCENDING;
     }
 
     /**
      * @return the model
      */
     public Page<?> getModel() {
+
         return model;
     }
 
     /**
-     * @param model the model to set
+     * @param model
+     *            the model to set
      */
     public void setModel(Page<?> model) {
+
         this.model = model;
     }
 
     public void setPage(int page) {
+
         model.setPage(page);
     }
 
     public void setSort(String sort) {
+
         model.setSortName(sort);
     }
 
     public void setDir(String dir) {
-        model.setOrder("asc".equalsIgnoreCase(dir) ? Page.Order.ASC
-            : Page.Order.DESC);
+
+        model.setOrder("asc".equalsIgnoreCase(dir) ? Page.Order.ASC : Page.Order.DESC);
     }
 
 }
