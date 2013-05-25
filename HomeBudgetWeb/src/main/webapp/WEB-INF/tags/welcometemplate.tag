@@ -101,7 +101,7 @@
                             <li>
                                 <a href="registration.html">Register</a></li>
                         </ul>
-                        <form class="navbar-form pull-right" name='f' action="<c:url value='j_spring_security_check' />" method='POST'>
+                        <form class="navbar-form pull-right" name='f' action="<c:url value='<%=request.getContextPath()%>/j_spring_security_check' />" method='POST'>
                             <input class="span2" type="text" name='j_username'  placeholder="Email/Username">
                             <input class="span2" type="password" name='j_password' placeholder="Password">
                             <label class="checkbox span pull-right" ><input id="remember_me" name="_spring_security_remember_me" type="checkbox" class="text-center" value="remember-me"/>
