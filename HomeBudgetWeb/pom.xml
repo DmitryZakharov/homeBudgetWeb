@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 	http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.homebudget</groupId>
@@ -126,18 +126,36 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${org.hibernate.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>org.javassist</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${org.hibernate.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>org.javassist</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>${joda-time.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>${javassist.version}</version>
         </dependency>
 
         <!-- AOP dependency -->
@@ -179,7 +197,7 @@
             <version>1.9.5</version>
             <scope>test</scope>
             <type>jar</type>
-        </dependency>	
+        </dependency>
     </dependencies>
     <build>
         <finalName>HomeBudgetWeb</finalName>
@@ -200,7 +218,7 @@
         <log4j.version>1.2.17</log4j.version>
         <mysql.version>5.1.24</mysql.version>
         <junit.version>4.11</junit.version>
-        <javassist.version>3.3</javassist.version>
+        <javassist.version>3.12.1.GA</javassist.version>
         <jstl.version>1.2</jstl.version>
         <org.jdal.version>1.3.1</org.jdal.version>
         <joda-time.version>1.6.2</joda-time.version>
