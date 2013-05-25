@@ -10,8 +10,9 @@ public class AccountManagementService {
 
     @Resource
     private AccountRepository accountRepository;
-    
-    public void saveAccount(Account account){
+
+    public void saveAccount(Account account) {
         accountRepository.save(account);
     }
+
 }

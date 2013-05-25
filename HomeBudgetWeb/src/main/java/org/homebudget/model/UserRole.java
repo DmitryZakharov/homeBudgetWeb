@@ -14,27 +14,29 @@ import javax.persistence.Id;
 @Entity(name = "USER_ROLE")
 public class UserRole {
 
-	public enum Role {
+    public enum Role {
 
-	    ADMIN_ROLE("ROLE_ADMIN", 3), MANAGER_ROLE("ROLE_MANAGER", 2) , USER_ROLE("ROLE_USER", 1), ANONYMOUS_ROLE("ROLE_ANONYMOUS", 0);
+        ADMIN_ROLE("ROLE_ADMIN", 3), MANAGER_ROLE("ROLE_MANAGER", 2), USER_ROLE("ROLE_USER", 1), ANONYMOUS_ROLE("ROLE_ANONYMOUS", 0);
 
-	    private final int order;
-	    private final String roleName;
+        private final int order;
 
-	    private Role(final String roleName, final int order) {
-	        this.roleName = roleName;
-	        this.order = order;
-	    }
+        private final String roleName;
 
-	    public int order() {
-	        return order;
-	    }
+        private Role(final String roleName, final int order) {
+            this.roleName = roleName;
+            this.order = order;
+        }
 
-	    public String roleName() {
-	        return roleName;
-	    }
-	};
-    
+        public int order() {
+            return order;
+        }
+
+        public String roleName() {
+            return roleName;
+        }
+
+    };
+
     @Id
     @GeneratedValue
     @Column(name = "USER_ROLE_ID")
@@ -43,9 +45,8 @@ public class UserRole {
     @Enumerated(EnumType.STRING)
     @Column(name = "USER_ROLE_TYPE")
     private Role userRole;
-    
 
-	public long getUserRoleId() {
+    public long getUserRoleId() {
         return userRoleId;
     }
 
@@ -60,4 +61,5 @@ public class UserRole {
     public void setUserRole(Role userRole) {
         this.userRole = userRole;
     }
+
 }

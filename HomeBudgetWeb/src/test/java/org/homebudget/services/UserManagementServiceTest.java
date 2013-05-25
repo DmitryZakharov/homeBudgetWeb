@@ -4,26 +4,22 @@
  */
 package org.homebudget.services;
 
-
 import java.util.List;
 import org.homebudget.dao.UserRepository;
 import org.homebudget.model.UserDetails;
 import org.homebudget.test.config.TestConfigurator;
 import static org.junit.Assert.*;
 import org.junit.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class UserManagementServiceTest extends TestConfigurator{
-    
+public class UserManagementServiceTest extends TestConfigurator {
+
     @Autowired
     UserManagementService service;
-    
 
     @Autowired
     UserRepository repository;
-    
-   
+
     /**
      * Test of saveUserDetails method, of class UserManagementService.
      */
@@ -40,10 +36,7 @@ public class UserManagementServiceTest extends TestConfigurator{
         assertEquals(1, result.size());
         assertEquals(userDetails.getEmail(), result.get(0).getEmail());
         assertEquals(userDetails.getUserName(), result.get(0).getUserName());
-        
-    }
-    
-    
 
-   
+    }
+
 }

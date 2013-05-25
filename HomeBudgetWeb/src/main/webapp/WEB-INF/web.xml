@@ -1,53 +1,53 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-	<display-name>Home Budget</display-name>
+    <display-name>Home Budget</display-name>
 	
     <context-param>
         <param-name>log4jConfigLocation</param-name>
         <param-value>/WEB-INF/config/log4j.xml</param-value>
     </context-param>
     
-	<welcome-file-list>
-	    <welcome-file>/WEB-INF/views/welcome.jsp</welcome-file>
-	</welcome-file-list>
+    <welcome-file-list>
+        <welcome-file>/WEB-INF/views/welcome.jsp</welcome-file>
+    </welcome-file-list>
 
-	<servlet>
-		<servlet-name>homebudget</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-			<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>
-				/WEB-INF/config/homebudget-servlet.xml
-			</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
+    <servlet>
+        <servlet-name>homebudget</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                /WEB-INF/config/homebudget-servlet.xml
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 
-	<listener>
-		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-	</listener>
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
 	
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 	
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-				/WEB-INF/config/homebudget-config.xml,
-				/WEB-INF/config/datasource-config.xml,
-				/WEB-INF/config/homebudget-security.xml,
-                /WEB-INF/config/homebudget-mail.xml,
-				/WEB-INF/config/persistence-config.xml
-		</param-value>
-	</context-param>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            /WEB-INF/config/homebudget-config.xml,
+            /WEB-INF/config/datasource-config.xml,
+            /WEB-INF/config/homebudget-security.xml,
+            /WEB-INF/config/homebudget-mail.xml,
+            /WEB-INF/config/persistence-config.xml
+        </param-value>
+    </context-param>
 	
-	<servlet-mapping>
-		<servlet-name>homebudget</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>homebudget</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
 
     <!-- Spring Security -->
     <filter>

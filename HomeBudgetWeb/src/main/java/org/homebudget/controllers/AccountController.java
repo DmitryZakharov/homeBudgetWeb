@@ -3,10 +3,8 @@ package org.homebudget.controllers;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.Resource;
 import javax.validation.Valid;
-
 import org.homebudget.dao.AccountRepository;
 import org.homebudget.dao.UserRepository;
 import org.homebudget.model.Account;
@@ -27,62 +25,65 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/account")
 public class AccountController {
 
-	@Autowired
-	private NewAccountValidation aNewAccountValidation;
-	@Resource
-	private AccountRepository accountRepositoryDaoImpl;
-	@Resource
-	private UserRepository userRepositoryDaoImpl;
+    @Autowired
+    private NewAccountValidation aNewAccountValidation;
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String showAccounts(ModelMap model) {
+    @Resource
+    private AccountRepository accountRepositoryDaoImpl;
 
-		final User user = (User) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
+    @Resource
+    private UserRepository userRepositoryDaoImpl;
 
-		final String username = user.getUsername();
-		UserDetails userDetails = userRepositoryDaoImpl
-				.findByUserUsername(username).get(0);
+    @RequestMapping(method = RequestMethod.GET)
+    public String showAccounts(ModelMap model) {
 
-		Long userId = userDetails.getUserId();
+        final User user = (User) SecurityContextHolder.getContext()
+            .getAuthentication().getPrincipal();
 
-		List<Account> accounts = accountRepositoryDaoImpl
-				.findByOwner(userDetails);
+        final String username = user.getUsername();
+        UserDetails userDetails = userRepositoryDaoImpl
+            .findByUserUsername(username).get(0);
 
-		model.addAttribute("accounts", accounts);
+        Long userId = userDetails.getUserId();
 
-		return "account";
+        List<Account> accounts = accountRepositoryDaoImpl
+            .findByOwner(userDetails);
 
-	}
+        model.addAttribute("accounts", accounts);
 
-	@RequestMapping(value = "/createAccount", method = RequestMethod.GET)
-	public ModelAndView showContacts() {
-		Account account = new Account();
-		Map<String, Object> model = new HashMap<String, Object>(); 
-		model.put("account", account);
-		return new ModelAndView("createAccount", model);
-	}
+        return "account";
 
-	@RequestMapping(value = "/createAccount", method = RequestMethod.POST)
-	public ModelAndView addAccount(
-			@ModelAttribute("account") @Valid Account account,
-			BindingResult result) {
+    }
 
-		final User user = (User) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
+    @RequestMapping(value = "/createAccount", method = RequestMethod.GET)
+    public ModelAndView showContacts() {
+        Account account = new Account();
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("account", account);
+        return new ModelAndView("createAccount", model);
+    }
 
-		aNewAccountValidation.validate(account, result);
-		if (result.hasErrors()) {
-			return new ModelAndView("createAccount");
-		}
+    @RequestMapping(value = "/createAccount", method = RequestMethod.POST)
+    public ModelAndView addAccount(
+        @ModelAttribute("account") @Valid Account account,
+        BindingResult result) {
 
-		if (account != null) {
-			final String username = user.getUsername();
-			final UserDetails owner = userRepositoryDaoImpl
-					.findByUserUsername(username).get(0);
-			account.setOwner(owner);
-			accountRepositoryDaoImpl.save(account);
-		}
-		return new ModelAndView("redirect:../account.html");
-	}
+        final User user = (User) SecurityContextHolder.getContext()
+            .getAuthentication().getPrincipal();
+
+        aNewAccountValidation.validate(account, result);
+        if (result.hasErrors()) {
+            return new ModelAndView("createAccount");
+        }
+
+        if (account != null) {
+            final String username = user.getUsername();
+            final UserDetails owner = userRepositoryDaoImpl
+                .findByUserUsername(username).get(0);
+            account.setOwner(owner);
+            accountRepositoryDaoImpl.save(account);
+        }
+        return new ModelAndView("redirect:../account.html");
+    }
+
 }

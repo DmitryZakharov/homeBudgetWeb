@@ -8,12 +8,13 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Repository for Accounts
+ *
  * @see http://static.springsource.org/spring-data/data-jpa/docs/current/reference/htmlsingle/#jpa.query-methods
  * @see http://static.springsource.org/spring-data/commons/docs/current/reference/html/repositories.html
  */
 @Repository
-public interface AccountRepository extends JpaRepository<Account, Long>{
+public interface AccountRepository extends JpaRepository<Account, Long> {
+
     public List<Account> findByOwner(UserDetails user);
 
-    
 }

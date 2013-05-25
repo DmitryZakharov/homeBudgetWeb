@@ -18,4 +18,5 @@ public class ResourceLoaderService implements ResourceLoaderAware {
     public Resource getResource(String location) {
         return resourceLoader.getResource(location);
     }
+
 }

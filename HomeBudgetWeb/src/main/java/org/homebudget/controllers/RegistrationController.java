@@ -4,9 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import javax.annotation.Resource;
-
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
@@ -26,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class RegistrationController {
 
     private static final Logger gLogger = Logger.getLogger(RegistrationController.class);
+
     @Autowired
     private RegistrationValidation aRegistrationValidation;
 
@@ -34,7 +33,7 @@ public class RegistrationController {
 
     @RequestMapping(method = RequestMethod.GET)
     protected String showRegistration(Map<String, Object> model)
-            throws Exception {
+        throws Exception {
         UserDetails aUserDetails = new UserDetails();
         UserRole aUserRole = new UserRole();
         aUserRole.setUserRole(UserRole.Role.USER_ROLE);
@@ -44,7 +43,7 @@ public class RegistrationController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String processRegistration(@Valid UserDetails aUserDetails,
-            BindingResult result) {
+        BindingResult result) {
         aRegistrationValidation.validate(aUserDetails, result);
         if (result.hasErrors()) {
             return "registration";
@@ -54,12 +53,11 @@ public class RegistrationController {
 
     }
 
-  @InitBinder
-	protected void initBinder(WebDataBinder binder) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(
-				dateFormat, false));
-	}
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(
+            dateFormat, false));
+    }
 
-   
 }

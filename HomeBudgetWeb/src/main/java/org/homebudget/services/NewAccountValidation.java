@@ -8,20 +8,22 @@ import org.springframework.validation.ValidationUtils;
 
 @Service
 public class NewAccountValidation {
-	public boolean supports(Class<?> klass) {
-		return UserDetails.class.isAssignableFrom(klass);
-	}
 
-	public void validate(Object target, Errors errors) {
-		Account account = (Account) target;
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "accountName",
-				"account.name.required",
-				"field must not be empty.");
-		String accountName = account.getAccountName();
-		if ((accountName.length()) > 50) {
-			errors.rejectValue("accountName",
-					"account.name.length.toolong",
-					"Account name must not be more than 50 characters.");
-		}
-	}
+    public boolean supports(Class<?> klass) {
+        return UserDetails.class.isAssignableFrom(klass);
+    }
+
+    public void validate(Object target, Errors errors) {
+        Account account = (Account) target;
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "accountName",
+            "account.name.required",
+            "field must not be empty.");
+        String accountName = account.getAccountName();
+        if ((accountName.length()) > 50) {
+            errors.rejectValue("accountName",
+                "account.name.length.toolong",
+                "Account name must not be more than 50 characters.");
+        }
+    }
+
 }

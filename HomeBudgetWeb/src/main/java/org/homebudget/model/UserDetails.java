@@ -14,7 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.Email;
 import org.homebudget.model.UserRole.Role;
 
@@ -26,30 +25,38 @@ public class UserDetails {
     @GeneratedValue
     private long userId;
 //	@NotNull
+
     @Column(name = "USER_USERNAME")
     private String userUsername;
+
     @Column(name = "USER_NAME")
     private String userName;
+
     @Column(name = "USER_SURNAME")
     private String userSurname;
 //	@NotNull
+
     @Column(name = "PASSWORD")
     private String password;
+
     @Transient
     private String confpassword;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable( name = "USER_USER_ROLE", joinColumns =
-    @JoinColumn(name = "USER_ID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "USER_ROLE_ID"))
+    @JoinTable(name = "USER_USER_ROLE", joinColumns =
+        @JoinColumn(name = "USER_ID"),
+        inverseJoinColumns =
+        @JoinColumn(name = "USER_ROLE_ID"))
     private Set<UserRole> userRoles = new HashSet<UserRole>();
+
     @Column(name = "ENABLED")
     private int enabled;
+
     @NotNull
     @Email
     @Column(name = "EMAIL")
     private String email;
+
     @Column(name = "DATE_OF_BIRTH")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date userBirthday;
@@ -139,4 +146,5 @@ public class UserDetails {
         uRole.setUserRole(role);
         this.userRoles.add(uRole);
     }
+
 }

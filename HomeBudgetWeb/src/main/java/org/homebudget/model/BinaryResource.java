@@ -17,6 +17,7 @@ public class BinaryResource implements java.io.Serializable {
     @Column(name = "RESOURCE_ID")
     @GeneratedValue
     private Long resourceId;
+
     @Lob
     @Column(name = "RESOURCE")
     private byte[] resource;
@@ -63,4 +64,5 @@ public class BinaryResource implements java.io.Serializable {
         }
         return result;
     }
+
 }

@@ -5,7 +5,6 @@
 package org.homebudget.test.config;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -16,9 +15,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
     "classpath:/config/datasource-config.xml",
     "classpath:/config/persistence-config.xml",
     "classpath:/config/homebudget-mail.xml"
-    })
+})
 public class TestConfigurator {
-    
+
     public TestConfigurator() {
     }
 
@@ -26,7 +25,7 @@ public class TestConfigurator {
      * Stub test to avoid no runnable methods
      */
     @Test
-    public void test(){
-        
+    public void test() {
     }
+
 }
