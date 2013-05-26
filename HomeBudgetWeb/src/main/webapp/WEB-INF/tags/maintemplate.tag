@@ -18,18 +18,13 @@
 <!-- Le styles -->
 <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-
-<%--      <link href="<%=request.getContextPath()%>/styles/layout.css" rel="stylesheet"> --%>
 <link href="styles/jquery-ui-1.10.3.custom.css" rel="stylesheet">
 <script src="scripts/jquery-1.9.1.js"></script>
 <script src="scripts/jquery-ui-1.10.3.custom.js"></script>
 <script type="text/javascript" src="scripts/homebudget.js"></script>
 
-
-
 <style type="text/css">
-/* Sticky footer styles
-            -------------------------------------------------- */
+/* Sticky footer styles-------------------------------------------------- */
 html,body {
 	height: 100%;
 	/* The html and body elements cannot have any padding or margin. */
@@ -95,10 +90,9 @@ html,body {
                 <a class="brand" href="#">Home Budget</a>
                 <div class="nav-collapse collapse">
                     <p class="navbar-text pull-right ">
-                        <span style="padding: 0px 10px;"><i
-                            onclick="location.href = 'j_spring_security_logout';"
-                            class="icon-off icon-white"></i></span> <a
-                            href="<c:url value="j_spring_security_logout" />"> Logout</a>
+                        <span style="padding: 0px 10px;"><i onclick="location.href = 'j_spring_security_logout';"
+                            class="icon-off icon-white"></i></span> <a href="<c:url value="j_spring_security_logout" />">
+                            Logout</a>
                     </p>
                     <p class="navbar-text pull-right">
                         Logged in as <a href="#" class="navbar-link"><security:authentication
