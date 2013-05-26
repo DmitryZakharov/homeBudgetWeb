@@ -17,6 +17,10 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.homebudget.model.UserRole.Role;
 
+/**
+ * @author dza
+ *
+ */
 @Entity(name = "USER_DETAILS")
 public class UserDetails {
 
@@ -59,6 +63,22 @@ public class UserDetails {
    @Column(name = "DATE_OF_BIRTH")
    @Temporal(javax.persistence.TemporalType.DATE)
    private Date userBirthday;
+   
+   
+   /**
+    *Default constructor 
+    */
+   public UserDetails() {
+   }
+   
+   /**
+    * Constructor
+    * @param role user role
+    */
+   public UserDetails(UserRole.Role role) {
+      UserRole aUserRole = new UserRole(role);
+      getUserRoles().add(aUserRole);
+  }
 
    public long getUserId() {
 

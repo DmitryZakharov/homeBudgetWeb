@@ -41,6 +41,15 @@ public class UserRole {
 
    };
 
+   public UserRole() {
+
+   }
+
+   public UserRole(UserRole.Role role) {
+
+      setUserRole(role);
+   }
+
    @Id
    @GeneratedValue
    @Column(name = "USER_ROLE_ID")

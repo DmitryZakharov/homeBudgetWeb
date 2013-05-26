@@ -1,9 +1,13 @@
 package org.homebudget.services;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.homebudget.dao.AccountRepository;
+import org.homebudget.dao.UserRepository;
 import org.homebudget.model.Account;
+import org.homebudget.model.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,12 +16,25 @@ public class AccountManagementService {
    @Resource
    private AccountRepository accountRepository;
 
-   public void saveAccount(Account account) {
+   @Resource
+   private UserRepository userRepository;
+
+   public void saveAccount(Account account, String username) {
+
+      final UserDetails owner = userRepository.findByUserUsername(username);
+      account.setOwner(owner);
 
       accountRepository.save(account);
    }
 
-   public Account getAccount(String username, String accountName) {
+   public List<Account> getAllUserAccounts(String username) {
+
+      final UserDetails userDetails = userRepository.findByUserUsername(username);
+
+      return accountRepository.findByOwner(userDetails);
+   }
+
+   public Account getAccount(String accountName, String username) {
 
       Account account = accountRepository.findByAccountName(accountName);
 
@@ -25,7 +42,6 @@ public class AccountManagementService {
          return account;
       }
       return null;
-
    }
 
 }

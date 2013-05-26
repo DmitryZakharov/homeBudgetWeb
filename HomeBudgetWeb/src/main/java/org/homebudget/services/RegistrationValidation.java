@@ -1,9 +1,10 @@
 package org.homebudget.services;
 
-import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.annotation.Resource;
+
 import org.homebudget.model.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
@@ -52,7 +53,7 @@ public class RegistrationValidation {
          errors.rejectValue("email", "registration.email.invalid");
       }
 
-     final  UserDetails result = service.getUserByEmail(email);
+      final UserDetails result = service.getUserByEmail(email);
       if (result != null) {
          errors.rejectValue("email", "registration.email.notunique");
       }
@@ -75,8 +76,9 @@ public class RegistrationValidation {
 
       if (userUsername == null || userUsername.isEmpty() || (userUsername.length()) > 50) {
          errors.rejectValue("userUsername", "registration.user_username.size");
-      }else{
-         UserDetails result = service.getUserByUsername(userUsername);
+      }
+      else {
+         UserDetails result = service.getUserDetailsByUsername(userUsername);
          if (result != null && !result.getUserName().equals(userUsername)) {
             errors.rejectValue("userUsername", "registration.user_username.notunique");
          }

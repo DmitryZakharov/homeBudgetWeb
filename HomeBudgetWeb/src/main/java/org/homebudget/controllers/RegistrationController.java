@@ -9,7 +9,7 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.homebudget.model.UserDetails;
-import org.homebudget.model.UserRole;
+import org.homebudget.model.UserRole.Role;
 import org.homebudget.services.RegistrationValidation;
 import org.homebudget.services.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/registration")
-public class RegistrationController {
+public class RegistrationController extends AbstractController {
 
    private static final Logger gLogger = Logger.getLogger(RegistrationController.class);
 
@@ -37,10 +37,7 @@ public class RegistrationController {
    @RequestMapping(method = RequestMethod.GET)
    public String showRegistration(Model model) {
 
-      UserDetails userDetails = new UserDetails();
-      UserRole aUserRole = new UserRole();
-      aUserRole.setUserRole(UserRole.Role.USER_ROLE);
-      model.addAttribute(userDetails);
+      model.addAttribute(userManagementService.getNewUser(Role.USER_ROLE));
       return "registration";
    }
 

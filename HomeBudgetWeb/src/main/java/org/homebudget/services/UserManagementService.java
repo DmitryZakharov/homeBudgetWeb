@@ -1,16 +1,15 @@
 package org.homebudget.services;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
+import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.apache.log4j.Logger;
 import org.homebudget.dao.UserRepository;
 import org.homebudget.dao.UserRoleRepository;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +26,11 @@ public class UserManagementService {
 
    @Resource
    private MailConfirmationService mailConfirmationService;
+
+   public UserDetails getNewUser(UserRole.Role role) {
+
+      return new UserDetails(role);
+   }
 
    @Transactional
    public void saveUserDetails(UserDetails userDetails) {
@@ -64,23 +68,12 @@ public class UserManagementService {
       saveUserDetails(aUserDetails);
    }
 
-   private Date getBirthdayFromString(String dateString) {
+   public List<UserDetails> getAllUsers() {
 
-      // password is replaced with hash after validation of the form.
-      DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-      System.out.println("DateString read: " + dateString);
-      gLogger.info("DateString read: " + dateString);
-      Date birthday = null;
-      try {
-         birthday = format.parse(dateString);
-      }
-      catch (ParseException ex) {
-         gLogger.error("Datestring could not be parsed " + dateString);
-      }
-      return birthday;
+      return userRepositoryDao.findAll();
    }
 
-   public UserDetails getUserByUsername(String userName) {
+   public UserDetails getUserDetailsByUsername(String userName) {
 
       return userRepositoryDao.findByUserUsername(userName);
    }
@@ -92,9 +85,8 @@ public class UserManagementService {
 
    public void updateUserDetails(UserDetails oldUserDetails, UserDetails newUserDetails) {
 
-      oldUserDetails.setUserName(newUserDetails.getUserName());
-      oldUserDetails.setUserSurname(newUserDetails.getUserSurname());
-      oldUserDetails.setUserUsername(newUserDetails.getUserUsername());
+      BeanUtils.copyProperties(newUserDetails, oldUserDetails, new String[] { "password", "userId",
+            "userRoles", "enabled" });
       final String userPassword = newUserDetails.getPassword();
       try {
          final String passwordHash = PasswordService.getHash(newUserDetails.getPassword());
@@ -104,14 +96,7 @@ public class UserManagementService {
          // fails, user must be notified.
          oldUserDetails.setPassword(userPassword);
       }
-      oldUserDetails.setEmail(newUserDetails.getEmail());
-      oldUserDetails.setUserBirthday(newUserDetails.getUserBirthday());
-
       userRepositoryDao.save(oldUserDetails);
 
    }
-   // public UserRole getRole(Role role){
-   // UserRole result = userRoleRepository.findByUserRole(role);
-   // return result;
-   // }
 }

@@ -7,7 +7,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
-import org.homebudget.dao.UserRepository;
 import org.homebudget.model.UserDetails;
 import org.homebudget.services.RegistrationValidation;
 import org.homebudget.services.UserManagementService;
@@ -15,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,10 +26,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 @RequestMapping(value = "/user")
-public class UserManagementController {
-
-   @Resource
-   private UserRepository userRepositoryDao;
+public class UserManagementController extends AbstractController {
 
    @Resource
    private UserManagementService userManagementService;
@@ -43,9 +37,8 @@ public class UserManagementController {
    @RequestMapping(method = RequestMethod.GET)
    public String showUserProfile(Model model) {
 
-      final User user = (User) SecurityContextHolder.getContext().getAuthentication()
-            .getPrincipal();
-      UserDetails userDetails = userRepositoryDao.findByUserUsername(user.getUsername());
+      UserDetails userDetails = userManagementService.getUserDetailsByUsername(getSessionUser()
+            .getUsername());
       model.addAttribute(userDetails);
 
       return "userprofile";
@@ -56,9 +49,8 @@ public class UserManagementController {
    public void updateUserDetails(@Valid UserDetails newUserDetails, BindingResult result,
          Model model) {
 
-      final User user = (User) SecurityContextHolder.getContext().getAuthentication()
-            .getPrincipal();
-      UserDetails oldUserDetails = userManagementService.getUserByUsername(user.getUsername());
+      UserDetails oldUserDetails = userManagementService.getUserDetailsByUsername(getSessionUser()
+            .getUsername());
       getUserManagementService().updateUserDetails(oldUserDetails, newUserDetails);
    }
 
@@ -78,7 +70,7 @@ public class UserManagementController {
    @ResponseStatus(HttpStatus.NO_CONTENT)
    public UserDetails deleteUserDetails(@PathVariable("username") String username) {
 
-      final UserDetails userDetails = userManagementService.getUserByUsername(username);
+      final UserDetails userDetails = userManagementService.getUserDetailsByUsername(username);
       getUserManagementService().deleteUserDetails(userDetails);
 
       return userDetails;
@@ -88,8 +80,8 @@ public class UserManagementController {
    @RequestMapping()
    public List<UserDetails> showAllUsers(Model model) {
 
-      final List<UserDetails> users = getHibernateDaoImpl().findAll();
-      // model.addAttribute(users);
+      final List<UserDetails> users = userManagementService.getAllUsers();
+      model.addAttribute(users);
       return users;
    }
 
@@ -98,16 +90,6 @@ public class UserManagementController {
 
       SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
       binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-   }
-
-   public UserRepository getHibernateDaoImpl() {
-
-      return userRepositoryDao;
-   }
-
-   public void setHibernateDaoImpl(UserRepository hibernateDaoImpl) {
-
-      this.userRepositoryDao = hibernateDaoImpl;
    }
 
    public UserManagementService getUserManagementService() {

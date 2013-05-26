@@ -5,10 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
-import org.homebudget.dao.AccountRepository;
-import org.homebudget.dao.UserRepository;
 import org.homebudget.model.Account;
-import org.homebudget.model.UserDetails;
 import org.homebudget.services.AccountManagementService;
 import org.homebudget.services.NewAccountValidation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,22 +25,13 @@ public class AccountController extends AbstractController {
    private NewAccountValidation aNewAccountValidation;
 
    @Resource
-   private AccountRepository accountRepositoryDaoImpl;
-
-   @Resource
-   private UserRepository userRepositoryDaoImpl;
-
-   @Resource
    private AccountManagementService accountManagementService;
 
    @RequestMapping(method = RequestMethod.GET)
    public List<Account> getAccounts(Model model) {
 
-      final String username = getSessionUser().getUsername();
-
-      final UserDetails userDetails = userRepositoryDaoImpl.findByUserUsername(username);
-
-      final List<Account> accounts = accountRepositoryDaoImpl.findByOwner(userDetails);
+      final List<Account> accounts = accountManagementService.getAllUserAccounts(getSessionUser()
+            .getUsername());
 
       model.addAttribute(accounts);
 
@@ -53,8 +41,8 @@ public class AccountController extends AbstractController {
    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
    public String getAccount(@PathVariable("name") String accountName, Model model) {
 
-      final Account account = accountManagementService.getAccount(getSessionUser().getUsername(),
-            accountName);
+      final Account account = accountManagementService.getAccount(accountName, getSessionUser()
+            .getUsername());
 
       model.addAttribute(account);
       return "account";
@@ -75,10 +63,8 @@ public class AccountController extends AbstractController {
          return "forward:new";
       }
       if (account != null) {
-         final UserDetails owner = userRepositoryDaoImpl.findByUserUsername(getSessionUser()
-               .getUsername());
-         account.setOwner(owner);
-         accountRepositoryDaoImpl.save(account);
+
+         accountManagementService.saveAccount(account, getSessionUser().getUsername());
       }
       return "redirect:accounts";
    }
@@ -91,6 +77,16 @@ public class AccountController extends AbstractController {
    public void setAccountManagementService(AccountManagementService accountManagementService) {
 
       this.accountManagementService = accountManagementService;
+   }
+
+   public NewAccountValidation getaNewAccountValidation() {
+
+      return aNewAccountValidation;
+   }
+
+   public void setaNewAccountValidation(NewAccountValidation aNewAccountValidation) {
+
+      this.aNewAccountValidation = aNewAccountValidation;
    }
 
 }
