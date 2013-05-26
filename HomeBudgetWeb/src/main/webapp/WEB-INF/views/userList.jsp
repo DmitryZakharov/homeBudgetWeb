@@ -12,7 +12,7 @@
     <body>
         <h1>LIST  OF USERS</h1>
         <table title="List Of Users">
-            <c:forEach items="${usersList}" var="user">
+            <c:forEach items="${userList}" var="user">
                 <tr>
                     <td>${user.userName}</td>
                     <td>${user.userSurname}</td>

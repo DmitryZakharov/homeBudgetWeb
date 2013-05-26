@@ -1,13 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <t:maintemplate>
     <jsp:body>
         <div class="container">
             <div class="bs-docs-example">
-                <form:form  method="Post" action="updateDetails.html"
-                            commandName="userDetails">
-                    <h2 class="registration-header" >User Details</h2>
+                <form:form method="PUT" action="user.html"  commandName="userDetails">
+                <form:input type="hidden" name="_method" value="put" path=""/>
+                    <h2 class="registration-header">User Details</h2>
                     <table>
 
                         <!-- USER USERNAME -->
@@ -16,7 +16,7 @@
                             <td><form:errors class="text-error" path="userUsername" /></td>
                         </tr>
                         <tr>
-                            <td><form:input type="text" class="input" placeholder="Username" path="userUsername"/></td>
+                            <td><form:input type="text" class="input" placeholder="Username" path="userUsername" /></td>
                         </tr>
                         <!-- USER NAME -->
                         <tr>
@@ -25,8 +25,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><form:input type="text" class="span4 well" placeholder="Name" path="userName"/> 
-                                <form:input type="text" class="span4 well" placeholder="Surname" path="userSurname"/>
+                            <td><form:input type="text" class="span4 well" placeholder="Name" path="userName" /> 
+                                <form:input type="text" class="span4 well" placeholder="Surname" path="userSurname" />
                             </td>
                         </tr>
                         <tr>
@@ -35,8 +35,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><form:password class="span4 well" placeholder="Password" path="password"/> 
-                                <form:password class="span4 well" placeholder="Confirm" path="confpassword"/>
+                            <td><form:password class="span4 well" placeholder="Password" path="password" /> 
+                                <form:password class="span4 well" placeholder="Confirm" path="confpassword" />
                             </td>
                         </tr>
                         <tr>
@@ -44,7 +44,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><form:input type="email" class="input" placeholder="E-mail" path="email"/> 
+                            <td><form:input type="email" class="input" placeholder="E-mail" path="email" /> 
                             </td>
                         </tr>
 
@@ -53,7 +53,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><form:input type="text" id="datepicker" class="input" placeholder="Date of birth" path="userBirthday"/>
+                            <td><form:input type="text" id="datepicker" class="input" placeholder="Date of birth"
+                                    path="userBirthday" />
                             </td>
                         </tr>
                         <!-- USER SUBMISSION ACTION -->

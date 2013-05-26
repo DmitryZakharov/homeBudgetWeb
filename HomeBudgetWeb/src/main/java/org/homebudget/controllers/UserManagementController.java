@@ -3,16 +3,18 @@ package org.homebudget.controllers;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.homebudget.dao.UserRepository;
 import org.homebudget.model.UserDetails;
-import org.homebudget.model.UserRole;
+import org.homebudget.services.RegistrationValidation;
 import org.homebudget.services.UserManagementService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -20,12 +22,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
+@RequestMapping(value = "/user")
 public class UserManagementController {
 
    @Resource
@@ -34,64 +37,60 @@ public class UserManagementController {
    @Resource
    private UserManagementService userManagementService;
 
-   @RequestMapping(value = "/addUser")
-   public String addNewUser(@ModelAttribute("userDetails") UserDetails userDetails) {
+   @Autowired
+   private RegistrationValidation aRegistrationValidation;
 
-      if (userDetails.getUserName() != null) {
-         userDetails.addUserRole(UserRole.Role.USER_ROLE);
-         userRepositoryDao.save(userDetails);
-      }
-
-      System.out.println("User Name: " + userDetails.getUserName());
-      System.out.println("User Surname: " + userDetails.getUserSurname());
-      System.out.println("User Date of Birth: " + userDetails.getUserBirthday());
-      return "addUser";
-   }
-
-   @RequestMapping(value = "/userProfile", method = RequestMethod.GET)
-   public ModelAndView showUserProfile(Map<String, Object> model) {
+   @RequestMapping(method = RequestMethod.GET)
+   public String showUserProfile(Model model) {
 
       final User user = (User) SecurityContextHolder.getContext().getAuthentication()
             .getPrincipal();
-      UserDetails aUserDetails = userRepositoryDao.findByUserUsername(user.getUsername()).get(0);
-      model.put("userDetails", aUserDetails);
+      UserDetails userDetails = userRepositoryDao.findByUserUsername(user.getUsername());
+      model.addAttribute(userDetails);
 
-      return new ModelAndView("userprofile");
+      return "userprofile";
    }
 
-   @RequestMapping(value = "/updateDetails", method = RequestMethod.GET)
-   public ModelAndView showUserDetails(Map<String, Object> model) {
+   @RequestMapping(method = RequestMethod.PUT)
+   @ResponseStatus(HttpStatus.NO_CONTENT)
+   public void updateUserDetails(@Valid UserDetails newUserDetails, BindingResult result,
+         Model model) {
 
       final User user = (User) SecurityContextHolder.getContext().getAuthentication()
             .getPrincipal();
-      UserDetails aUserDetails = userRepositoryDao.findByUserUsername(user.getUsername()).get(0);
-      model.put("userDetails", aUserDetails);
-
-      return new ModelAndView("userprofile");
-   }
-
-   @RequestMapping(value = "/updateDetails", method = RequestMethod.POST)
-   public String updateUserDetails(@Valid UserDetails newUserDetails, BindingResult result,
-         Map<String, Object> model) {
-
-      final User user = (User) SecurityContextHolder.getContext().getAuthentication()
-            .getPrincipal();
-      UserDetails oldUserDetails = userRepositoryDao.findByUserUsername(user.getUsername()).get(0);
+      UserDetails oldUserDetails = userManagementService.getUserByUsername(user.getUsername());
       getUserManagementService().updateUserDetails(oldUserDetails, newUserDetails);
-
-      model.put("userDetails", oldUserDetails);
-
-      return ("redirect:updateDetails");
    }
 
-   @RequestMapping(value = "/usersList")
-   public String showAllUsers(Model model) {
+   @Secured("ADMIN_ROLE")
+   @RequestMapping(method = RequestMethod.POST)
+   @ResponseStatus(HttpStatus.CREATED)
+   public UserDetails addUserDetails(@Valid UserDetails userDetails, BindingResult result,
+         Model model) {
 
-      List<UserDetails> usersList = getHibernateDaoImpl().findAll();
-      System.out.println("counted users: " + usersList.size());
+      getUserManagementService().saveUserDetails(userDetails);
 
-      model.addAttribute("usersList", usersList);
-      return "usersList";
+      return userDetails;
+   }
+
+   @Secured("ADMIN_ROLE")
+   @RequestMapping(value = "/{username}", method = RequestMethod.DELETE)
+   @ResponseStatus(HttpStatus.NO_CONTENT)
+   public UserDetails deleteUserDetails(@PathVariable("username") String username) {
+
+      final UserDetails userDetails = userManagementService.getUserByUsername(username);
+      getUserManagementService().deleteUserDetails(userDetails);
+
+      return userDetails;
+   }
+
+   @Secured("ADMIN_ROLE")
+   @RequestMapping()
+   public List<UserDetails> showAllUsers(Model model) {
+
+      final List<UserDetails> users = getHibernateDaoImpl().findAll();
+      // model.addAttribute(users);
+      return users;
    }
 
    @InitBinder

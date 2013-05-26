@@ -131,16 +131,15 @@ html,body {
                     <div class="well sidebar-nav">
                         <ul class="nav nav-list">
                             <li class="nav-header">Manage Accounts</li>
-                            <li><a href="account/createAccount.html">add new
-                                    account</a></li>
-                            <li class="nav-header">Plan expences</li>
+                            <li><a href="accounts">accounts</a></li>
+                            <li class="nav-header">Plan expenses</li>
                             <li><a href="#">Link</a></li>
                             <li class="nav-header">Budget Planing</li>
                             <li><a href="#">Link</a></li>
                             <li><a href="#">Link</a></li>
                             <li><a href="#">Link</a></li>
                             <li class="nav-header">Personal settings</li>
-                            <li><a href="userProfile.html">Change account</a></li>
+                            <li><a href="user.html">profile</a></li>
                         </ul>
                     </div>
                     <!--/.well -->

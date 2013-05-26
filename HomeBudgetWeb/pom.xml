@@ -25,12 +25,12 @@
             <groupId>org.jdal</groupId>
             <artifactId>jdal-core</artifactId>
             <version>${org.jdal.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>${javax.servlet.version}</version>
-            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>servlet-api</artifactId>
+                    <groupId>javax.servlet</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>javax.transaction</groupId>

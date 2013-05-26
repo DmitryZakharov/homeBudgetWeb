@@ -52,8 +52,8 @@ public class RegistrationValidation {
          errors.rejectValue("email", "registration.email.invalid");
       }
 
-      Collection<UserDetails> result = service.getUserByEmail(email);
-      if (result != null && !result.isEmpty()) {
+     final  UserDetails result = service.getUserByEmail(email);
+      if (result != null) {
          errors.rejectValue("email", "registration.email.notunique");
       }
    }
@@ -73,14 +73,14 @@ public class RegistrationValidation {
 
    private void validateUserUsername(String userUsername, Errors errors) {
 
-      if (userUsername == null || (userUsername.length()) > 50) {
+      if (userUsername == null || userUsername.isEmpty() || (userUsername.length()) > 50) {
          errors.rejectValue("userUsername", "registration.user_username.size");
-      }
-      Collection<UserDetails> result = service.getUserByUsername(userUsername);
-      if (result != null && !result.isEmpty()) {
-         errors.rejectValue("userUsername", "registration.user_username.notunique");
+      }else{
+         UserDetails result = service.getUserByUsername(userUsername);
+         if (result != null && !result.getUserName().equals(userUsername)) {
+            errors.rejectValue("userUsername", "registration.user_username.notunique");
+         }
       }
 
    }
-
 }

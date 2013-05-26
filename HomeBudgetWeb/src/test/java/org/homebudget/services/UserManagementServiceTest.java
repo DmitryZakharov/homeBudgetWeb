@@ -4,11 +4,12 @@
  */
 package org.homebudget.services;
 
-import java.util.List;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.homebudget.dao.UserRepository;
 import org.homebudget.model.UserDetails;
 import org.homebudget.test.config.TestConfigurator;
-import static org.junit.Assert.*;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,10 +34,10 @@ public class UserManagementServiceTest extends TestConfigurator {
       userDetails.setUserUsername("testUser");
 
       service.saveUserDetails(userDetails);
-      List<UserDetails> result = repository.findByUserUsername(userDetails.getUserUsername());
-      assertEquals(1, result.size());
-      assertEquals(userDetails.getEmail(), result.get(0).getEmail());
-      assertEquals(userDetails.getUserName(), result.get(0).getUserName());
+      UserDetails result = repository.findByUserUsername(userDetails.getUserUsername());
+      assertNotNull(result);
+      assertEquals(userDetails.getEmail(), result.getEmail());
+      assertEquals(userDetails.getUserName(), result.getUserName());
 
    }
 

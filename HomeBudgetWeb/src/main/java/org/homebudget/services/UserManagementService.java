@@ -80,12 +80,12 @@ public class UserManagementService {
       return birthday;
    }
 
-   public Collection<UserDetails> getUserByUsername(String userName) {
+   public UserDetails getUserByUsername(String userName) {
 
       return userRepositoryDao.findByUserUsername(userName);
    }
 
-   public Collection<UserDetails> getUserByEmail(String email) {
+   public UserDetails getUserByEmail(String email) {
 
       return userRepositoryDao.findByEmail(email);
    }

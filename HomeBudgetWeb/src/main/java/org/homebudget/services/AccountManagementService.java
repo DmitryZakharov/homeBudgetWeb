@@ -1,6 +1,7 @@
 package org.homebudget.services;
 
 import javax.annotation.Resource;
+
 import org.homebudget.dao.AccountRepository;
 import org.homebudget.model.Account;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,17 @@ public class AccountManagementService {
    public void saveAccount(Account account) {
 
       accountRepository.save(account);
+   }
+
+   public Account getAccount(String username, String accountName) {
+
+      Account account = accountRepository.findByAccountName(accountName);
+
+      if (account != null && account.getOwner().getUserUsername().equals(username)) {
+         return account;
+      }
+      return null;
+
    }
 
 }
