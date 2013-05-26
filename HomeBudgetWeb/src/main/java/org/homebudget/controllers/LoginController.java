@@ -11,17 +11,6 @@ public class LoginController {
    @RequestMapping(value = "/main", method = RequestMethod.GET)
    public String printWelcome(ModelMap model) {
 
-      // User user = (User) SecurityContextHolder.getContext()
-      // .getAuthentication().getPrincipal();
-      // String nickname = user.getUsername();
-      //
-      // UserDetails userDetails = userRepositoryDao
-      // .findByUserUsername(nickname);
-
-      // model.addAttribute("username", userDetails.getUserName());
-      // model.addAttribute("usersurname", userDetails.getUserSurname());
-      // model.addAttribute("message",
-      // "Spring Security login + database example");
       return "main";
 
    }

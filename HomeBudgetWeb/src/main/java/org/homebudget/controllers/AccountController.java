@@ -14,7 +14,6 @@ import org.homebudget.services.NewAccountValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,9 +37,9 @@ public class AccountController extends AbstractController {
    private AccountManagementService accountManagementService;
 
    @RequestMapping(method = RequestMethod.GET)
-   public List<Account> getAccounts(ModelMap model) {
+   public List<Account> getAccounts(Model model) {
 
-      final String username = getMyUser().getUsername();
+      final String username = getSessionUser().getUsername();
 
       final UserDetails userDetails = userRepositoryDaoImpl.findByUserUsername(username);
 
@@ -54,7 +53,7 @@ public class AccountController extends AbstractController {
    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
    public String getAccount(@PathVariable("name") String accountName, Model model) {
 
-      final Account account = accountManagementService.getAccount(getMyUser().getUsername(),
+      final Account account = accountManagementService.getAccount(getSessionUser().getUsername(),
             accountName);
 
       model.addAttribute(account);
@@ -62,24 +61,22 @@ public class AccountController extends AbstractController {
    }
 
    @RequestMapping(value = "/new", method = RequestMethod.GET)
-   public String getAccount(ModelMap model) {
+   public String getAccount(Model model) {
 
-     final Account account = new Account();
-      model.addAttribute(account);
+      model.addAttribute(new Account());
       return "account";
    }
 
    @RequestMapping(method = RequestMethod.POST)
    public String postAccount(@ModelAttribute("account") @Valid Account account, BindingResult result) {
 
-      final String username = getMyUser().getUsername();
-
       aNewAccountValidation.validate(account, result);
       if (result.hasErrors()) {
          return "forward:new";
       }
       if (account != null) {
-         final UserDetails owner = userRepositoryDaoImpl.findByUserUsername(username);
+         final UserDetails owner = userRepositoryDaoImpl.findByUserUsername(getSessionUser()
+               .getUsername());
          account.setOwner(owner);
          accountRepositoryDaoImpl.save(account);
       }

@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.User;
 public abstract class AbstractController {
 
    
-   public User getMyUser(){
+   public User getSessionUser(){
       return  (User) SecurityContextHolder.getContext().getAuthentication()
             .getPrincipal();
    }
