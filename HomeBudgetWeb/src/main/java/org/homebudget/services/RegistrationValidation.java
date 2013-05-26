@@ -79,7 +79,7 @@ public class RegistrationValidation {
       }
       else {
          UserDetails result = service.getUserDetailsByUsername(userUsername);
-         if (result != null && !result.getUserName().equals(userUsername)) {
+         if (result != null && result.getUserUsername().equals(userUsername)) {
             errors.rejectValue("userUsername", "registration.user_username.notunique");
          }
       }
