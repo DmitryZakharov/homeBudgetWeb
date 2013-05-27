@@ -1,9 +1,7 @@
 package org.homebudget.services;
 
 import java.util.List;
-
 import javax.annotation.Resource;
-
 import org.apache.log4j.Logger;
 import org.homebudget.dao.UserRepository;
 import org.homebudget.dao.UserRoleRepository;
@@ -25,7 +23,7 @@ public class UserManagementService {
    private UserRoleRepository userRoleRepository;
 
    @Resource
-   private MailConfirmationService mailConfirmationService;
+   private MailService mailService;
 
    public UserDetails getNewUser(UserRole.Role role) {
 
@@ -64,7 +62,7 @@ public class UserManagementService {
       aUserDetails.addUserRole(UserRole.Role.USER_ROLE);
       // TODO: set to 0, when email confirmation is implemented
       aUserDetails.setEnabled(1);
-      mailConfirmationService.sendConfirmation(aUserDetails);
+      mailService.sendConfirmation(aUserDetails);
       saveUserDetails(aUserDetails);
    }
 
