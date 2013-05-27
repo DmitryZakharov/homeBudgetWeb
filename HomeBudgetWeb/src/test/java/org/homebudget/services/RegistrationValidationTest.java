@@ -24,12 +24,8 @@ public class RegistrationValidationTest extends TestConfigurator {
 
    public static final String VALID_USERNAME = "JohnDoe";
 
-   public RegistrationValidationTest() {
-
-   }
-
    @Resource
-   RegistrationValidation instance;
+   UserValidationService instance;
 
    @Resource
    UserManagementService service;

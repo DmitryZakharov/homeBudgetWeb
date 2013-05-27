@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole.Role;
-import org.homebudget.services.RegistrationValidation;
+import org.homebudget.services.UserValidationService;
 import org.homebudget.services.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -29,7 +29,7 @@ public class RegistrationController extends AbstractController {
    private static final Logger gLogger = Logger.getLogger(RegistrationController.class);
 
    @Autowired
-   private RegistrationValidation aRegistrationValidation;
+   private UserValidationService aRegistrationValidation;
 
    @Resource
    private UserManagementService userManagementService;

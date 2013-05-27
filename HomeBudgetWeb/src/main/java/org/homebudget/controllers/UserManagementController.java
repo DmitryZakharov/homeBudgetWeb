@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.homebudget.model.UserDetails;
-import org.homebudget.services.RegistrationValidation;
+import org.homebudget.services.UserValidationService;
 import org.homebudget.services.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -32,7 +32,7 @@ public class UserManagementController extends AbstractController {
    private UserManagementService userManagementService;
 
    @Autowired
-   private RegistrationValidation aRegistrationValidation;
+   private UserValidationService aRegistrationValidation;
 
    @RequestMapping(method = RequestMethod.GET)
    public String showUserProfile(Model model) {
