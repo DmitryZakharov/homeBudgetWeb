@@ -43,6 +43,12 @@ public class UserManagementService {
    }
 
    @Transactional
+   public void deleteAllUserDetails() {
+      
+      userRepositoryDao.deleteAll();
+   }
+
+   @Transactional
    public void saveUserRole(UserRole userRole) {
 
       userRoleRepository.save(userRole);
@@ -83,8 +89,8 @@ public class UserManagementService {
 
    public void updateUserDetails(UserDetails oldUserDetails, UserDetails newUserDetails) {
 
-      BeanUtils.copyProperties(newUserDetails, oldUserDetails, new String[] { "password", "userId",
-            "userRoles", "enabled" });
+      BeanUtils.copyProperties(newUserDetails, oldUserDetails, new String[]{"password", "userId",
+         "userRoles", "enabled"});
       final String userPassword = newUserDetails.getPassword();
       try {
          final String passwordHash = PasswordService.getHash(newUserDetails.getPassword());
@@ -97,4 +103,5 @@ public class UserManagementService {
       userRepositoryDao.save(oldUserDetails);
 
    }
+
 }

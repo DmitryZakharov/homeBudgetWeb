@@ -7,6 +7,7 @@ package org.homebudget.services;
 import javax.annotation.Resource;
 import org.homebudget.model.UserDetails;
 import org.homebudget.test.config.TestConfigurator;
+import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -29,6 +30,11 @@ public class RegistrationValidationTest extends TestConfigurator {
 
    @Resource
    UserManagementService service;
+   
+   @After
+   public void tearDown(){
+      service.deleteAllUserDetails();
+   }
 
    /**
     * Test of validate method, of class RegistrationValidation.

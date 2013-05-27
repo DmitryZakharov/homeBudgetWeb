@@ -9,27 +9,17 @@ import java.util.Date;
 import java.util.List;
 import org.homebudget.dao.AccountRepository;
 import org.homebudget.services.ResourceLoaderService;
+import org.homebudget.test.config.TestConfigurator;
 import static org.junit.Assert.*;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "classpath:/config/homebudget-servlet.xml",
-      "classpath:/config/datasource-config.xml", "classpath:/config/persistence-config.xml",
-      "classpath:/config/homebudget-mail.xml" })
-public class TransactionModelTest {
 
-   @Before
-   public void setUp() {
+public class TransactionModelTest extends TestConfigurator{
 
-   }
-
+  
    @Autowired
    AccountRepository repository;
 
