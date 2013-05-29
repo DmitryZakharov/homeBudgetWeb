@@ -1,9 +1,13 @@
 package org.homebudget.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity(name = "CATEGORY")
 public class Category {
@@ -14,7 +18,11 @@ public class Category {
    private int categoryId;
 
    @Column(name = "CATEGORY_NAME")
-   private String category;
+   private String name;
+
+   @OneToOne(optional = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @JoinColumn(name = "CATEGORY_PARENT")
+   private Category parent;
 
    public int getCategoryId() {
 
@@ -26,14 +34,22 @@ public class Category {
       this.categoryId = categoryId;
    }
 
-   public String getCategory() {
-
-      return category;
+   public String getName() {
+      return name;
    }
 
-   public void setCategory(String category) {
+   public void setName(String name) {
+      this.name = name;
+   }
 
-      this.category = category;
+
+
+   public Category getParent() {
+      return parent;
+   }
+
+   public void setParent(Category parent) {
+      this.parent = parent;
    }
 
 }

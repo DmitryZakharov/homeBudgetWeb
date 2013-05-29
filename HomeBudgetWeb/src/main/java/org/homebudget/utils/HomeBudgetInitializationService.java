@@ -72,7 +72,7 @@ public class HomeBudgetInitializationService {
          logger.info("Creating account: " + account.getAccountName());
 
          Category category = createTestCategory();
-         logger.info("Creating category: " + category.getCategory());
+         logger.info("Creating category: " + category.getName());
 
          Transaction transaction = createTestTransaction(category);
          logger.info("Creating transaction: " + transaction.getAmount());
@@ -145,7 +145,7 @@ public class HomeBudgetInitializationService {
    private Category createTestCategory() {
 
       Category category = new Category();
-      category.setCategory("work");
+      category.setName("work");
       return category;
    }
 

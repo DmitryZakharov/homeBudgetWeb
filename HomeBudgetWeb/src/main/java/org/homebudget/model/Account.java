@@ -45,7 +45,8 @@ public class Account {
    @ElementCollection(fetch = FetchType.EAGER)
    @JoinTable(name = "TRANSACTIONS", joinColumns = @JoinColumn(name = "ACCOUNT_ID"))
    @GenericGenerator(name = "hilo-gen", strategy = "hilo")
-   @CollectionId(columns = { @Column(name = "TRANSACTION_ID") }, generator = "hilo-gen", type = @Type(type = "long"))
+   @CollectionId(columns = {@Column(name = "TRANSACTION_ID")}, generator = "hilo-gen", type = @Type(
+       type = "long"))
    private Collection<Transaction> transactions = new ArrayList<Transaction>();
 
    public long getAccountId() {
@@ -106,6 +107,11 @@ public class Account {
    public void setTransactions(Collection<Transaction> transactions) {
 
       this.transactions = transactions;
+   }
+   
+   public void addTransaction(Transaction transaction) {
+
+      this.transactions.add(transaction);
    }
 
 }

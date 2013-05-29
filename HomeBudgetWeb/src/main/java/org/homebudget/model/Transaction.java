@@ -15,12 +15,6 @@ import javax.persistence.TemporalType;
 @Embeddable
 public class Transaction {
 
-   public static enum TransactionType {
-
-      INCOME, OUTCOME
-
-   };
-
    @Column(name = "DATE_OF_TRANSACTION")
    @Temporal(TemporalType.DATE)
    private Date dateOFTransaction;
@@ -102,5 +96,11 @@ public class Transaction {
 
       this.transactionImage = transactionImage;
    }
+
+   public static enum TransactionType {
+
+      INCOME, OUTCOME
+
+   };
 
 }
