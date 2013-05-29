@@ -79,7 +79,7 @@ public class UserManagementService {
 
    public UserDetails getUserDetailsByUsername(String userName) {
 
-      return userRepositoryDao.findByUserUsername(userName);
+      return userRepositoryDao.findByUsername(userName);
    }
 
    public UserDetails getUserByEmail(String email) {

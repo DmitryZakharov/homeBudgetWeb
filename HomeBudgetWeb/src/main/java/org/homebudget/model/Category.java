@@ -15,7 +15,7 @@ public class Category {
    @Id
    @Column(name = "CATEGORY_ID")
    @GeneratedValue
-   private int categoryId;
+   private int id;
 
    @Column(name = "CATEGORY_NAME")
    private String name;
@@ -24,31 +24,33 @@ public class Category {
    @JoinColumn(name = "CATEGORY_PARENT")
    private Category parent;
 
-   public int getCategoryId() {
+   public int getId() {
 
-      return categoryId;
+      return id;
    }
 
-   public void setCategoryId(int categoryId) {
+   public void setId(int id) {
 
-      this.categoryId = categoryId;
+      this.id = id;
    }
 
    public String getName() {
+
       return name;
    }
 
    public void setName(String name) {
+
       this.name = name;
    }
 
-
-
    public Category getParent() {
+
       return parent;
    }
 
    public void setParent(Category parent) {
+
       this.parent = parent;
    }
 

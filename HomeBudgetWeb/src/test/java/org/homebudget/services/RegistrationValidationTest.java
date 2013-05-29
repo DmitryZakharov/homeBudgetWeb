@@ -4,11 +4,15 @@
  */
 package org.homebudget.services;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import javax.annotation.Resource;
+
 import org.homebudget.model.UserDetails;
 import org.homebudget.test.config.TestConfigurator;
 import org.junit.After;
-import static org.junit.Assert.*;
 import org.junit.Test;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
@@ -30,9 +34,10 @@ public class RegistrationValidationTest extends TestConfigurator {
 
    @Resource
    UserManagementService service;
-   
+
    @After
-   public void tearDown(){
+   public void tearDown() {
+
       service.deleteAllUserDetails();
    }
 
@@ -72,14 +77,14 @@ public class RegistrationValidationTest extends TestConfigurator {
 
       System.out.println("testValidateUserNameUniqueness");
       UserDetails target = new UserDetails();
-      target.setUserUsername(VALID_USERNAME);
+      target.setUsername(VALID_USERNAME);
       target.setEmail(VALID_EMAIL);
       service.saveUserDetails(target);
       Errors errors = new BeanPropertyBindingResult(target, "userDetails");
 
       instance.validate(target, errors);
       assertTrue(errors.hasErrors());
-      assertNotNull(errors.getFieldError("userUsername"));
+      assertNotNull(errors.getFieldError("username"));
       service.deleteUserDetails(target);
    }
 
@@ -105,7 +110,7 @@ public class RegistrationValidationTest extends TestConfigurator {
       System.out.println("testValidUser");
       UserDetails target = new UserDetails();
       target.setEmail(VALID_EMAIL);
-      target.setUserUsername(VALID_USERNAME);
+      target.setUsername(VALID_USERNAME);
       target.setPassword("password");
       target.setConfpassword("password");
 

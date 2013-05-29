@@ -21,11 +21,11 @@ public class UserRole {
 
       private final int order;
 
-      private final String roleName;
+      private final String name;
 
-      private Role(final String roleName, final int order) {
+      private Role(final String name, final int order) {
 
-         this.roleName = roleName;
+         this.name = name;
          this.order = order;
       }
 
@@ -34,12 +34,21 @@ public class UserRole {
          return order;
       }
 
-      public String roleName() {
+      public String getName() {
 
-         return roleName;
+         return name;
       }
 
    };
+
+   @Id
+   @GeneratedValue
+   @Column(name = "USER_ROLE_ID")
+   private long id;
+
+   @Enumerated(EnumType.STRING)
+   @Column(name = "USER_ROLE_TYPE")
+   private Role role;
 
    public UserRole() {
 
@@ -47,36 +56,27 @@ public class UserRole {
 
    public UserRole(UserRole.Role role) {
 
-      setUserRole(role);
+      setRole(role);
    }
 
-   @Id
-   @GeneratedValue
-   @Column(name = "USER_ROLE_ID")
-   private long userRoleId;
+   public long getId() {
 
-   @Enumerated(EnumType.STRING)
-   @Column(name = "USER_ROLE_TYPE")
-   private Role userRole;
-
-   public long getUserRoleId() {
-
-      return userRoleId;
+      return id;
    }
 
-   public void setUserRoleId(long userRoleId) {
+   public void setId(long id) {
 
-      this.userRoleId = userRoleId;
+      this.id = id;
    }
 
-   public Role getUserRole() {
+   public Role getRole() {
 
-      return userRole;
+      return role;
    }
 
-   public void setUserRole(Role userRole) {
+   public void setRole(Role role) {
 
-      this.userRole = userRole;
+      this.role = role;
    }
 
 }

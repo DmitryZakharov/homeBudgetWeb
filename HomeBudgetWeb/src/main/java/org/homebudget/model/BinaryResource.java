@@ -8,15 +8,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
+import org.homebudget.controllers.RegistrationController;
 import org.springframework.core.io.Resource;
 
 @Entity(name = "BINARY_RESOURCE")
 public class BinaryResource implements java.io.Serializable {
+   
+   private static final Logger gLogger = Logger.getLogger(RegistrationController.class);
+
+   private static final long serialVersionUID = 1172145991794242627L;
 
    @Id
    @Column(name = "RESOURCE_ID")
    @GeneratedValue
-   private Long resourceId;
+   private Long id;
 
    @Lob
    @Column(name = "RESOURCE")
@@ -31,14 +37,16 @@ public class BinaryResource implements java.io.Serializable {
       this.resource = getBytesFromResource(resource);
    }
 
-   public Long getResourceId() {
-
-      return resourceId;
+   
+   public Long getId() {
+   
+      return id;
    }
 
-   public void setResourceId(Long resourceId) {
-
-      this.resourceId = resourceId;
+   
+   public void setId(Long id) {
+   
+      this.id = id;
    }
 
    public byte[] getResource() {
@@ -60,7 +68,7 @@ public class BinaryResource implements java.io.Serializable {
          result = IOUtils.toByteArray(inputStream);
       }
       catch (Exception ex) {
-         ex.printStackTrace();
+         gLogger.error("Failed to get byte array from resource", ex);
       }
       finally {
          try {
@@ -69,7 +77,7 @@ public class BinaryResource implements java.io.Serializable {
             }
          }
          catch (IOException ex) {
-            ex.printStackTrace();
+            gLogger.warn("Failed to close input stream", ex);
          }
       }
       return result;

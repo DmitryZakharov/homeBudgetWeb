@@ -23,11 +23,11 @@ public class Account {
    @Id
    @Column(name = "ACCOUNT_ID")
    @GeneratedValue
-   private long accountId;
+   private long id;
 
    // @NotBlank (message = "{account.name.required}")
    @Column(name = "ACCOUNT_NAME")
-   private String accountName;
+   private String name;
 
    // @NotBlank (message = "{account.creationdate.required}")
    @Column(name = "CREATION_DATE")
@@ -49,24 +49,28 @@ public class Account {
        type = "long"))
    private Collection<Transaction> transactions = new ArrayList<Transaction>();
 
-   public long getAccountId() {
-
-      return accountId;
+   
+   public long getId() {
+   
+      return id;
    }
 
-   public void setAccountId(long accountId) {
-
-      this.accountId = accountId;
+   
+   public String getName() {
+   
+      return name;
    }
 
-   public String getAccountName() {
-
-      return accountName;
+   
+   public void setId(long id) {
+   
+      this.id = id;
    }
 
-   public void setAccountName(String accountName) {
-
-      this.accountName = accountName;
+   
+   public void setName(String name) {
+   
+      this.name = name;
    }
 
    public UserDetails getOwner() {

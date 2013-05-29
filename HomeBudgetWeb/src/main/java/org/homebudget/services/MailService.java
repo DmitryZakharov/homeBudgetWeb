@@ -1,6 +1,7 @@
 package org.homebudget.services;
 
 import javax.annotation.Resource;
+
 import org.apache.log4j.Logger;
 import org.homebudget.model.UserDetails;
 import org.springframework.mail.MailException;
@@ -23,8 +24,7 @@ public class MailService {
 
       simpleMailMessage.setTo(userDetails.getEmail());
       simpleMailMessage.setSubject("Homebudget registration. The last step");
-      simpleMailMessage.setText("Dear " + userDetails.getUserName() + " "
-            + userDetails.getUserSurname()
+      simpleMailMessage.setText("Dear " + userDetails.getFname() + " " + userDetails.getSname()
             + ",\n Thank you for your registration at homebudget service.\n"
             + "In order to use all our features we need to confirm your E-Mail.\n"
             + "Please click the link below to complete your registration.\n"

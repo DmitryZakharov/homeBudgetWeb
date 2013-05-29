@@ -50,13 +50,13 @@ public class AccountValidationTest extends TestConfigurator {
       String userName = "User";
       UserDetails user = createTestUser(userName);
       userRepository.save(user);
-      account.setAccountName("AccountName1");
+      account.setName("AccountName1");
       service.saveAccount(account, userName);
 
       Errors errors = new BeanPropertyBindingResult(account, "Account");
       instance.validate(account, errors);
       assertTrue(errors.hasErrors());
-      assertNotNull(errors.getFieldError("accountName"));
+      assertNotNull(errors.getFieldError("name"));
    }
 
    @Test
@@ -68,7 +68,7 @@ public class AccountValidationTest extends TestConfigurator {
       String userName = "User";
       UserDetails user = createTestUser(userName);
       userRepository.save(user);
-      account.setAccountName("AccountName1");
+      account.setName("AccountName1");
       account.setOwner(user);
       Errors errors = new BeanPropertyBindingResult(account, "Account");
       instance.validate(account, errors);
@@ -85,7 +85,7 @@ public class AccountValidationTest extends TestConfigurator {
       String userName = "User";
       UserDetails user = createTestUser(userName);
       userRepository.save(user);
-      account.setAccountName("AccountName1");
+      account.setName("AccountName1");
       account.setDateOfCreation(new Date());
       account.setOwner(user);
       Errors errors = new BeanPropertyBindingResult(account, "Account");
@@ -95,7 +95,7 @@ public class AccountValidationTest extends TestConfigurator {
 
    private UserDetails createTestUser(String userName) {
       UserDetails user = new UserDetails();
-      user.setUserUsername(userName);
+      user.setUsername(userName);
       user.setEmail("user@email.com");
       return user;
    }

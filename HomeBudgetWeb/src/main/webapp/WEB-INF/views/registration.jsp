@@ -15,10 +15,10 @@
                                 <div class="input-prepend">
                                     <span class="add-on"><i class="icon-user"></i></span>
                                     <form:input type="text" class="input-xlarge" id="uname" name="uname"
-                                        placeholder="User Name" path="userUsername" />
+                                        placeholder="User Name" path="name" />
                                 </div>
                                 <div class="text">
-                                    <form:errors class="text-error" path="userUsername" />
+                                    <form:errors class="text-error" path="name" />
                                 </div>
                             </div>
                         </div>
@@ -28,10 +28,10 @@
                                 <div class="input-prepend">
                                     <span class="add-on"><i class="icon-user"></i></span>
                                     <form:input type="text" class="input-xlarge" id="fname" name="fname"
-                                        placeholder="First Name" path="userName" />
+                                        placeholder="First Name" path="fname" />
                                 </div>
                                 <div class="text">
-                                    <form:errors class="text-error" path="userName" />
+                                    <form:errors class="text-error" path="fname" />
                                 </div>
                             </div>
                         </div>
@@ -41,10 +41,10 @@
                                 <div class="input-prepend">
                                     <span class="add-on"><i class="icon-user"></i></span>
                                     <form:input type="text" class="input-xlarge" id="lname" name="lname"
-                                        placeholder="Last Name" path="userSurname" />
+                                        placeholder="Last Name" path="sname" />
                                 </div>
                                 <div class="text">
-                                    <form:errors class="text-error" path="userSurname" />
+                                    <form:errors class="text-error" path="sname" />
                                 </div>
                             </div>
                         </div>
@@ -55,10 +55,10 @@
                                 <div class="input-prepend">
                                     <span class="add-on"><i class="icon-gift"></i></span>
                                     <form:input type="text" class="input-xlarge" id="datepicker" name="birthday"
-                                        placeholder="Date of birth" path="userBirthday" />
+                                        placeholder="Date of birth" path="birthday" />
                                 </div>
                                 <div class="text">
-                                    <form:errors class="text-error" path="userBirthday" />
+                                    <form:errors class="text-error" path="birthday" />
                                 </div>
                             </div>
                         </div>

@@ -13,20 +13,20 @@
                         <!-- USER USERNAME -->
                         <tr>
 
-                            <td><form:errors class="text-error" path="userUsername" /></td>
+                            <td><form:errors class="text-error" path="username" /></td>
                         </tr>
                         <tr>
-                            <td><form:input type="text" class="input" placeholder="Username" path="userUsername" /></td>
+                            <td><form:input type="text" class="input" placeholder="Username" path="username" /></td>
                         </tr>
                         <!-- USER NAME -->
                         <tr>
-                            <td><form:errors class="text-error" path="userName" /> 
-                                <form:errors class="text-error" path="userSurname" />
+                            <td><form:errors class="text-error" path="fname" /> 
+                                <form:errors class="text-error" path="sname" />
                             </td>
                         </tr>
                         <tr>
-                            <td><form:input type="text" class="span4 well" placeholder="Name" path="userName" /> 
-                                <form:input type="text" class="span4 well" placeholder="Surname" path="userSurname" />
+                            <td><form:input type="text" class="span4 well" placeholder="Name" path="fname" /> 
+                                <form:input type="text" class="span4 well" placeholder="Surname" path="sname" />
                             </td>
                         </tr>
                         <tr>
@@ -49,12 +49,12 @@
                         </tr>
 
                         <tr>
-                            <td><form:errors class="text-error" path="userBirthday" /> 
+                            <td><form:errors class="text-error" path="birthday" /> 
                             </td>
                         </tr>
                         <tr>
                             <td><form:input type="text" id="datepicker" class="input" placeholder="Date of birth"
-                                    path="userBirthday" />
+                                    path="birthday" />
                             </td>
                         </tr>
                         <!-- USER SUBMISSION ACTION -->

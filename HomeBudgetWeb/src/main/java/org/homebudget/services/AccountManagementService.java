@@ -19,7 +19,7 @@ public class AccountManagementService {
 
    public void saveAccount(Account account, String username) {
 
-      final UserDetails owner = userRepository.findByUserUsername(username);
+      final UserDetails owner = userRepository.findByUsername(username);
       account.setOwner(owner);
 
       accountRepository.save(account);
@@ -27,16 +27,16 @@ public class AccountManagementService {
 
    public List<Account> getAllUserAccounts(String username) {
 
-      final UserDetails userDetails = userRepository.findByUserUsername(username);
+      final UserDetails userDetails = userRepository.findByUsername(username);
 
       return accountRepository.findByOwner(userDetails);
    }
 
    public Account getAccount(String accountName, String username) {
 
-      Account account = accountRepository.findByAccountName(accountName);
+      Account account = accountRepository.findByName(accountName);
 
-      if (account != null && account.getOwner().getUserUsername().equals(username)) {
+      if (account != null && account.getOwner().getUsername().equals(username)) {
          return account;
       }
       return null;

@@ -14,9 +14,9 @@
         <table title="List Of Users">
             <c:forEach items="${userList}" var="user">
                 <tr>
-                    <td>${user.userName}</td>
-                    <td>${user.userSurname}</td>
-                    <td>${user.userBirthday}</td>
+                    <td>${user.fname}</td>
+                    <td>${user.sname}</td>
+                    <td>${user.birthday}</td>
                 </tr>
             </c:forEach>
         </table>

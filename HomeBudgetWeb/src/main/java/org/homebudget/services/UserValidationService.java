@@ -28,7 +28,7 @@ public class UserValidationService implements IValidationService<UserDetails> {
 
       validateEmptyFields(errors);
 
-      String userUsername = aUserDetails.getUserUsername();
+      String userUsername = aUserDetails.getUsername();
       validateUserUsername(userUsername, errors);
 
       String password = aUserDetails.getPassword();
@@ -62,7 +62,7 @@ public class UserValidationService implements IValidationService<UserDetails> {
 
    private void validateEmptyFields(Errors errors) {
       List<String> notEmptyFields = new ArrayList<String>();
-      notEmptyFields.add("userUsername");
+      notEmptyFields.add("username");
       notEmptyFields.add("email");
       notEmptyFields.add("password");
       notEmptyFields.add("confpassword");
@@ -72,12 +72,12 @@ public class UserValidationService implements IValidationService<UserDetails> {
    private void validateUserUsername(String userUsername, Errors errors) {
 
       if (userUsername == null || userUsername.isEmpty() || (userUsername.length()) > 50) {
-         errors.rejectValue("userUsername", "registration.user_username.size");
+         errors.rejectValue("username", "registration.user_username.size");
       }
       else {
          UserDetails result = service.getUserDetailsByUsername(userUsername);
-         if (result != null && result.getUserUsername().equals(userUsername)) {
-            errors.rejectValue("userUsername", "registration.user_username.notunique");
+         if (result != null && result.getUsername().equals(userUsername)) {
+            errors.rejectValue("username", "registration.user_username.notunique");
          }
       }
 

@@ -30,14 +30,14 @@ public class UserManagementServiceTest extends TestConfigurator {
       System.out.println("saveUserDetails");
       UserDetails userDetails = new UserDetails();
       userDetails.setEmail("test@test.com");
-      userDetails.setUserName("testUser");
-      userDetails.setUserUsername("testUser");
+      userDetails.setFname("testUser");
+      userDetails.setUsername("testUser");
 
       service.saveUserDetails(userDetails);
-      UserDetails result = repository.findByUserUsername(userDetails.getUserUsername());
+      UserDetails result = repository.findByUsername(userDetails.getUsername());
       assertNotNull(result);
       assertEquals(userDetails.getEmail(), result.getEmail());
-      assertEquals(userDetails.getUserName(), result.getUserName());
+      assertEquals(userDetails.getFname(), result.getFname());
 
    }
 

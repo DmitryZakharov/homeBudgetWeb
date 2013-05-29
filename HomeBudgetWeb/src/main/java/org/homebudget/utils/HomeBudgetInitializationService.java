@@ -1,8 +1,10 @@
 package org.homebudget.utils;
 
 import java.util.Date;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+
 import org.apache.log4j.Logger;
 import org.homebudget.dao.UserRoleRepository;
 import org.homebudget.model.Account;
@@ -56,7 +58,7 @@ public class HomeBudgetInitializationService {
       logger.info("initialize database with " + number + " users");
       initUserRoles();
 
-      UserRole uRole = userRoleRepository.findByUserRole(UserRole.Role.USER_ROLE);
+      UserRole uRole = userRoleRepository.findByRole(UserRole.Role.USER_ROLE);
       for (int i = 0; i < number; i++) {
          String name = "";
          if (i == 0) {
@@ -66,10 +68,10 @@ public class HomeBudgetInitializationService {
             name = "Dmitry";
          }
          UserDetails user = createTestUser(i, name);
-         logger.info("Creating user: " + user.getUserName());
+         logger.info("Creating user: " + user.getFname());
 
          Account account = createTestAccount(user);
-         logger.info("Creating account: " + account.getAccountName());
+         logger.info("Creating account: " + account.getName());
 
          Category category = createTestCategory();
          logger.info("Creating category: " + category.getName());
@@ -89,28 +91,28 @@ public class HomeBudgetInitializationService {
 
       for (Role role : Role.values()) {
          UserRole uRole = new UserRole();
-         uRole.setUserRole(role);
-         logger.info("Creating role: " + uRole.getUserRole());
+         uRole.setRole(role);
+         logger.info("Creating role: " + uRole.getRole());
          userManagementService.saveUserRole(uRole);
       }
    }
 
-   private UserDetails createTestUser(int i, String name) {
+   private UserDetails createTestUser(int i, String fName) {
 
       final UserDetails user = new UserDetails();
-      user.setUserName(name + i);
+      user.setFname(fName + i);
 
-      user.setUserUsername(user.getUserName() + "_nick");
-      user.setUserSurname("Doe");
+      user.setUsername(user.getUsername() + "_nick");
+      user.setFname("Doe");
       user.setEmail("some" + i + "@email.com");
       Date birthday = new Date();
-      user.setUserBirthday(birthday);
+      user.setBirthday(birthday);
       user.setEnabled(1);
       try {
          String password = "000" + i;
          if (i == 0) {
-            user.setUserName(name);
-            user.setUserUsername("admin");
+            user.setFname(fName);
+            user.setUsername("admin");
             password = "admin";
          }
          user.setPassword(PasswordService.getHash(password));
@@ -127,8 +129,8 @@ public class HomeBudgetInitializationService {
       final Transaction transaction = new Transaction();
       transaction.setAmount(10);
       transaction.setCategory(category);
-      transaction.setDateOFTransaction(new Date());
-      transaction.setTransactionType(TransactionType.INCOME);
+      transaction.setExecutionDate(new Date());
+      transaction.setType(TransactionType.INCOME);
 
       return transaction;
    }

@@ -8,9 +8,9 @@
                 <table>
                     <tr>
                         <td>USER INFORMATION</td>
-                        <td><form:input path="userName" /></td>
-                        <td><form:input path="userSurname" /></td>
-                        <td><form:input path="userBirthday" /></td>
+                        <td><form:input path="fname" /></td>
+                        <td><form:input path="sname" /></td>
+                        <td><form:input path="birthday" /></td>
                     </tr>
                     <tr>
                         <td colspan="3"><input type="submit" value="register" /></td>

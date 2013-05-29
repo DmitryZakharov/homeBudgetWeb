@@ -11,9 +11,9 @@
                     </tr>
                     <tr>	
                         <td>
-                            <form:label path="accountName">Account name:</form:label>
-                            <form:input path="accountName" />
-                            <font color="red"><form:errors path="accountName" /></font>
+                            <form:label path="name">Account name:</form:label>
+                            <form:input path="name" />
+                            <font color="red"><form:errors path="name" /></font>
                         </td>
                     </tr>
                     <tr>

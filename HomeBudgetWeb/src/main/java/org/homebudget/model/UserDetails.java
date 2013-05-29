@@ -3,6 +3,7 @@ package org.homebudget.model;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,12 +15,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.Email;
 import org.homebudget.model.UserRole.Role;
 
 /**
  * @author dza
- *
+ * 
  */
 @Entity(name = "USER_DETAILS")
 public class UserDetails {
@@ -27,18 +29,18 @@ public class UserDetails {
    @Id
    @Column(name = "USER_ID")
    @GeneratedValue
-   private long userId;
+   private long id;
 
    // @NotNull
 
    @Column(name = "USER_USERNAME")
-   private String userUsername;
+   private String username;
 
    @Column(name = "USER_NAME")
-   private String userName;
+   private String fname;
 
    @Column(name = "USER_SURNAME")
-   private String userSurname;
+   private String sname;
 
    // @NotNull
 
@@ -62,72 +64,75 @@ public class UserDetails {
 
    @Column(name = "DATE_OF_BIRTH")
    @Temporal(javax.persistence.TemporalType.DATE)
-   private Date userBirthday;
-   
-   
+   private Date birthday;
+
    /**
-    *Default constructor 
+    * Default constructor
     */
    public UserDetails() {
+
    }
-   
+
    /**
     * Constructor
-    * @param role user role
+    * 
+    * @param role
+    *           user role
     */
    public UserDetails(UserRole.Role role) {
+
       UserRole aUserRole = new UserRole(role);
       getUserRoles().add(aUserRole);
-  }
-
-   public long getUserId() {
-
-      return userId;
    }
 
-   public void setUserId(long userId) {
+   public long getId() {
 
-      this.userId = userId;
+      return id;
    }
 
-   public String getUserUsername() {
+   public void setId(long id) {
 
-      return userUsername;
+      this.id = id;
    }
 
-   public void setUserUsername(String userUsername) {
+   public String getUsername() {
 
-      this.userUsername = userUsername;
+      return username;
    }
 
-   public String getUserName() {
+   public void setUsername(String username) {
 
-      return userName;
+      this.username = username;
    }
 
-   public void setUserName(String userName) {
+   public String getFname() {
 
-      this.userName = userName;
+      return fname;
    }
 
-   public String getUserSurname() {
+   public void setFname(String fname) {
 
-      return userSurname;
+      this.fname = fname;
    }
 
-   public void setUserSurname(String userSurname) {
+   public String getSname() {
 
-      this.userSurname = userSurname;
+      return sname;
    }
 
-   public Date getUserBirthday() {
+   public void setSname(String sname) {
 
-      return userBirthday;
+      this.sname = sname;
    }
 
-   public void setUserBirthday(Date userBirthday) {
+   public Date getBirthday() {
 
-      this.userBirthday = userBirthday;
+      return birthday;
+   }
+
+   public void setBirthday(Date birthday) {
+
+      this.birthday = birthday;
    }
 
    public String getPassword() {
@@ -183,7 +188,7 @@ public class UserDetails {
    public void addUserRole(Role role) {
 
       UserRole uRole = new UserRole();
-      uRole.setUserRole(role);
+      uRole.setRole(role);
       this.userRoles.add(uRole);
    }
 
