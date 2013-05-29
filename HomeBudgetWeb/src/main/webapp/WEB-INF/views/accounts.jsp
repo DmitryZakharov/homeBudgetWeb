@@ -18,8 +18,8 @@
                 <c:forEach items="${accountList}" var="account">
                     <tr>
                         <td><a href="<c:url value="accounts/${account.name}.html" />">${account.name}</a></td>
-                        <td>${account.executionDate}</td>
-                        <td>${account.owner.name}</td>
+                        <td>${account.dateOfCreation}</td>
+                        <td>${account.owner.fname}</td>
                         <td>${account.startingBalance}</td>
                     </tr>
                 </c:forEach>
