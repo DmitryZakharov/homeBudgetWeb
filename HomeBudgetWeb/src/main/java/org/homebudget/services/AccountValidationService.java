@@ -23,7 +23,7 @@ public class AccountValidationService implements IValidationService<Account> {
    }
 
    @Override
-   public void validate(Object target, Errors errors) {
+   public void validate(Account target, Errors errors, String username) {
 
       Account account = (Account) target;
       List<String> notEmptyFields = new ArrayList<String>();
@@ -33,8 +33,8 @@ public class AccountValidationService implements IValidationService<Account> {
       validateEmptyFields(notEmptyFields, errors);
 
       String accountName = account.getName();
-      String ownerUsername = account.getOwner().getUsername();
-      validateAccountName(accountName, ownerUsername, errors);
+      
+      validateAccountName(accountName, username, errors);
    }
 
    private void validateAccountName(String accountName, String ownerUsername, Errors errors) {

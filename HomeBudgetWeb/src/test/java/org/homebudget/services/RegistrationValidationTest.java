@@ -52,7 +52,7 @@ public class RegistrationValidationTest extends TestConfigurator {
       target.setEmail(INVALID_EMAIL);
       Errors errors = new BeanPropertyBindingResult(target, "userDetails");
 
-      instance.validate(target, errors);
+      instance.validate(target, errors, null);
       assertTrue(errors.hasErrors());
       assertNotNull(errors.getFieldError("email"));
    }
@@ -66,7 +66,7 @@ public class RegistrationValidationTest extends TestConfigurator {
       service.saveUserDetails(target);
       Errors errors = new BeanPropertyBindingResult(target, "userDetails");
 
-      instance.validate(target, errors);
+      instance.validate(target, errors, null);
       assertTrue(errors.hasErrors());
       assertNotNull(errors.getFieldError("email"));
       service.deleteUserDetails(target);
@@ -82,7 +82,7 @@ public class RegistrationValidationTest extends TestConfigurator {
       service.saveUserDetails(target);
       Errors errors = new BeanPropertyBindingResult(target, "userDetails");
 
-      instance.validate(target, errors);
+      instance.validate(target, errors,target.getUsername());
       assertTrue(errors.hasErrors());
       assertNotNull(errors.getFieldError("username"));
       service.deleteUserDetails(target);
@@ -99,7 +99,7 @@ public class RegistrationValidationTest extends TestConfigurator {
 
       Errors errors = new BeanPropertyBindingResult(target, "userDetails");
 
-      instance.validate(target, errors);
+      instance.validate(target, errors, target.getUsername());
       assertTrue(errors.hasErrors());
       assertNotNull(errors.getFieldError("password"));
    }
@@ -116,7 +116,7 @@ public class RegistrationValidationTest extends TestConfigurator {
 
       Errors errors = new BeanPropertyBindingResult(target, "userDetails");
 
-      instance.validate(target, errors);
+      instance.validate(target, errors,target.getUsername());
       assertFalse(errors.hasErrors());
 
    }

@@ -54,7 +54,7 @@ public class AccountValidationTest extends TestConfigurator {
       service.saveAccount(account, userName);
 
       Errors errors = new BeanPropertyBindingResult(account, "Account");
-      instance.validate(account, errors);
+      instance.validate(account, errors, userName);
       assertTrue(errors.hasErrors());
       assertNotNull(errors.getFieldError("name"));
    }
@@ -71,7 +71,7 @@ public class AccountValidationTest extends TestConfigurator {
       account.setName("AccountName1");
       account.setOwner(user);
       Errors errors = new BeanPropertyBindingResult(account, "Account");
-      instance.validate(account, errors);
+      instance.validate(account, errors, user.getUsername());
       assertTrue(errors.hasErrors());
       assertNotNull(errors.getFieldError("dateOfCreation"));
    }
@@ -89,7 +89,7 @@ public class AccountValidationTest extends TestConfigurator {
       account.setDateOfCreation(new Date());
       account.setOwner(user);
       Errors errors = new BeanPropertyBindingResult(account, "Account");
-      instance.validate(account, errors);
+      instance.validate(account, errors, userName);
       assertFalse(errors.hasErrors());
    }
 

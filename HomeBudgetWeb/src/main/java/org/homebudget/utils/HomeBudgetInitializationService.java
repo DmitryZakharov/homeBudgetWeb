@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.homebudget.dao.UserRoleRepository;
 import org.homebudget.model.Account;
 import org.homebudget.model.Category;
+import org.homebudget.model.Currency;
 import org.homebudget.model.Transaction;
 import org.homebudget.model.Transaction.TransactionType;
 import org.homebudget.model.UserDetails;
@@ -141,6 +142,7 @@ public class HomeBudgetInitializationService {
       account.setDateOfCreation(new Date());
       account.setOwner(user);
       account.setStartingBalance(0);
+            account.setCurrency(Currency.RUB);
       return account;
    }
 

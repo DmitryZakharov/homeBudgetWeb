@@ -54,7 +54,7 @@ public class RegistrationController extends AbstractController {
    public String registerUser(@Valid UserDetails userDetails, BindingResult result,
          HttpServletResponse response, Model model) {
 
-      aRegistrationValidation.validate(userDetails, result);
+      aRegistrationValidation.validate(userDetails, result, getSessionUser().getUsername());
       if (result.hasErrors()) {
          return "registration";
       }

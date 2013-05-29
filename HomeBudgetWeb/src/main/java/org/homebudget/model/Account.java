@@ -3,9 +3,12 @@ package org.homebudget.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+
 import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -45,31 +49,30 @@ public class Account {
    @ElementCollection(fetch = FetchType.EAGER)
    @JoinTable(name = "TRANSACTIONS", joinColumns = @JoinColumn(name = "ACCOUNT_ID"))
    @GenericGenerator(name = "hilo-gen", strategy = "hilo")
-   @CollectionId(columns = {@Column(name = "TRANSACTION_ID")}, generator = "hilo-gen", type = @Type(
-       type = "long"))
+   @CollectionId(columns = { @Column(name = "TRANSACTION_ID") }, generator = "hilo-gen", type = @Type(type = "long"))
    private Collection<Transaction> transactions = new ArrayList<Transaction>();
 
-   
+   @Enumerated(EnumType.STRING)
+   @Column(name = "CURRENCY")
+   private Currency currency;
+
    public long getId() {
-   
+
       return id;
    }
 
-   
    public String getName() {
-   
+
       return name;
    }
 
-   
    public void setId(long id) {
-   
+
       this.id = id;
    }
 
-   
    public void setName(String name) {
-   
+
       this.name = name;
    }
 
@@ -112,10 +115,20 @@ public class Account {
 
       this.transactions = transactions;
    }
-   
+
    public void addTransaction(Transaction transaction) {
 
       this.transactions.add(transaction);
+   }
+
+   public Currency getCurrency() {
+
+      return currency;
+   }
+
+   public void setCurrency(Currency currency) {
+
+      this.currency = currency;
    }
 
 }

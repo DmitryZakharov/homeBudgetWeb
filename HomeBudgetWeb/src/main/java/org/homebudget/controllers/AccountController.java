@@ -58,7 +58,7 @@ public class AccountController extends AbstractController {
    @RequestMapping(method = RequestMethod.POST)
    public String postAccount(@ModelAttribute("account") @Valid Account account, BindingResult result) {
 
-      aNewAccountValidation.validate(account, result);
+      aNewAccountValidation.validate(account, result, getSessionUser().getUsername());
       if (result.hasErrors()) {
          return "forward:new";
       }

@@ -22,7 +22,7 @@ public class UserValidationService implements IValidationService<UserDetails> {
    }
 
    @Override
-   public void validate(Object target, Errors errors) {
+   public void validate(UserDetails target, Errors errors, String username) {
 
       UserDetails aUserDetails = (UserDetails) target;
 
