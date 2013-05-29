@@ -3,25 +3,25 @@ package org.homebudget.model;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.Email;
 import org.homebudget.model.UserRole.Role;
 
 /**
  * @author dza
- * 
+ *
  */
 @Entity(name = "USER_DETAILS")
 public class UserDetails {
@@ -32,7 +32,6 @@ public class UserDetails {
    private long id;
 
    // @NotNull
-
    @Column(name = "USER_USERNAME")
    private String username;
 
@@ -43,7 +42,6 @@ public class UserDetails {
    private String sname;
 
    // @NotNull
-
    @Column(name = "PASSWORD")
    private String password;
 
@@ -51,7 +49,8 @@ public class UserDetails {
    private String confpassword;
 
    @ManyToMany(cascade = CascadeType.ALL)
-   @JoinTable(name = "USER_USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ROLE_ID"))
+   @JoinTable(name = "USER_USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"),
+       inverseJoinColumns = @JoinColumn(name = "USER_ROLE_ID"))
    private Set<UserRole> userRoles = new HashSet<UserRole>();
 
    @Column(name = "ENABLED")
@@ -66,18 +65,19 @@ public class UserDetails {
    @Temporal(javax.persistence.TemporalType.DATE)
    private Date birthday;
 
+   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+   private Document image;
+
    /**
     * Default constructor
     */
    public UserDetails() {
-
    }
 
    /**
     * Constructor
-    * 
-    * @param role
-    *           user role
+    *
+    * @param role user role
     */
    public UserDetails(UserRole.Role role) {
 
@@ -190,6 +190,14 @@ public class UserDetails {
       UserRole uRole = new UserRole();
       uRole.setRole(role);
       this.userRoles.add(uRole);
+   }
+
+   public Document getImage() {
+      return image;
+   }
+
+   public void setImage(Document image) {
+      this.image = image;
    }
 
 }
