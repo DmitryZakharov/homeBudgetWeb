@@ -1,9 +1,7 @@
 package org.homebudget.services;
 
 import java.util.List;
-
 import javax.annotation.Resource;
-
 import org.homebudget.dao.AccountRepository;
 import org.homebudget.dao.UserRepository;
 import org.homebudget.model.Account;
@@ -42,6 +40,11 @@ public class AccountManagementService {
          return account;
       }
       return null;
+   }
+   
+      
+   public void deleteAll(){
+      accountRepository.deleteAll();
    }
 
 }

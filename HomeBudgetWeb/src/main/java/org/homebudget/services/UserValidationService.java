@@ -1,5 +1,7 @@
 package org.homebudget.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Resource;
@@ -9,7 +11,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 
 @Service
-public class UserValidationService implements IValidationService<UserDetails>{
+public class UserValidationService implements IValidationService<UserDetails> {
 
    @Resource
    UserManagementService service;
@@ -59,16 +61,12 @@ public class UserValidationService implements IValidationService<UserDetails>{
    }
 
    private void validateEmptyFields(Errors errors) {
-
-      ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userUsername",
-            "registration.userUsername.empty");
-
-      ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "registration.email.empty");
-
-      ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "registration.password.empty");
-      ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confpassword",
-            "registration.password.empty");
-
+      List<String> notEmptyFields = new ArrayList<String>();
+      notEmptyFields.add("userUsername");
+      notEmptyFields.add("email");
+      notEmptyFields.add("password");
+      notEmptyFields.add("confpassword");
+      validateEmptyFields(notEmptyFields, errors);
    }
 
    private void validateUserUsername(String userUsername, Errors errors) {
@@ -83,6 +81,14 @@ public class UserValidationService implements IValidationService<UserDetails>{
          }
       }
 
+   }
+
+   @Override
+   public void validateEmptyFields(
+       Iterable<String> fields, Errors errors) {
+      for (String field : fields) {
+         ValidationUtils.rejectIfEmptyOrWhitespace(errors, field, "common.field.required");
+      }
    }
 
 }

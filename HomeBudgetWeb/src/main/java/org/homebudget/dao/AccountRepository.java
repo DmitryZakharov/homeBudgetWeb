@@ -18,5 +18,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
    public List<Account> findByOwner(UserDetails user);
    
    public Account findByAccountName(String accountName);
-
+   
 }
