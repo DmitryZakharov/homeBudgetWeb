@@ -1,20 +1,29 @@
 package org.homebudget.model;
 
+import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
-@Embeddable
-public class Transaction {
+@Entity(name = "TRANSACTION")
+public class Transaction implements Serializable {
+
+   @Id
+   @GeneratedValue
+   @Column(name = "TRANSACTION_ID")
+   private Long id;
 
    public static enum TransactionType {
 
@@ -43,6 +52,11 @@ public class Transaction {
    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
    @JoinColumn(name = "RESOURCE_ID")
    private BinaryResource attachedImage;
+
+   @ManyToOne(optional = false, fetch = FetchType.EAGER)
+   @JoinColumn(name = "ACCOUNT_ID")
+   @NotNull
+   private Account parent;
 
    public Date getExecutionDate() {
 
@@ -104,4 +118,21 @@ public class Transaction {
       this.comment = comment;
    }
 
+   public Long getId() {
+      return id;
+   }
+
+   public void setId(Long id) {
+      this.id = id;
+   }
+
+   public Account getParent() {
+      return parent;
+   }
+
+   public void setParent(Account parent) {
+      this.parent = parent;
+   }
+
+   
 }

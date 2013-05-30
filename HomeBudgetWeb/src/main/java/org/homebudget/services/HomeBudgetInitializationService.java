@@ -137,6 +137,7 @@ public class HomeBudgetInitializationService {
    private Account createTestAccount(UserDetails user) {
 
       final Account account = new Account();
+      account.setName("account for user " + user.getUsername());
       account.setDateOfCreation(new Date());
       account.setOwner(user);
       account.setStartingBalance(0);

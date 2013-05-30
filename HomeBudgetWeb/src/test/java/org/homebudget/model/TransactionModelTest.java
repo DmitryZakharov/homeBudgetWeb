@@ -4,15 +4,13 @@
  */
 package org.homebudget.model;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Date;
 import java.util.List;
-
 import org.homebudget.dao.AccountRepository;
 import org.homebudget.services.ResourceLoaderService;
 import org.homebudget.test.config.TestConfigurator;
-import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -30,8 +28,8 @@ public class TransactionModelTest extends TestConfigurator {
 
    }
 
-   @After
-   public void tearDown() {
+   @Before
+   public void setUp() {
 
       repository.deleteAll();
    }

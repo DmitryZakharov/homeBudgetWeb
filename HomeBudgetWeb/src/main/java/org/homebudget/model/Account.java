@@ -3,9 +3,8 @@ package org.homebudget.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,13 +12,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
-
-import org.hibernate.annotations.CollectionId;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
 @Entity(name = "ACCOUNT")
 public class Account {
@@ -46,10 +41,10 @@ public class Account {
    @Column(name = "STARTING_BALANCE")
    private float startingBalance;
 
-   @ElementCollection(fetch = FetchType.EAGER)
-   @JoinTable(name = "TRANSACTIONS", joinColumns = @JoinColumn(name = "ACCOUNT_ID"))
-   @GenericGenerator(name = "hilo-gen", strategy = "hilo")
-   @CollectionId(columns = { @Column(name = "TRANSACTION_ID") }, generator = "hilo-gen", type = @Type(type = "long"))
+   @OneToMany(
+       mappedBy = "parent",
+       fetch = FetchType.EAGER,
+       cascade = CascadeType.ALL)
    private Collection<Transaction> transactions = new ArrayList<Transaction>();
 
    @Enumerated(EnumType.STRING)
@@ -117,7 +112,7 @@ public class Account {
    }
 
    public void addTransaction(Transaction transaction) {
-
+      transaction.setParent(this);
       this.transactions.add(transaction);
    }
 
