@@ -31,7 +31,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3"><input type="submit" value="add account" /></td>
+                        <td colspan="3"><input type="submit" value="create" /></td>
                     </tr>
                 </table>
             </form:form>

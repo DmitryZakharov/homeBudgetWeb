@@ -82,7 +82,7 @@ public class HomeBudgetInitializationService {
 
          // account.getTransactions().add(transaction);
 
-         user.getUserRoles().add(uRole);
+         user.getRoles().add(uRole);
 
          userManagementService.saveUserDetails(user);
       }

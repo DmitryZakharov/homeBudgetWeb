@@ -1,5 +1,7 @@
 package org.homebudget.controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,13 +11,18 @@ import org.homebudget.model.Account;
 import org.homebudget.services.AccountManagementService;
 import org.homebudget.services.AccountValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 @RequestMapping("/accounts")
@@ -45,7 +52,7 @@ public class AccountController extends AbstractController {
             .getUsername());
 
       model.addAttribute(account);
-      return "account";
+      return "accountDetails";
    }
 
    @RequestMapping(value = "/new", method = RequestMethod.GET)
@@ -53,6 +60,21 @@ public class AccountController extends AbstractController {
 
       model.addAttribute(new Account());
       return "account";
+   }
+   
+   @RequestMapping(method = RequestMethod.DELETE)
+   public String deleteAccount(@ModelAttribute("account") @Valid Account account, BindingResult result) {
+
+      final String sessionUsername =  getSessionUser().getUsername();
+      
+      Account oldAccount = accountManagementService.getAccount(account.getId(), sessionUsername);
+
+      if(oldAccount == null)
+         return "redirect:accounts";
+      
+      accountManagementService.deleteAccount(oldAccount.getId());
+      
+      return "redirect:accounts";
    }
 
    @RequestMapping(method = RequestMethod.POST)
@@ -67,6 +89,23 @@ public class AccountController extends AbstractController {
          accountManagementService.saveAccount(account, getSessionUser().getUsername());
       }
       return "redirect:accounts";
+   }
+
+   @RequestMapping(method = RequestMethod.PUT)
+   @ResponseStatus(HttpStatus.NO_CONTENT)
+   public String updateAccountDetails(@Valid Account account, BindingResult result, Model model) {
+      
+      final String sessionUsername =  getSessionUser().getUsername();
+      
+      Account oldAccount = accountManagementService.getAccount(account.getId(), sessionUsername);
+
+      if(oldAccount == null)
+         return "redirect:accounts";
+      
+      accountManagementService.updateAccountDetails(oldAccount, account);
+      
+      return "redirect:accounts";
+
    }
 
    public AccountManagementService getAccountManagementService() {
@@ -87,6 +126,13 @@ public class AccountController extends AbstractController {
    public void setaNewAccountValidation(AccountValidationService aNewAccountValidation) {
 
       this.aNewAccountValidation = aNewAccountValidation;
+   }
+   
+   @InitBinder
+   protected void initBinder(WebDataBinder binder) {
+
+      SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+      binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
    }
 
 }

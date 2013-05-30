@@ -3,6 +3,7 @@ package org.homebudget.model;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,12 +17,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.Email;
-import org.homebudget.model.UserRole.Role;
 
 /**
  * @author dza
- *
+ * 
  */
 @Entity(name = "USER_DETAILS")
 public class UserDetails {
@@ -49,9 +50,8 @@ public class UserDetails {
    private String confpassword;
 
    @ManyToMany(cascade = CascadeType.ALL)
-   @JoinTable(name = "USER_USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"),
-       inverseJoinColumns = @JoinColumn(name = "USER_ROLE_ID"))
-   private Set<UserRole> userRoles = new HashSet<UserRole>();
+   @JoinTable(name = "USER_USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ROLE_ID"))
+   private Set<UserRole> roles = new HashSet<UserRole>();
 
    @Column(name = "ENABLED")
    private int enabled;
@@ -72,17 +72,19 @@ public class UserDetails {
     * Default constructor
     */
    public UserDetails() {
+
    }
 
    /**
     * Constructor
-    *
-    * @param role user role
+    * 
+    * @param role
+    *           user role
     */
    public UserDetails(UserRole.Role role) {
 
       UserRole aUserRole = new UserRole(role);
-      getUserRoles().add(aUserRole);
+      getRoles().add(aUserRole);
    }
 
    public long getId() {
@@ -175,28 +177,28 @@ public class UserDetails {
       this.email = email;
    }
 
-   public Set<UserRole> getUserRoles() {
+   public Set<UserRole> getRoles() {
 
-      return userRoles;
+      return roles;
    }
 
-   public void setUserRoles(Set<UserRole> userRoles) {
+   public void setRoles(Set<UserRole> roles) {
 
-      this.userRoles = userRoles;
+      this.roles = roles;
    }
 
-   public void addUserRole(Role role) {
+   public void addUserRole(UserRole role) {
 
-      UserRole uRole = new UserRole();
-      uRole.setRole(role);
-      this.userRoles.add(uRole);
+      this.roles.add(role);
    }
 
    public Document getImage() {
+
       return image;
    }
 
    public void setImage(Document image) {
+
       this.image = image;
    }
 
