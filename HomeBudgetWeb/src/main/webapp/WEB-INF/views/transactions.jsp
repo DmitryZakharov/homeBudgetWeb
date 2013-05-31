@@ -27,8 +27,9 @@
                   <td>${transaction.category.name}</td>
                   <td>${transaction.executionDate}</td>
                   <td>${transaction.amount}</td>
-                  <td class="center">
+                  <td>
                      <a href="<c:url value="accounts/${name}/transactions/${transaction.id}.html" />"><i class="icon-edit"/></a>
+                     
                      <form:form name="delete" method="delete" action="accounts/${name}/transactions/${transaction.id}.html">
                         <script lang="javascript">
                            function SubmitForm() {
