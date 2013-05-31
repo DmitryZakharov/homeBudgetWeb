@@ -47,7 +47,7 @@
 
 
          </table>
-         <a href="<c:url value="accounts/${transaction.parent.name}/transactions.html" />">create new transaction</a>
+         <a href="<c:url value="accounts/${transaction.parent.name}/transactions/new.html" />">create new transaction</a>
       </div> <!-- /container -->
    </jsp:body>
 </t:maintemplate>

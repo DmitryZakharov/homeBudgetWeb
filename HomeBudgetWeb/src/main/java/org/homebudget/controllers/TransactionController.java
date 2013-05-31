@@ -61,7 +61,7 @@ public class TransactionController extends AbstractController {
       return "transaction";
    }
 
-   @RequestMapping(value = "{name}/transactions", method = RequestMethod.GET)
+   @RequestMapping(value = "{name}/transactions/new", method = RequestMethod.GET)
    public String createTransaction(@PathVariable("name") String accountName, Model model) {
       Account account = getAccountForSessionUser(accountName);
       if (account == null) {
