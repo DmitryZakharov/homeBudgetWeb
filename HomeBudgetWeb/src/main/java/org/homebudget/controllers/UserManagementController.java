@@ -25,7 +25,7 @@ public class UserManagementController extends AbstractController {
    private UserManagementService userManagementService;
 
    @Autowired
-   private UserValidationService aRegistrationValidation;
+   private UserValidationService userValidationService;
 
    @RequestMapping(method = RequestMethod.GET)
    public String showUserProfile(Model model) {

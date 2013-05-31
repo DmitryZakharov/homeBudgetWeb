@@ -15,10 +15,10 @@
                                 <div class="input-prepend">
                                     <span class="add-on"><i class="icon-user"></i></span>
                                     <form:input type="text" class="input-xlarge" id="uname" name="uname"
-                                        placeholder="User Name" path="name" />
+                                        placeholder="User Name" path="username" />
                                 </div>
                                 <div class="text">
-                                    <form:errors class="text-error" path="name" />
+                                    <form:errors class="text-error" path="username" />
                                 </div>
                             </div>
                         </div>
