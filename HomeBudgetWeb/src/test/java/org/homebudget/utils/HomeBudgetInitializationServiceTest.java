@@ -89,7 +89,8 @@ public class HomeBudgetInitializationServiceTest extends TestConfigurator {
       aUserDetails.setEnabled(1);
       aUserDetails.setUsername("user" + j);
       aUserDetails.setPassword("password");
-      aUserDetails.addUserRole(UserRole.Role.USER_ROLE);
+      UserRole role = new UserRole(UserRole.Role.USER_ROLE);
+      aUserDetails.addUserRole(role);
       aUserManagementService.saveUserDetails(aUserDetails);
       return aUserDetails;
    }

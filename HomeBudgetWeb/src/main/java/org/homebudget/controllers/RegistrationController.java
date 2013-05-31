@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole.Role;
+import org.homebudget.services.UserManagementService;
 import org.homebudget.services.UserValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
