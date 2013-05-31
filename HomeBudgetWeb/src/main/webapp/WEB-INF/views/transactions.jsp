@@ -30,7 +30,7 @@
                   <td>${transaction.parent.name}</td>
                   <td>${transaction.amount}</td>
                   <td>
-                     <a href="<c:url value="accounts/${transaction.parent.name}/transactions/${transaction.id}.html" />"><i class="icon-edit"/></a>
+                     <a href="<c:url value="accounts/${transaction.parent.name}/transactions.html" />"><i class="icon-edit"/></a>
 
                      <form:form name="delete" method="delete" action="accounts/${transaction.parent.name}/transactions/${transaction.id}.html">
                         <script lang="javascript">
@@ -43,11 +43,9 @@
                      </form:form>
                   </td>
                </tr>
-            </c:forEach>
-
-
          </table>
          <a href="<c:url value="accounts/${transaction.parent.name}/transactions/new.html" />">create new transaction</a>
+      </c:forEach>
       </div> <!-- /container -->
    </jsp:body>
 </t:maintemplate>

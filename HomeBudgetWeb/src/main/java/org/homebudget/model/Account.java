@@ -15,9 +15,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import org.apache.log4j.Logger;
 
 @Entity(name = "ACCOUNT")
 public class Account {
+   
+   private static final Logger logger = Logger.getLogger(Account.class);
 
    @Id
    @Column(name = "ACCOUNT_ID")
@@ -123,6 +126,16 @@ public class Account {
    public void setCurrency(Currency currency) {
 
       this.currency = currency;
+   }
+   
+   public boolean hasTransaction(Long transactionId){
+      for(Transaction transaction : transactions){
+         if(transaction.getId() == transactionId){
+            return true;
+         }
+      }
+       logger.warn("Account " + name + " does not contain transaction with id " + transactionId);
+      return false;
    }
 
 }
