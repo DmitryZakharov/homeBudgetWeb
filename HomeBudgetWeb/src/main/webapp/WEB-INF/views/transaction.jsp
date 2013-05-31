@@ -4,7 +4,7 @@
 <t:maintemplate>
     <jsp:body>
         <div class="container">
-            <form:form method="POST" commandName="transaction" action="transactions.html">
+            <form:form method="POST" commandName="transaction" action="accounts/${transaction.parent.name}/transactions.html">
                 <table>
                     <tr><tr>
                         <td>new transaction information</td>

@@ -1,26 +1,19 @@
 package org.homebudget.controllers;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.validation.Valid;
-
 import org.homebudget.model.Account;
 import org.homebudget.model.Currency;
 import org.homebudget.services.AccountManagementService;
 import org.homebudget.services.AccountValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -140,11 +133,6 @@ public class AccountController extends AbstractController {
       this.accountValidationService = accountValidationService;
    }
 
-   @InitBinder
-   protected void initBinder(WebDataBinder binder) {
 
-      SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-      binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-   }
 
 }

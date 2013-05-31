@@ -14,16 +14,21 @@
                 <th>Date of Creation</th>
                 <th>Owner</th>
                 <th>Starting Balance</th>
- <th>Currency</th> <th></th><th>Actions</th>                </tr>
+                <th>Currency</th> 
+                <th></th>
+                       
+            </tr>
                 <c:forEach items="${accountList}" var="account">
                     <tr>
-                        <td><a href="<c:url value="transactions.html" />">${account.name}</a></td>
+                        <td><a href="<c:url value="accounts/${account.name}/transactions.html" />">${account.name}</a></td>
                         <td>${account.dateOfCreation}</td>
                         <td>${account.owner.fname}</td>
                         <td>${account.startingBalance}</td>
 					
                         <td>${account.currency}</td>
-                        <td>
+                         <td>
+                            <a href="<c:url value="accounts/${account.name}.html" />"><i class="icon-edit"/></a>
+                       
                         <form:form name="delete" method="delete" action="accounts/${account.name}.html">
                             <script lang="javascript">
                            		function SubmitForm() {
@@ -34,7 +39,7 @@
                             <i class="icon-trash" onclick="SubmitForm()"></i>
                         </form:form>
                         </td>
-					<td><a class="btn btn-small btn-warning" href="<c:url value="accounts/${account.name}.html" />">Edit</a></td>
+                    
                     </tr>
                 </c:forEach>
             </table>

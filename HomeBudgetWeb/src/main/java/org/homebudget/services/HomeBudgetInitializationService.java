@@ -127,6 +127,7 @@ public class HomeBudgetInitializationService {
 
       final Transaction transaction = new Transaction();
       transaction.setAmount(10);
+      transaction.setComment("comment");
       transaction.setCategory(category);
       transaction.setExecutionDate(new Date());
       transaction.setType(TransactionType.INCOME);
