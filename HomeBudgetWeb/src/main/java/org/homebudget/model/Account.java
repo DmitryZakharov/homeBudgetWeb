@@ -33,7 +33,6 @@ public class Account {
    @Column(name = "ACCOUNT_NAME")
    private String name;
 
-   // @NotBlank (message = "{account.creationdate.required}")
    @Column(name = "CREATION_DATE")
    @Temporal(javax.persistence.TemporalType.DATE)
    private Date dateOfCreation;
