@@ -1,11 +1,14 @@
 package org.homebudget.controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.homebudget.model.Account;
+import org.homebudget.model.Currency;
 import org.homebudget.services.AccountManagementService;
 import org.homebudget.services.AccountValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +53,10 @@ public class AccountController extends AbstractController {
 
    @RequestMapping(value = "/new", method = RequestMethod.GET)
    public String getAccount(Model model) {
+      
+     final List<Currency> currencyList = new ArrayList<Currency>( Arrays.asList(Currency.values() ));
 
+      model.addAttribute(currencyList);
       model.addAttribute(new Account());
       return "account";
    }
