@@ -86,13 +86,14 @@ public class AccountController extends AbstractController {
       return "redirect:";
    }
 
-   
-   @RequestMapping(value="new" ,method = RequestMethod.POST)
-   public String postAccount(@ModelAttribute("account") @Valid Account account,  BindingResult result, Model model) {
+   @RequestMapping(value = "new", method = RequestMethod.POST)
+   public String postAccount(@ModelAttribute("account") @Valid Account account,
+         BindingResult result, Model model) {
 
       accountValidationService.validate(account, result, getSessionUser().getUsername());
       if (result.hasErrors()) {
-         final List<Currency> currencyList = new ArrayList<Currency>(Arrays.asList(Currency.values()));
+         final List<Currency> currencyList = new ArrayList<Currency>(Arrays.asList(Currency
+               .values()));
          model.addAttribute(currencyList);
          return "account";
       }
@@ -112,7 +113,7 @@ public class AccountController extends AbstractController {
       Account oldAccount = accountManagementService.getAccount(account.getId(), sessionUsername);
 
       if (oldAccount == null) return "redirect:accounts";
-      
+
       accountManagementService.updateAccountDetails(oldAccount, account);
 
       return "redirect:accounts";
