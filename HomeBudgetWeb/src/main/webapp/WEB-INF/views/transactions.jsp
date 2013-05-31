@@ -17,17 +17,19 @@
                 <th>Account</th>
                 <th>Amount</th>
                 </tr>
-                <c:forEach items="${transactionList}" var="transaction">
+        <%--        <c:forEach items="${transactionList}" var="transaction">
                     <tr>
-                        <td><a href="<c:url value="transactions/${transaction.id}.html" />">${transaction.comment}</a></td>
+                        <td><a href="<c:url value="transactions/${transaction.comment}.html" />">${transaction.comment}</a></td>
                         
                         <td>${transaction.type}</td>
                         <td>${transaction.category.name}</td>
                         <td>${transaction.executionDate}</td>
-                        <td>${transaction.parent}</td>
+                        <td>${transaction.parent.name}</td>
                         <td>${transaction.amount}</td>
                     </tr>
                 </c:forEach>
+        
+        --%>
             </table>
             <a href="<c:url value="transactions/new" />">create new transaction</a>
         </div> <!-- /container -->

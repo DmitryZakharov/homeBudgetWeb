@@ -14,13 +14,15 @@
                 <th>Date of Creation</th>
                 <th>Owner</th>
                 <th>Starting Balance</th>
+                <th>Actions</th>
                 </tr>
                 <c:forEach items="${accountList}" var="account">
                     <tr>
-                        <td><a href="<c:url value="accounts/${account.name}.html" />">${account.name}</a></td>
+                        <td><a href="<c:url value="transactions.html" />">${account.name}</a></td>
                         <td>${account.dateOfCreation}</td>
                         <td>${account.owner.fname}</td>
                         <td>${account.startingBalance}</td>
+                         <td><a class="btn btn-small btn-warning" href="<c:url value="accounts/${account.name}.html" />">Edit</a></td>
                     </tr>
                 </c:forEach>
             </table>
