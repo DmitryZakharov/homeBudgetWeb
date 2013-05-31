@@ -10,8 +10,8 @@ import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole.Role;
-import org.homebudget.services.UserValidationService;
 import org.homebudget.services.UserManagementService;
+import org.homebudget.services.UserValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -31,7 +31,7 @@ public class RegistrationController extends AbstractController {
    private static final Logger gLogger = Logger.getLogger(RegistrationController.class);
 
    @Autowired
-   private UserValidationService aRegistrationValidation;
+   private UserValidationService userValidationService;
 
    @Resource
    private UserManagementService userManagementService;
@@ -54,7 +54,7 @@ public class RegistrationController extends AbstractController {
    public String registerUser(@Valid UserDetails userDetails, BindingResult result,
          HttpServletResponse response, Model model) {
 
-      aRegistrationValidation.validate(userDetails, result, "");
+      userValidationService.validate(userDetails, result, "");
       if (result.hasErrors()) {
          return "registration";
       }

@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class AccountController extends AbstractController {
 
    @Autowired
-   private AccountValidationService aNewAccountValidation;
+   private AccountValidationService accountValidationService;
 
    @Resource
    private AccountManagementService accountManagementService;
@@ -51,8 +51,8 @@ public class AccountController extends AbstractController {
    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
    public String getAccount(@PathVariable("name") String accountName, Model model) {
 
-      final List<Currency> currencyList = new ArrayList<Currency>( Arrays.asList(Currency.values() ));
-     
+      final List<Currency> currencyList = new ArrayList<Currency>(Arrays.asList(Currency.values()));
+
       final Account account = accountManagementService.getAccount(accountName, getSessionUser()
             .getUsername());
 
@@ -63,8 +63,8 @@ public class AccountController extends AbstractController {
 
    @RequestMapping(value = "/new", method = RequestMethod.GET)
    public String getAccount(Model model) {
-      
-      final List<Currency> currencyList = new ArrayList<Currency>( Arrays.asList(Currency.values() ));
+
+      final List<Currency> currencyList = new ArrayList<Currency>(Arrays.asList(Currency.values()));
 
       model.addAttribute(currencyList);
 
@@ -89,7 +89,7 @@ public class AccountController extends AbstractController {
    @RequestMapping(method = RequestMethod.POST)
    public String postAccount(@ModelAttribute("account") @Valid Account account, BindingResult result) {
 
-      aNewAccountValidation.validate(account, result, getSessionUser().getUsername());
+      accountValidationService.validate(account, result, getSessionUser().getUsername());
       if (result.hasErrors()) {
          return "forward:new";
       }
@@ -126,14 +126,14 @@ public class AccountController extends AbstractController {
       this.accountManagementService = accountManagementService;
    }
 
-   public AccountValidationService getaNewAccountValidation() {
+   public AccountValidationService getAccountValidationService() {
 
-      return aNewAccountValidation;
+      return accountValidationService;
    }
 
-   public void setaNewAccountValidation(AccountValidationService aNewAccountValidation) {
+   public void setAccountValidationService(AccountValidationService accountValidationService) {
 
-      this.aNewAccountValidation = aNewAccountValidation;
+      this.accountValidationService = accountValidationService;
    }
 
    @InitBinder
