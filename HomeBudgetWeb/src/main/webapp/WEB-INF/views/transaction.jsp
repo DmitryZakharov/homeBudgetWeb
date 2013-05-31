@@ -19,7 +19,7 @@
                     <tr>	
                         <td>
                             <form:label path="type">Type:</form:label>
-                            <form:input placeholder="INCOME" path="type" />
+                            <form:input path="type" />
                             <font color="red"><form:errors path="type" /></font>
                         </td>
                     </tr>

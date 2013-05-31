@@ -8,7 +8,7 @@
    <jsp:body>
       <div class="container">
          <h1>List Of Transactions</h1>
-         <table title="List Of Transactions" class="table table-striped table-condensed">
+         <table title="List Of Transactions" class="table table-striped table-condensed table-bordered">
             <tr>
                <th></th>
                <th>Transaction Comment</th>
@@ -47,9 +47,10 @@
                      </form:form>
                   </td>
                </tr>
+            </c:forEach>
             </table>
 
-         </c:forEach>
+         
       </div> <!-- /container -->
       <a href="<c:url value="accounts/${name}/transactions/new.html" />">create new transaction</a>
    </jsp:body>
