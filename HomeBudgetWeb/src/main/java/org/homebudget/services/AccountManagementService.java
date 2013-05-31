@@ -66,6 +66,10 @@ public class AccountManagementService {
    public void deleteAccount(long id){
       accountRepository.delete(id);
    }
+   
+   public void deleteAccount(Account account){
+      accountRepository.delete(account);
+   }
 
    public void deleteAll() {
 

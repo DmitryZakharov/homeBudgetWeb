@@ -39,17 +39,6 @@
                     </tr>
                 </table>
             </form:form>
-            <form:form name="delete" method="delete" commandName="account" action="accounts.html">
-                <form:input type="hidden" name="_method" value="delete" path="" />
-                <form:input type="hidden" name="id" path="id" />
-                <script lang="javascript">
-                    function SubmitForm() {
-                        document.forms['delete']
-                        .submit();
-                        }
-                </script>
-            <i class="icon-trash" onclick="SubmitForm()"></i>
-            </form:form>
         </div> <!-- /container -->
     </jsp:body>
 </t:maintemplate>

@@ -62,19 +62,20 @@ public class AccountController extends AbstractController {
       return "account";
    }
    
-   @RequestMapping(method = RequestMethod.DELETE)
-   public String deleteAccount(@ModelAttribute("account") @Valid Account account, BindingResult result) {
+   
+   @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
+   public String deleteAccount(@PathVariable("name") String accountName) {
 
       final String sessionUsername =  getSessionUser().getUsername();
       
-      Account oldAccount = accountManagementService.getAccount(account.getId(), sessionUsername);
+      final Account account = accountManagementService.getAccount(accountName, sessionUsername);
 
-      if(oldAccount == null)
-         return "redirect:accounts";
+      if(account == null)
+         return "redirect:";
       
-      accountManagementService.deleteAccount(oldAccount.getId());
+      accountManagementService.deleteAccount(account);
       
-      return "redirect:accounts";
+      return "redirect:";
    }
 
    @RequestMapping(method = RequestMethod.POST)

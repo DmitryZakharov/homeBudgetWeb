@@ -126,6 +126,7 @@ html,body {
                         <ul class="nav nav-list">
                             <li class="nav-header">Manage Accounts</li>
                             <li><a href="accounts">accounts</a></li>
+                            <li><a href="<c:url value="accounts/new" />">add new</a></li>
                             <li class="nav-header">Plan expenses</li>
                             <li><a href="#">Link</a></li>
                             <li class="nav-header">Budget Planing</li>
