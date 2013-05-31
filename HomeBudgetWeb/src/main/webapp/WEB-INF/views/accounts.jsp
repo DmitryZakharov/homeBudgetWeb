@@ -14,6 +14,7 @@
                 <th>Date of Creation</th>
                 <th>Owner</th>
                 <th>Starting Balance</th>
+                <th>Currency</th>
                 <th></th>
                 </tr>
                 <c:forEach items="${accountList}" var="account">
@@ -22,6 +23,7 @@
                         <td>${account.dateOfCreation}</td>
                         <td>${account.owner.fname}</td>
                         <td>${account.startingBalance}</td>
+                        <td>${account.currency}</td>
                         <td>
                         <form:form name="delete" method="delete" action="accounts/${account.name}.html">
                             <script lang="javascript">

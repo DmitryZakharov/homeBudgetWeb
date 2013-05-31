@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <t:maintemplate>
     <jsp:body>
@@ -32,6 +33,13 @@
                             <form:label path="startingBalance">Starting Balance:</form:label>
                             <form:input path="startingBalance" />					
                             <font color="red"><form:errors path="startingBalance" /></font>
+                        </td>
+                    </tr>
+                      <tr>
+                        <td>
+                            <form:label path="currency">Currency:</form:label>
+                            <form:select path="currency" items="${currencyList}"  />
+                            <font color="red"><form:errors path="currency" /></font>
                         </td>
                     </tr>
                     <tr>

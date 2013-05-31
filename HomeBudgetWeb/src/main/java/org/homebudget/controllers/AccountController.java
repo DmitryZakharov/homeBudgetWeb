@@ -1,6 +1,8 @@
 package org.homebudget.controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -49,9 +51,12 @@ public class AccountController extends AbstractController {
    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
    public String getAccount(@PathVariable("name") String accountName, Model model) {
 
+      final List<Currency> currencyList = new ArrayList<Currency>( Arrays.asList(Currency.values() ));
+     
       final Account account = accountManagementService.getAccount(accountName, getSessionUser()
             .getUsername());
 
+      model.addAttribute(currencyList);
       model.addAttribute(account);
       return "accountDetails";
    }
@@ -59,26 +64,25 @@ public class AccountController extends AbstractController {
    @RequestMapping(value = "/new", method = RequestMethod.GET)
    public String getAccount(Model model) {
       
-     final List<Currency> currencyList = new ArrayList<Currency>( Arrays.asList(Currency.values() ));
+      final List<Currency> currencyList = new ArrayList<Currency>( Arrays.asList(Currency.values() ));
 
       model.addAttribute(currencyList);
+
       model.addAttribute(new Account());
       return "account";
    }
-   
-   
+
    @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
    public String deleteAccount(@PathVariable("name") String accountName) {
 
-      final String sessionUsername =  getSessionUser().getUsername();
-      
+      final String sessionUsername = getSessionUser().getUsername();
+
       final Account account = accountManagementService.getAccount(accountName, sessionUsername);
 
-      if(account == null)
-         return "redirect:";
-      
+      if (account == null) return "redirect:";
+
       accountManagementService.deleteAccount(account);
-      
+
       return "redirect:";
    }
 
@@ -99,16 +103,15 @@ public class AccountController extends AbstractController {
    @RequestMapping(method = RequestMethod.PUT)
    @ResponseStatus(HttpStatus.NO_CONTENT)
    public String updateAccountDetails(@Valid Account account, BindingResult result, Model model) {
-      
-      final String sessionUsername =  getSessionUser().getUsername();
-      
+
+      final String sessionUsername = getSessionUser().getUsername();
+
       Account oldAccount = accountManagementService.getAccount(account.getId(), sessionUsername);
 
-      if(oldAccount == null)
-         return "redirect:accounts";
-      
+      if (oldAccount == null) return "redirect:accounts";
+
       accountManagementService.updateAccountDetails(oldAccount, account);
-      
+
       return "redirect:accounts";
 
    }
@@ -132,7 +135,7 @@ public class AccountController extends AbstractController {
 
       this.aNewAccountValidation = aNewAccountValidation;
    }
-   
+
    @InitBinder
    protected void initBinder(WebDataBinder binder) {
 
