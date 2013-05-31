@@ -5,7 +5,7 @@
 <t:maintemplate>
     <jsp:body>
         <div class="container">
-            <form:form method="POST" commandName="account" action="accounts.html">
+            <form:form method="POST" commandName="account" action="accounts/new.html">
                 <table>
                     <tr><tr>
                         <td>new account information</td>
