@@ -18,21 +18,25 @@
                <th>Account</th>
                <th>Amount</th>
                <th></th>
+               <th></th>
             </tr>
             <c:forEach items="${transactionList}" var="transaction">
                <tr>
 
-                  <td><span class="badge"><a href="<c:url value="accounts/${transaction.parent.name}/transactions/${transaction.id}.html" />">${transaction.id}</a></span></td>
+                  <td><span class="badge"><a href="<c:url value="accounts/${name}/transactions/${transaction.id}.html" />">${transaction.id}</a></span></td>
                   <td>${transaction.comment}</td>
                   <td>${transaction.type}</td>
                   <td>${transaction.category.name}</td>
                   <td>${transaction.executionDate}</td>
-                  <td>${transaction.parent.name}</td>
+                  <td>
+                     <a href="<c:url value="accounts/${name}.html" />">${name}</a>
+                  </td>
                   <td>${transaction.amount}</td>
                   <td>
-                     <a href="<c:url value="accounts/${transaction.parent.name}/transactions.html" />"><i class="icon-edit"/></a>
-
-                     <form:form name="delete" method="delete" action="accounts/${transaction.parent.name}/transactions/${transaction.id}.html">
+                     <a href="<c:url value="accounts/${name}/transactions/${transaction.id}.html" />"><i class="icon-edit"/></a>
+                  </td>
+                  <td>
+                     <form:form name="delete" method="delete" action="accounts/${name}/transactions/${transaction.id}.html">
                         <script lang="javascript">
                            function SubmitForm() {
                               document.forms['delete']
@@ -43,9 +47,10 @@
                      </form:form>
                   </td>
                </tr>
-         </table>
-         <a href="<c:url value="accounts/${transaction.parent.name}/transactions/new.html" />">create new transaction</a>
-      </c:forEach>
+            </table>
+
+         </c:forEach>
       </div> <!-- /container -->
+      <a href="<c:url value="accounts/${name}/transactions/new.html" />">create new transaction</a>
    </jsp:body>
 </t:maintemplate>

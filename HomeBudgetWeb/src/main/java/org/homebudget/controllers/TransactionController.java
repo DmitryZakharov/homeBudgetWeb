@@ -3,6 +3,7 @@ package org.homebudget.controllers;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import org.homebudget.model.Account;
 import org.homebudget.model.Transaction;
 import org.homebudget.services.AccountManagementService;
 import org.homebudget.services.TransactionManagementService;
@@ -90,14 +91,15 @@ public class TransactionController extends AbstractController {
    public String postTransaction(@PathVariable("name") String accountName, @ModelAttribute(
        "transaction") @Valid Transaction transaction,
        BindingResult result, Model model) {
-     boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().getUsername(), transaction.getId());
+     boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().getUsername());
      if(!isAuthorized){
         return "redirect:";
-     } 
-     transactionValidation.validate(transaction, result, getSessionUser().getUsername());
-      if (result.hasErrors()) {
-         return "forward:new";
-      }
+     }
+     Account account = accountManagementService.getAccount(accountName, getSessionUser().getUsername());
+   //  transactionValidation.validate(transaction, result, getSessionUser().getUsername());
+//      if (result.hasErrors()) {
+//         return "redirect:";
+//      }
       transactionManagementService.saveTransaction(transaction, accountName);
 
       return "redirect:";

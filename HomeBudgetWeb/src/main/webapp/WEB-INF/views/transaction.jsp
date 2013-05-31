@@ -4,7 +4,7 @@
 <t:maintemplate>
     <jsp:body>
         <div class="container">
-            <form:form method="POST" commandName="transaction" action="accounts/${transaction.parent.name}/transactions.html">
+            <form:form method="POST" commandName="transaction" action="accounts/${name}/transactions/new.html">
                 <table>
                     <tr><tr>
                         <td>new transaction information</td>
@@ -14,6 +14,13 @@
                             <form:label path="comment">Transaction Comment:</form:label>
                             <form:input path="comment" />
                             <font color="red"><form:errors path="comment" /></font>
+                        </td>
+                    </tr>
+                    <tr>	
+                        <td>
+                            <form:label path="type">Type:</form:label>
+                            <form:input placeholder="INCOME" path="type" />
+                            <font color="red"><form:errors path="type" /></font>
                         </td>
                     </tr>
                     <tr>
