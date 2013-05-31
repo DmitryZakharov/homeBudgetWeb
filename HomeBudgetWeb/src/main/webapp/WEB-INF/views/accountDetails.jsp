@@ -10,7 +10,6 @@
               <form:input type="hidden" name="id" path="id" />
                 <table>
                     <tr>
-                    
                     <tr>
                         <td>Account Details</td>
                     </tr>
