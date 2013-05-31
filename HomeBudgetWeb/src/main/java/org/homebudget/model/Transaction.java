@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
 @Entity(name = "TRANSACTION")
 public class Transaction implements Serializable {
@@ -55,7 +54,6 @@ public class Transaction implements Serializable {
 
    @ManyToOne(optional = false, fetch = FetchType.EAGER)
    @JoinColumn(name = "ACCOUNT_ID")
-   @NotNull
    private Account parent;
 
    public Date getExecutionDate() {

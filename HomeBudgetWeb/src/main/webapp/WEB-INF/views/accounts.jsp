@@ -26,7 +26,7 @@
                         <td>${account.startingBalance}</td>
 					
                         <td>${account.currency}</td>
-                         <td>
+                         <td class="center">
                             <a href="<c:url value="accounts/${account.name}.html" />"><i class="icon-edit"/></a>
                        
                         <form:form name="delete" method="delete" action="accounts/${account.name}.html">

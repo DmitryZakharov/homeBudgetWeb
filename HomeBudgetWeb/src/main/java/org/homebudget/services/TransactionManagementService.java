@@ -61,7 +61,7 @@ public class TransactionManagementService {
    }
 
    public void updateTransactionDetails(Transaction oldTransaction, Transaction newTransaction) {
-      BeanUtils.copyProperties(newTransaction, oldTransaction, new String[] { "id", "parent" });
+      BeanUtils.copyProperties(newTransaction, oldTransaction, new String[]{"id", "parent"});
       transactionRepository.save(oldTransaction);
    }
    

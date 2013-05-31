@@ -57,8 +57,12 @@ public class TransactionController extends AbstractController {
       final Transaction transaction = transactionManagementService.getTransaction(transactionId);
 
       model.addAttribute(transaction);
-      return "transaction";
+      return "transactionDetails";
    }
+   
+
+
+   
 
    @RequestMapping(value = "{name}/transactions/new", method = RequestMethod.GET)
    public String createTransaction(@PathVariable("name") String accountName, Model model) {
@@ -107,7 +111,7 @@ public class TransactionController extends AbstractController {
 
    @RequestMapping(value = "{name}/transactions", method = RequestMethod.PUT)
    @ResponseStatus(HttpStatus.NO_CONTENT)
-   public String updateTransactionDetails(@Valid Transaction transaction, @PathVariable("name") String accountName,
+   public String updateTransactionDetails(Transaction transaction, @PathVariable("name") String accountName,
        BindingResult result,
        Model model) {
       
@@ -122,7 +126,6 @@ public class TransactionController extends AbstractController {
       if (oldTransaction == null) {
          return "redirect:transactions";
       }
-
       transactionManagementService.updateTransactionDetails(oldTransaction, transaction);
 
       return "redirect:transactions";

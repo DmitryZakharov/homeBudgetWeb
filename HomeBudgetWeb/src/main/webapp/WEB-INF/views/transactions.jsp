@@ -7,17 +7,15 @@
 <t:maintemplate>
    <jsp:body>
       <div class="container">
-         <h1>List Of Transactions</h1>
-         <table title="List Of Transactions" class="table table-striped table-condensed table-bordered">
+         <h1>List Of Transactions for: <a href="<c:url value="accounts/${name}.html" />">${name}</a></h1>
+         <table title="List Of Transactions" class="table table-striped table-condensed">
             <tr>
                <th></th>
                <th>Transaction Comment</th>
                <th>Transaction Type</th>
                <th>Transaction Category</th>
                <th>Date of Creation</th>
-               <th>Account</th>
                <th>Amount</th>
-               <th></th>
                <th></th>
             </tr>
             <c:forEach items="${transactionList}" var="transaction">
@@ -28,14 +26,9 @@
                   <td>${transaction.type}</td>
                   <td>${transaction.category.name}</td>
                   <td>${transaction.executionDate}</td>
-                  <td>
-                     <a href="<c:url value="accounts/${name}.html" />">${name}</a>
-                  </td>
                   <td>${transaction.amount}</td>
-                  <td>
+                  <td class="center">
                      <a href="<c:url value="accounts/${name}/transactions/${transaction.id}.html" />"><i class="icon-edit"/></a>
-                  </td>
-                  <td>
                      <form:form name="delete" method="delete" action="accounts/${name}/transactions/${transaction.id}.html">
                         <script lang="javascript">
                            function SubmitForm() {
