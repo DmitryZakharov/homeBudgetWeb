@@ -14,6 +14,7 @@
                 <th>Date of Creation</th>
                 <th>Owner</th>
                 <th>Starting Balance</th>
+                <th></th>
                 </tr>
                 <c:forEach items="${accountList}" var="account">
                     <tr>
@@ -21,10 +22,20 @@
                         <td>${account.dateOfCreation}</td>
                         <td>${account.owner.fname}</td>
                         <td>${account.startingBalance}</td>
+                        <td>
+                        <form:form name="delete" method="delete" action="accounts/${account.name}.html">
+                            <script lang="javascript">
+                           		function SubmitForm() {
+                                	document.forms['delete']
+                                	.submit();
+                                }
+                        	</script>
+                            <i class="icon-trash" onclick="SubmitForm()"></i>
+                        </form:form>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>
-            <a href="<c:url value="accounts/new" />">create new account</a>
         </div> <!-- /container -->
     </jsp:body>
 </t:maintemplate>

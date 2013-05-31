@@ -1,7 +1,9 @@
 package org.homebudget.services;
 
 import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.apache.log4j.Logger;
 import org.homebudget.dao.UserRepository;
 import org.homebudget.dao.UserRoleRepository;
@@ -44,7 +46,7 @@ public class UserManagementService {
 
    @Transactional
    public void deleteAllUserDetails() {
-      
+
       userRepositoryDao.deleteAll();
    }
 
@@ -65,7 +67,7 @@ public class UserManagementService {
          // fails, user must be notified.
          aUserDetails.setPassword(userPassword);
       }
-      aUserDetails.addUserRole(UserRole.Role.USER_ROLE);
+      aUserDetails.addUserRole(userRoleRepository.findByRole(UserRole.Role.USER_ROLE));
       // TODO: set to 0, when email confirmation is implemented
       aUserDetails.setEnabled(1);
       mailService.sendConfirmation(aUserDetails);
@@ -89,8 +91,8 @@ public class UserManagementService {
 
    public void updateUserDetails(UserDetails oldUserDetails, UserDetails newUserDetails) {
 
-      BeanUtils.copyProperties(newUserDetails, oldUserDetails, new String[]{"password", "userId",
-         "userRoles", "enabled"});
+      BeanUtils.copyProperties(newUserDetails, oldUserDetails, new String[] { "password", "id",
+            "roles", "enabled" });
       final String userPassword = newUserDetails.getPassword();
       try {
          final String passwordHash = PasswordService.getHash(newUserDetails.getPassword());
