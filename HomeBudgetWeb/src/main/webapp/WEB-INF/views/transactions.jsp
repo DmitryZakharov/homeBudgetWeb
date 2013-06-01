@@ -43,9 +43,7 @@
                </tr>
             </c:forEach>
             </table>
-
-         
-      </div> <!-- /container -->
       <a href="<c:url value="accounts/${name}/transactions/new.html" />">create new transaction</a>
+      </div> <!-- /container -->
    </jsp:body>
 </t:maintemplate>

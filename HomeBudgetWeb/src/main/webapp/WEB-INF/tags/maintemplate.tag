@@ -129,6 +129,8 @@ html,body {
                             <li><a href="<c:url value="accounts/new" />">add new</a></li>
                             <li class="nav-header">Plan expenses</li>
                             <li><a href="#">Link</a></li>
+                            <li class="nav-header">Reports</li>
+                            <li><a href="#">create report</a></li>
                             <li class="nav-header">Budget Planing</li>
                             <li><a href="#">Link</a></li>
                             <li><a href="#">Link</a></li>
@@ -142,7 +144,7 @@ html,body {
                 <!--/span-->
                 <!-- END OF NAVIGATION PANAL -->
                 <!-- MAIN FIELD -->
-                <div class="span9">
+                <div class="span7">
                     <div class="bs-docs-example">
                         <div id="body">
                             <jsp:doBody />

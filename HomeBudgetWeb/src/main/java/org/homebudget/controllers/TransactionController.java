@@ -1,10 +1,14 @@
 package org.homebudget.controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import org.homebudget.model.Account;
+import org.homebudget.model.Currency;
 import org.homebudget.model.Transaction;
+import org.homebudget.model.Transaction.TransactionType;
 import org.homebudget.services.AccountManagementService;
 import org.homebudget.services.TransactionManagementService;
 import org.homebudget.services.TransactionValidationService;
@@ -55,7 +59,7 @@ public class TransactionController extends AbstractController {
          return "redirect:";
       }
       final Transaction transaction = transactionManagementService.getTransaction(transactionId);
-
+      
       model.addAttribute(transaction);
       return "transactionDetails";
    }
@@ -70,6 +74,10 @@ public class TransactionController extends AbstractController {
       if (!isAuthorized) {
          return "redirect:";
       }
+      
+      final List<TransactionType> transactionTypeList = new ArrayList<TransactionType>(Arrays.asList(TransactionType.values()));
+
+      model.addAttribute(transactionTypeList);
       model.addAttribute(new Transaction());
       return "transaction";
    }
