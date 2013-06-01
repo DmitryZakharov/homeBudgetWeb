@@ -16,8 +16,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.transaction.annotation.Transactional;
+
 @Entity(name = "TRANSACTION")
 public class Transaction implements Serializable {
+
+   private static final long serialVersionUID = -5210927811826634768L;
 
    @Id
    @GeneratedValue
@@ -52,8 +56,8 @@ public class Transaction implements Serializable {
    @JoinColumn(name = "RESOURCE_ID")
    private BinaryResource attachedImage;
 
-   @ManyToOne(optional = false, fetch = FetchType.EAGER)
-   @JoinColumn(name = "ACCOUNT_ID")
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "ACCOUNT_ID", nullable = false)
    private Account parent;
 
    public Date getExecutionDate() {

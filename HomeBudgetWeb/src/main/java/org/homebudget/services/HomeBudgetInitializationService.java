@@ -28,6 +28,9 @@ public class HomeBudgetInitializationService {
 
    @Resource
    UserRoleRepository userRoleRepository;
+   
+   @Resource
+   private TransactionManagementService transactionManagementService;
 
    private boolean executed = false;
 
@@ -78,11 +81,11 @@ public class HomeBudgetInitializationService {
          logger.info("Creating transaction: " + transaction.getAmount());
 
          account.addTransaction(transaction);
-
+         
          user.getRoles().add(uRole);
-
          userManagementService.saveUserDetails(user);
          accountManagementService.saveAccount(account, user.getUsername());
+        // transactionManagementService.saveTransaction(transaction, account.getName());
       }
    }
 

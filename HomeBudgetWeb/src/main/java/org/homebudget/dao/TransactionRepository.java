@@ -5,6 +5,7 @@ import org.homebudget.model.Account;
 import org.homebudget.model.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Repository for Transactions
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
  * @see http://static.springsource.org/spring-data/commons/docs/current/reference/html/repositories.html
  */
 @Repository
+@Transactional
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
    public List<Transaction> findByParent(Account account);

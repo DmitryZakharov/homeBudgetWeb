@@ -5,6 +5,7 @@ import org.homebudget.model.Account;
 import org.homebudget.model.UserDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Repository for Accounts
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
  * @see http://static.springsource.org/spring-data/commons/docs/current/reference/html/repositories.html
  */
 @Repository
+@Transactional
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
    public List<Account> findByOwner(UserDetails user);

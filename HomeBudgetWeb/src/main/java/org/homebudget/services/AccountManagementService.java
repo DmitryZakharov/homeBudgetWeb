@@ -36,6 +36,11 @@ public class AccountManagementService {
       accountRepository.save(oldAccount);
 
    }
+   
+   public void updateAccount(Account account){
+      accountRepository.save(account);
+
+   }
 
    public List<Account> getAllUserAccounts(String username) {
 

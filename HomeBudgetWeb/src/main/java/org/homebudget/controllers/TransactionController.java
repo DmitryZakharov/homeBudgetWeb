@@ -82,11 +82,19 @@ public class TransactionController extends AbstractController {
          return "redirect:";
       }
       final Transaction transaction = transactionManagementService.getTransaction(transactionId);
+      
+    transaction.getParent().getTransactions().remove(transaction);
+    
+    
+    accountManagementService.updateAccount( transaction.getParent());
+
+   // transactionManagementService.deleteTransaction(transactionId);
+    
       if (transaction == null) {
          return "redirect:";
       }
 
-      transactionManagementService.deleteTransaction(transaction);
+
 
       return "redirect:";
    }
