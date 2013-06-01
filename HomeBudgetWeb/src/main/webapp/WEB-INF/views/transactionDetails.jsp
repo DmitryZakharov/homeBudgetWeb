@@ -23,7 +23,7 @@
                <tr>	
                   <td>
                      <form:label path="type">Type:</form:label>
-                     <form:input path="type" />
+                     <form:select path="type" items="${transactionTypeList}"  />
                      <font color="red"><form:errors path="type" /></font>
                   </td>
                </tr>
