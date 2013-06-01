@@ -2,6 +2,7 @@ package org.homebudget.model;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.springframework.transaction.annotation.Transactional;
 
 @Entity(name = "TRANSACTION")
 public class Transaction implements Serializable {
@@ -121,20 +120,23 @@ public class Transaction implements Serializable {
    }
 
    public Long getId() {
+
       return id;
    }
 
    public void setId(Long id) {
+
       this.id = id;
    }
 
    public Account getParent() {
+
       return parent;
    }
 
    public void setParent(Account parent) {
+
       this.parent = parent;
    }
 
-   
 }

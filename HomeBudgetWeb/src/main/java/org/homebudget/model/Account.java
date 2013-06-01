@@ -3,7 +3,6 @@ package org.homebudget.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,12 +16,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
 @Entity(name = "ACCOUNT")
 public class Account {
-   
+
    private static final Logger logger = Logger.getLogger(Account.class);
 
    @Id
@@ -46,8 +46,7 @@ public class Account {
    @Column(name = "STARTING_BALANCE")
    private float startingBalance;
 
-
-   @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL, orphanRemoval= true, mappedBy="parent")
+   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "parent")
    private Collection<Transaction> transactions = new ArrayList<Transaction>();
 
    @Enumerated(EnumType.STRING)
@@ -116,6 +115,7 @@ public class Account {
    }
 
    public void addTransaction(Transaction transaction) {
+
       transaction.setParent(this);
       this.transactions.add(transaction);
    }
@@ -129,15 +129,16 @@ public class Account {
 
       this.currency = currency;
    }
-   
-   public boolean hasTransaction(Long transactionId){
-     final Collection<Transaction> transactions = getTransactions();
-      for(Transaction transaction : transactions){
-         if(transaction.getId() == transactionId){
+
+   public boolean hasTransaction(Long transactionId) {
+
+      final Collection<Transaction> transactions = getTransactions();
+      for (Transaction transaction : transactions) {
+         if (transaction.getId() == transactionId) {
             return true;
          }
       }
-       logger.warn("Account " + name + " does not contain transaction with id " + transactionId);
+      logger.warn("Account " + name + " does not contain transaction with id " + transactionId);
       return false;
    }
 
