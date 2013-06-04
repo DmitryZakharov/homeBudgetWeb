@@ -66,10 +66,11 @@ public class UserManagementService {
       catch (Exception e) {// with is a hack. Must be removed. If hashing
          // fails, user must be notified.
          aUserDetails.setPassword(userPassword);
+         gLogger.error("Failed to create hash from password", e);
       }
       aUserDetails.addUserRole(userRoleRepository.findByRole(UserRole.Role.USER_ROLE));
       // TODO: set to 0, when email confirmation is implemented
-      aUserDetails.setEnabled(1);
+      aUserDetails.getMetadata().setEnabled(1);
       mailService.sendConfirmation(aUserDetails);
       saveUserDetails(aUserDetails);
    }
@@ -101,6 +102,7 @@ public class UserManagementService {
       catch (Exception e) {// with is a hack. Must be removed. If hashing
          // fails, user must be notified.
          oldUserDetails.setPassword(userPassword);
+         gLogger.error("Failed to create hash from password", e);
       }
       userRepositoryDao.save(oldUserDetails);
 

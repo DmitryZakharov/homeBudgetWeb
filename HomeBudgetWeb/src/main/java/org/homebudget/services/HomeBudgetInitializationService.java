@@ -109,7 +109,7 @@ public class HomeBudgetInitializationService {
       user.setEmail("some" + i + "@email.com");
       Date birthday = new Date();
       user.setBirthday(birthday);
-      user.setEnabled(1);
+      user.getMetadata().setEnabled(1);
       try {
          String password = "000" + i;
          if (i == 0) {

@@ -51,9 +51,6 @@ public class UserDetails {
    @JoinTable(name = "USER_USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ROLE_ID"))
    private Set<UserRole> roles = new HashSet<UserRole>();
 
-   @Column(name = "ENABLED")
-   private int enabled;
-
    @NotNull
    @Email
    @Column(name = "EMAIL")
@@ -66,11 +63,15 @@ public class UserDetails {
    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
    private BinaryResource userPic;
 
+   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL,  orphanRemoval = true)
+   @JoinColumn(name = "METADATA_ID")
+   private UserMetadata metadata;
+   
    /**
     * Default constructor
     */
    public UserDetails() {
-
+      this.metadata = new UserMetadata();
    }
 
    /**
@@ -155,16 +156,6 @@ public class UserDetails {
       this.confpassword = confpassword;
    }
 
-   public int getEnabled() {
-
-      return enabled;
-   }
-
-   public void setEnabled(int enabled) {
-
-      this.enabled = enabled;
-   }
-
    public String getEmail() {
 
       return email;
@@ -196,6 +187,18 @@ public class UserDetails {
 
    public void setUserPic(BinaryResource userPic) {
       this.userPic = userPic;
+   }
+
+   
+   public UserMetadata getMetadata() {
+   
+      return metadata;
+   }
+
+   
+   public void setMetadata(UserMetadata metadata) {
+   
+      this.metadata = metadata;
    }
 
 

@@ -86,7 +86,7 @@ public class HomeBudgetInitializationServiceTest extends TestConfigurator {
    private UserDetails createTestUser(int j) {
       UserDetails aUserDetails = new UserDetails();
       aUserDetails.setEmail("test" + j + "@example.com");
-      aUserDetails.setEnabled(1);
+      aUserDetails.getMetadata().setEnabled(1);
       aUserDetails.setUsername("user" + j);
       aUserDetails.setPassword("password");
       UserRole role = new UserRole(UserRole.Role.USER_ROLE);

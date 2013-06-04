@@ -132,7 +132,4 @@ public class AccountController extends AbstractController {
 
       this.accountValidationService = accountValidationService;
    }
-
-
-
 }

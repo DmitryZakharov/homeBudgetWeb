@@ -1,9 +1,15 @@
 package org.homebudget.controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
+import org.homebudget.model.Currency;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole.Role;
 import org.homebudget.services.UserManagementService;
@@ -33,7 +39,10 @@ public class RegistrationController extends AbstractController {
    @RequestMapping(method = RequestMethod.GET)
    public String showRegistration(Model model) {
 
+      final List<Currency> currencyList = new ArrayList<Currency>(Arrays.asList(Currency.values()));
+
       model.addAttribute(userManagementService.getNewUser(Role.USER_ROLE));
+      model.addAttribute(currencyList);
       return "registration";
    }
 
@@ -45,8 +54,8 @@ public class RegistrationController extends AbstractController {
 
    @RequestMapping(method = RequestMethod.POST)
    // @ResponseStatus(HttpStatus.CREATED)
-   public String registerUser(@ModelAttribute("userDetails") @Valid UserDetails userDetails, BindingResult result,
-         HttpServletResponse response, Model model) {
+   public String registerUser(@ModelAttribute("userDetails") @Valid UserDetails userDetails,
+         BindingResult result, HttpServletResponse response, Model model) {
 
       userValidationService.validate(userDetails, result, "");
       if (result.hasErrors()) {
@@ -57,7 +66,4 @@ public class RegistrationController extends AbstractController {
       return "redirect:registration/success";
 
    }
-
-
-
 }
