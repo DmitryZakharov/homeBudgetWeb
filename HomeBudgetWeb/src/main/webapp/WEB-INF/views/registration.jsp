@@ -54,8 +54,8 @@
                             <label class="control-label">Main Currency</label>
                             <div class="controls">
                                 <div class="input-prepend">
-                                    <span class="add-on"><i class="icon-user"></i></span>
-                                    <form:select path="metadata.currency" items="${currencyList}" />
+                                    <span class="add-on"><i class="icon-globe"></i></span>
+                                    <form:select  class="input-xlarge" path="metadata.currency" items="${currencyList}" />
                                     <font color="red"><form:errors path="metadata.currency" /></font>
                                 </div>
                                 <div class="text">
