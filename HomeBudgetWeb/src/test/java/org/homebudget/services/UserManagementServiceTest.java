@@ -8,18 +8,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import org.homebudget.dao.UserRepository;
 import org.homebudget.model.BinaryResource;
-import org.homebudget.model.Document;
 import org.homebudget.model.UserDetails;
 import org.homebudget.test.config.TestConfigurator;
 import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Test;
-import static org.mockito.Mockito.*;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.Resource;
-import org.springframework.web.multipart.MultipartFile;
 
 public class UserManagementServiceTest extends TestConfigurator {
 
@@ -35,11 +29,7 @@ public class UserManagementServiceTest extends TestConfigurator {
    @Autowired
    UserRepository repository;
    
-   @Autowired
-   ApplicationContext applicationContext;
-   
-   @Autowired
-   DocumentManagementService documentManagementService;
+
 
    @After
    public void tearDown(){
@@ -69,12 +59,12 @@ public class UserManagementServiceTest extends TestConfigurator {
       System.out.println("testSaveUserDetailsWithImage");
       UserDetails userDetails = createTestUser();
       
-      Document document = createTestDocument();
-      userDetails.setImage(document);
+      BinaryResource document = createTestDocument();
+      userDetails.setUserPic(document);
       service.saveUserDetails(userDetails);
       UserDetails result = repository.findByUsername(userDetails.getUsername());
       assertNotNull(result);
-      assertNotNull(result.getImage());
+      assertNotNull(result.getUserPic());
 
    }
 
@@ -86,18 +76,6 @@ public class UserManagementServiceTest extends TestConfigurator {
       return userDetails;
    }
 
-   private Document createTestDocument() throws BeansException, IOException {
-      MultipartFile multipartFile = mock(MultipartFile.class);
-      ResourceLoaderService resourceLoader = (ResourceLoaderService) applicationContext
-           .getBean("resourceLoaderService");
-      Resource resource = resourceLoader.getResource("classpath:docs/foto2.jpg");
-      BinaryResource binaryResource = new BinaryResource(resource);
-      when(multipartFile.getName()).thenReturn(resource.getFilename());
-      when(multipartFile.getOriginalFilename()).thenReturn(resource.getFile().getPath());
-      when(multipartFile.getInputStream()).thenReturn(resource.getInputStream());
-      when(multipartFile.getBytes()).thenReturn(binaryResource.getResource());
-      Document document = documentManagementService.getDocument(multipartFile);
-      return document;
-   }
+
 
 }

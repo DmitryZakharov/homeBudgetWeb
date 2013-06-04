@@ -4,25 +4,23 @@
  */
 package org.homebudget.model;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import org.homebudget.dao.AccountRepository;
-import org.homebudget.services.ResourceLoaderService;
 import org.homebudget.test.config.TestConfigurator;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.Resource;
 
 public class TransactionModelTest extends TestConfigurator {
 
    @Autowired
    AccountRepository repository;
 
-   @Autowired
-   ApplicationContext applicationContext;
+
+
 
    public TransactionModelTest() {
 
@@ -35,7 +33,7 @@ public class TransactionModelTest extends TestConfigurator {
    }
 
    @Test
-   public void saveTransactionWithImage() {
+   public void saveTransactionWithImage() throws IOException {
 
       Account account = new Account();
       account.setName("my account");
@@ -51,12 +49,7 @@ public class TransactionModelTest extends TestConfigurator {
       transaction.setExecutionDate(date);
       transaction.setType(Transaction.TransactionType.INCOME);
 
-      ResourceLoaderService resourceLoader = (ResourceLoaderService) applicationContext
-            .getBean("resourceLoaderService");
-
-      Resource resource = resourceLoader.getResource("classpath:docs/foto2.jpg");
-
-      BinaryResource image = new BinaryResource(resource);
+      BinaryResource image = createTestDocument();
       transaction.setAttachedImage(image);
       account.addTransaction(transaction);
 
@@ -67,8 +60,7 @@ public class TransactionModelTest extends TestConfigurator {
       List<Transaction> foundTransactions = (List<Transaction>) accounts.get(0).getTransactions();
       assertEquals(1, foundTransactions.size());
       Transaction result = foundTransactions.get(0);
-      assertEquals(transaction.getAttachedImage().getResource().length, result.getAttachedImage()
-            .getResource().length);
+      assertNotNull(result.getAttachedImage().getContent());
 
    }
 

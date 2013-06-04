@@ -1,87 +1,89 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package org.homebudget.model;
 
-import java.io.IOException;
-import java.io.InputStream;
-
+import java.sql.Blob;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.Table;
+ 
+@Entity
+@Table(name="resources")
+public class BinaryResource {
+     
+    @Id
+    @GeneratedValue
+    @Column(name="id")
+    private Integer id;
+ 
+    @Column(name="name")
+    private String name;
+ 
+    @Column(name="description")
+    private String description;
+ 
+    @Column(name="filename")
+    private String filename;
+ 
+    @Column(name="content")
+    @Lob
+    private Blob content;
+     
+    @Column(name="content_type")
+    private String contentType;
+     
+    public Integer getId() {
+        return id;
+    }
 
-import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
-import org.springframework.core.io.Resource;
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-@Entity(name = "BINARY_RESOURCE")
-public class BinaryResource implements java.io.Serializable {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public Blob getContent() {
+        return content;
+    }
+
+    public void setContent(Blob content) {
+        this.content = content;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+     
    
-   private static final Logger gLogger = Logger.getLogger(BinaryResource.class);
-
-   private static final long serialVersionUID = 1172145991794242627L;
-
-   @Id
-   @Column(name = "RESOURCE_ID")
-   @GeneratedValue
-   private Long id;
-
-   @Lob
-   @Column(name = "RESOURCE")
-   private byte[] resource;
-
-   public BinaryResource() {
-
-   }
-
-   public BinaryResource(Resource resource) {
-
-      this.resource = getBytesFromResource(resource);
-   }
-
-   
-   public Long getId() {
-   
-      return id;
-   }
-
-   
-   public void setId(Long id) {
-   
-      this.id = id;
-   }
-
-   public byte[] getResource() {
-
-      return resource;
-   }
-
-   public void setResource(byte[] resource) {
-
-      this.resource = resource;
-   }
-
-   private byte[] getBytesFromResource(Resource resource) {
-
-      byte[] result = {};
-      InputStream inputStream = null;
-      try {
-         inputStream = resource.getInputStream();
-         result = IOUtils.toByteArray(inputStream);
-      }
-      catch (Exception ex) {
-         gLogger.error("Failed to get byte array from resource", ex);
-      }
-      finally {
-         try {
-            if (inputStream != null) {
-               inputStream.close();
-            }
-         }
-         catch (IOException ex) {
-            gLogger.warn("Failed to close input stream", ex);
-         }
-      }
-      return result;
-   }
-
 }

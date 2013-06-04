@@ -3,7 +3,6 @@ package org.homebudget.model;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +16,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.Email;
 
 /**
@@ -66,7 +64,7 @@ public class UserDetails {
    private Date birthday;
 
    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-   private Document image;
+   private BinaryResource userPic;
 
    /**
     * Default constructor
@@ -192,14 +190,14 @@ public class UserDetails {
       this.roles.add(role);
    }
 
-   public Document getImage() {
-
-      return image;
+   public BinaryResource getUserPic() {
+      return userPic;
    }
 
-   public void setImage(Document image) {
-
-      this.image = image;
+   public void setUserPic(BinaryResource userPic) {
+      this.userPic = userPic;
    }
+
+
 
 }

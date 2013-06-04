@@ -2,7 +2,6 @@ package org.homebudget.model;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,7 +37,7 @@ public class Transaction implements Serializable {
    private Date executionDate;
 
    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-   @JoinColumn(name = "CATEGORY_ID")
+   @JoinColumn(name = "CATEGORY")
    private Category category;
 
    @Column(name = "AMOUNT")
@@ -52,11 +51,11 @@ public class Transaction implements Serializable {
    private String comment;
 
    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-   @JoinColumn(name = "RESOURCE_ID")
-   private BinaryResource attachedImage;
+   @JoinColumn(name = "ATTACHMENT")
+   private BinaryResource attachment;
 
    @ManyToOne(fetch = FetchType.EAGER)
-   @JoinColumn(name = "ACCOUNT_ID", nullable = false)
+   @JoinColumn(name = "ACCOUNT", nullable = false)
    private Account parent;
 
    public Date getExecutionDate() {
@@ -81,12 +80,12 @@ public class Transaction implements Serializable {
 
    public BinaryResource getAttachedImage() {
 
-      return attachedImage;
+      return attachment;
    }
 
    public void setAttachedImage(BinaryResource attachedImage) {
 
-      this.attachedImage = attachedImage;
+      this.attachment = attachedImage;
    }
 
    public float getAmount() {
