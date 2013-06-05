@@ -43,7 +43,7 @@
 
 
                         <div class="fileupload">
-                           <form:input commandName="attachment" path="attachment" type="file"  id="file" name="file" onchange="fileSelected();" />
+                           <input  type="file"  id="file" name="attachment" onchange="fileSelected();"/>
 
                         </div>
 

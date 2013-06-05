@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/accounts")
@@ -42,7 +43,7 @@ public class TransactionController extends AbstractController {
 
    @Resource
    private ResourceManagementService resourceManagementService;
-
+   
    @RequestMapping(value = "/{name}/transactions", method = RequestMethod.GET)
    public String getAllTransactions(@PathVariable("name") String accountName,
        Model model) {
@@ -120,8 +121,7 @@ public class TransactionController extends AbstractController {
    @RequestMapping(value = "{name}/transactions/new", method = RequestMethod.POST)
    public String postTransaction(@PathVariable("name") String accountName, @ModelAttribute(
        "transaction") @Valid Transaction transaction,
-       BindingResult result, Model model
-       , @RequestParam("attachment") Object file
+       BindingResult result, @RequestParam(value = "attachment", required=false) MultipartFile attachment
        ) {
       boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().
           getUsername());
@@ -129,8 +129,8 @@ public class TransactionController extends AbstractController {
          return "redirect:";
       }
       logger.info("Processing save transacton: " + transaction);
-//      BinaryResource resource = resourceManagementService.getResource((MultipartFile)file);
-//      transaction.setAttachedImage(resource);
+      BinaryResource resource = resourceManagementService.getResource(attachment);
+      transaction.setAttachment(resource);
  
       transactionManagementService.saveTransaction(transaction, accountName);
 
