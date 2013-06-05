@@ -78,15 +78,15 @@ public class Transaction implements Serializable {
       this.type = type;
    }
 
-   public BinaryResource getAttachedImage() {
-
+   public BinaryResource getAttachment() {
       return attachment;
    }
 
-   public void setAttachedImage(BinaryResource attachedImage) {
-
-      this.attachment = attachedImage;
+   public void setAttachment(BinaryResource attachment) {
+      this.attachment = attachment;
    }
+
+  
 
    public float getAmount() {
 

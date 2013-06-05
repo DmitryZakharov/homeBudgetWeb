@@ -6,7 +6,6 @@ package org.homebudget.test.config;
 
 import java.io.IOException;
 import org.homebudget.model.BinaryResource;
-import org.homebudget.services.ResourceLoaderService;
 import org.homebudget.services.ResourceManagementService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,9 +43,8 @@ public class TestConfigurator {
 
    protected BinaryResource createTestDocument() throws BeansException, IOException {
       MultipartFile multipartFile = mock(MultipartFile.class);
-      ResourceLoaderService resourceLoader = (ResourceLoaderService) applicationContext
-          .getBean("resourceLoaderService");
-      Resource resource = resourceLoader.getResource("classpath:docs/foto2.jpg");
+
+      Resource resource = aResourceManagementService.getResource("classpath:docs/foto2.jpg");
       byte[] bytes = aResourceManagementService.getBytesFromResource(resource);
 
       when(multipartFile.getName()).thenReturn(resource.getFilename());

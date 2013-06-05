@@ -18,10 +18,13 @@
 <!-- Le styles -->
 <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="styles/fileupload.css" rel="stylesheet">
 <link href="styles/jquery-ui-1.10.3.custom.css" rel="stylesheet">
 <script src="scripts/jquery-1.9.1.js"></script>
 <script src="scripts/jquery-ui-1.10.3.custom.js"></script>
 <script type="text/javascript" src="scripts/homebudget.js"></script>
+<script type="text/javascript" src="scripts/fileupload.js"></script>
+        
 
 <style type="text/css">
 /* Sticky footer styles-------------------------------------------------- */

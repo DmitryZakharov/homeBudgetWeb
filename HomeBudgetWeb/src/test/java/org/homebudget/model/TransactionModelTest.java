@@ -50,7 +50,7 @@ public class TransactionModelTest extends TestConfigurator {
       transaction.setType(Transaction.TransactionType.INCOME);
 
       BinaryResource image = createTestDocument();
-      transaction.setAttachedImage(image);
+      transaction.setAttachment(image);
       account.addTransaction(transaction);
 
       repository.save(account);
@@ -60,7 +60,7 @@ public class TransactionModelTest extends TestConfigurator {
       List<Transaction> foundTransactions = (List<Transaction>) accounts.get(0).getTransactions();
       assertEquals(1, foundTransactions.size());
       Transaction result = foundTransactions.get(0);
-      assertNotNull(result.getAttachedImage().getContent());
+      assertNotNull(result.getAttachment().getContent());
 
    }
 

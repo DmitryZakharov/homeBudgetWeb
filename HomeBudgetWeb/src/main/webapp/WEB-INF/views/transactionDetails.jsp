@@ -42,6 +42,12 @@
                   </td>
                </tr>
                <tr>
+                  <td>
+                     <form:label path="attachment">Attachment:</form:label>		
+                     <img src=${attachment}/>
+                  </td>
+               </tr>
+               <tr>
                   <td colspan="3"><input type="submit" value="update" /></td>
                </tr>
             </table>

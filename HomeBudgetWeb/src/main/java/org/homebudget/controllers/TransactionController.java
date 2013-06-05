@@ -3,14 +3,14 @@ package org.homebudget.controllers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.validation.Valid;
-
-import org.homebudget.model.Account;
+import org.apache.log4j.Logger;
+import org.homebudget.model.BinaryResource;
 import org.homebudget.model.Transaction;
 import org.homebudget.model.Transaction.TransactionType;
 import org.homebudget.services.AccountManagementService;
+import org.homebudget.services.ResourceManagementService;
 import org.homebudget.services.TransactionManagementService;
 import org.homebudget.services.TransactionValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +22,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 @RequestMapping("/accounts")
 public class TransactionController extends AbstractController {
+
+   private static final Logger logger = Logger.getLogger(TransactionController.class);
 
    @Autowired
    private TransactionValidationService transactionValidation;
@@ -37,10 +40,14 @@ public class TransactionController extends AbstractController {
    @Resource
    private AccountManagementService accountManagementService;
 
+   @Resource
+   private ResourceManagementService resourceManagementService;
+
    @RequestMapping(value = "/{name}/transactions", method = RequestMethod.GET)
    public String getAllTransactions(@PathVariable("name") String accountName,
        Model model) {
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().getUsername());
+      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().
+          getUsername());
       if (!isAuthorized) {
          return "redirect:";
       }
@@ -55,32 +62,35 @@ public class TransactionController extends AbstractController {
    @RequestMapping(value = "{name}/transactions/{id}", method = RequestMethod.GET)
    public String getTransaction(@PathVariable("name") String accountName,
        @PathVariable("id") Long transactionId, Model model) {
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().getUsername(), transactionId);
+      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().
+          getUsername(), transactionId);
       if (!isAuthorized) {
          return "redirect:";
       }
       final Transaction transaction = transactionManagementService.getTransaction(transactionId);
       final List<TransactionType> transactionTypeList = new ArrayList<TransactionType>(
-            Arrays.asList(TransactionType.values()));
-
+          Arrays.asList(TransactionType.values()));
+      BinaryResource attachment = transaction.getAttachment();
+      String attachmentString = null;
+      if(attachment != null){
+         attachmentString = resourceManagementService.getBase64ImageString(attachment);
+      }
       model.addAttribute(transactionTypeList);
       model.addAttribute(transaction);
+      model.addAttribute(attachmentString);
       return "transactionDetails";
    }
-   
-
-
-   
 
    @RequestMapping(value = "{name}/transactions/new", method = RequestMethod.GET)
    public String createTransaction(@PathVariable("name") String accountName, Model model) {
-     boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().getUsername());
+      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().
+          getUsername());
       if (!isAuthorized) {
          return "redirect:";
       }
-      
+
       final List<TransactionType> transactionTypeList = new ArrayList<TransactionType>(
-            Arrays.asList(TransactionType.values()));
+          Arrays.asList(TransactionType.values()));
 
       model.addAttribute(transactionTypeList);
       model.addAttribute(new Transaction());
@@ -90,41 +100,38 @@ public class TransactionController extends AbstractController {
    @RequestMapping(value = "{name}/transactions/{id}", method = RequestMethod.DELETE)
    public String deleteTransaction(@PathVariable("name") String accountName,
        @PathVariable("id") Long transactionId) {
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().getUsername(), transactionId);
-      if(!isAuthorized){
+      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().
+          getUsername(), transactionId);
+      if (!isAuthorized) {
          return "redirect:";
       }
       final Transaction transaction = transactionManagementService.getTransaction(transactionId);
-      
-    transaction.getParent().getTransactions().remove(transaction);
-    
-    
-    accountManagementService.updateAccount( transaction.getParent());
 
-   // transactionManagementService.deleteTransaction(transactionId);
-    
+      transaction.getParent().getTransactions().remove(transaction);
+
+      accountManagementService.updateAccount(transaction.getParent());
+
       if (transaction == null) {
          return "redirect:";
       }
-
-
-
       return "redirect:";
    }
 
    @RequestMapping(value = "{name}/transactions/new", method = RequestMethod.POST)
    public String postTransaction(@PathVariable("name") String accountName, @ModelAttribute(
        "transaction") @Valid Transaction transaction,
-       BindingResult result, Model model) {
-     boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().getUsername());
-     if(!isAuthorized){
-        return "redirect:";
-     }
-     Account account = accountManagementService.getAccount(accountName, getSessionUser().getUsername());
-   //  transactionValidation.validate(transaction, result, getSessionUser().getUsername());
-//      if (result.hasErrors()) {
-//         return "redirect:";
-//      }
+       BindingResult result, Model model
+       , @RequestParam("attachment") Object file
+       ) {
+      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().
+          getUsername());
+      if (!isAuthorized) {
+         return "redirect:";
+      }
+      logger.info("Processing save transacton: " + transaction);
+//      BinaryResource resource = resourceManagementService.getResource((MultipartFile)file);
+//      transaction.setAttachedImage(resource);
+ 
       transactionManagementService.saveTransaction(transaction, accountName);
 
       return "redirect:";
@@ -132,15 +139,17 @@ public class TransactionController extends AbstractController {
 
    @RequestMapping(value = "{name}/transactions", method = RequestMethod.PUT)
    @ResponseStatus(HttpStatus.NO_CONTENT)
-   public String updateTransactionDetails(Transaction transaction, @PathVariable("name") String accountName,
+   public String updateTransactionDetails(Transaction transaction,
+       @PathVariable("name") String accountName,
        BindingResult result,
        Model model) {
-      
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().getUsername(), transaction.getId());
-     if(!isAuthorized){
-        return "redirect:";
-     } 
-      
+
+      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().
+          getUsername(), transaction.getId());
+      if (!isAuthorized) {
+         return "redirect:";
+      }
+
       Transaction oldTransaction = transactionManagementService.getTransaction(transaction.getId(),
           accountName);
 
@@ -171,7 +180,5 @@ public class TransactionController extends AbstractController {
    public void setTransactionValidation(TransactionValidationService transactionValidation) {
       this.transactionValidation = transactionValidation;
    }
-
-   
 
 }
