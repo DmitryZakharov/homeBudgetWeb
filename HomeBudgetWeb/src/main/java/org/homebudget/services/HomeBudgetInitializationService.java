@@ -1,8 +1,10 @@
 package org.homebudget.services;
 
 import java.util.Date;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+
 import org.apache.log4j.Logger;
 import org.homebudget.dao.UserRoleRepository;
 import org.homebudget.model.Account;
@@ -28,9 +30,12 @@ public class HomeBudgetInitializationService {
 
    @Resource
    UserRoleRepository userRoleRepository;
-   
+
    @Resource
    private TransactionManagementService transactionManagementService;
+
+   @Resource
+   private CategoryManagementService categoryManagementService;
 
    private boolean executed = false;
 
@@ -71,21 +76,23 @@ public class HomeBudgetInitializationService {
          UserDetails user = createTestUser(i, name);
          logger.info("Creating user: " + user.getFname());
 
+         // save user so it can queried by other services
+         user.getRoles().add(uRole);
+         userManagementService.saveUserDetails(user);
+
          Account account = createTestAccount(user);
          logger.info("Creating account: " + account.getName());
 
-         Category category = createTestCategory();
+         Category category = createTestCategory(user, i);
          logger.info("Creating category: " + category.getName());
 
          Transaction transaction = createTestTransaction(category);
          logger.info("Creating transaction: " + transaction.getAmount());
 
          account.addTransaction(transaction);
-         
-         user.getRoles().add(uRole);
-         userManagementService.saveUserDetails(user);
+
          accountManagementService.saveAccount(account, user.getUsername());
-        // transactionManagementService.saveTransaction(transaction, account.getName());
+         // transactionManagementService.saveTransaction(transaction, account.getName());
       }
    }
 
@@ -109,7 +116,7 @@ public class HomeBudgetInitializationService {
       user.setEmail("some" + i + "@email.com");
       Date birthday = new Date();
       user.setBirthday(birthday);
-      user.setEnabled(1);
+      user.getMetadata().setEnabled(1);
       try {
          String password = "000" + i;
          if (i == 0) {
@@ -149,14 +156,15 @@ public class HomeBudgetInitializationService {
       return account;
    }
 
-   private Category createTestCategory() {
+   private Category createTestCategory(UserDetails user, long index) {
 
-      Category category = new Category();
-      category.setName("work");
+      final Category category = categoryManagementService.createCategory("work".concat(Long.toString(index)), null,
+            user.getUsername());
       return category;
    }
 
    public void setUserNumber(int userNumber) {
+
       this.executed = false;
       this.userNumber = userNumber;
    }

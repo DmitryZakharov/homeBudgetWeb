@@ -18,6 +18,12 @@
                <th>Amount</th>
                <th></th>
             </tr>
+            <script lang="javascript">
+                function SubmitForm(formname) {
+                document.forms[formname]
+                    .submit();
+                }
+            </script>
             <c:forEach items="${transactionList}" var="transaction">
                <tr>
 
@@ -30,14 +36,9 @@
                   <td>
                      <a href="<c:url value="accounts/${name}/transactions/${transaction.id}.html" />"><i class="icon-edit"/></a>
                      
-                     <form:form name="delete" method="delete" action="accounts/${name}/transactions/${transaction.id}.html">
-                        <script lang="javascript">
-                           function SubmitForm() {
-                              document.forms['delete']
-                                      .submit();
-                           }
-                        </script>
-                        <i class="icon-trash" onclick="SubmitForm()"></i>
+                     <form:form name="delete_${transaction.id}" method="delete" action="accounts/${name}/transactions/${transaction.id}.html">
+
+                        <i class="icon-trash" onclick="SubmitForm('delete_${transaction.id}')"></i>
                      </form:form>
                   </td>
                </tr>

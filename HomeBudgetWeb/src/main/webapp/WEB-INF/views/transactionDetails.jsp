@@ -29,6 +29,17 @@
                </tr>
                <tr>
                   <td>
+                            <form:label path="category">Category:</form:label>
+                            <form:select name="category" path="category">
+                                <c:forEach items="${categoryList}" var="category">
+                                    <option value="${category.name}">${category.name}</option>
+                                </c:forEach>
+                            </form:select>
+                            <font color="red"><form:errors path="category" /></font>
+                        </td>
+                    </tr>
+               <tr>
+                  <td>
                      <form:label path="executionDate">Date of Creation:</form:label>
                      <form:input  type="text"  id="datepicker" path="executionDate" />
                      <font color="red"><form:errors path="executionDate" /></font>

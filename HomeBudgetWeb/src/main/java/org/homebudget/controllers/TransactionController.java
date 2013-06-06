@@ -7,10 +7,13 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.homebudget.model.BinaryResource;
+import org.homebudget.model.Category;
 import org.homebudget.model.Transaction;
 import org.homebudget.model.Transaction.TransactionType;
 import org.homebudget.services.AccountManagementService;
 import org.homebudget.services.ResourceManagementService;
+import org.homebudget.services.CategoryEditor;
+import org.homebudget.services.CategoryManagementService;
 import org.homebudget.services.TransactionManagementService;
 import org.homebudget.services.TransactionValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,18 +47,21 @@ public class TransactionController extends AbstractController {
    private AccountManagementService accountManagementService;
 
    @Resource
+   private CategoryManagementService categoryManagementService;
+
+   @Resource
    private ResourceManagementService resourceManagementService;
    
    @RequestMapping(value = "/{name}/transactions", method = RequestMethod.GET)
-   public String getAllTransactions(@PathVariable("name") String accountName,
-       Model model) {
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().
-          getUsername());
+   public String getAllTransactions(@PathVariable("name") String accountName, Model model) {
+
+      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
+            .getUsername());
       if (!isAuthorized) {
          return "redirect:";
       }
-      final List<Transaction> transactions = transactionManagementService.getAllAccountTransactions(
-          accountName);
+      final List<Transaction> transactions = transactionManagementService
+            .getAllAccountTransactions(accountName);
 
       model.addAttribute(transactions);
 
@@ -63,8 +71,9 @@ public class TransactionController extends AbstractController {
    @RequestMapping(value = "{name}/transactions/{id}", method = RequestMethod.GET)
    public String getTransaction(@PathVariable("name") String accountName,
        @PathVariable("id") Long transactionId, Model model) {
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().
-          getUsername(), transactionId);
+
+      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
+            .getUsername(), transactionId);
       if (!isAuthorized) {
          return "redirect:";
       }
@@ -76,6 +85,9 @@ public class TransactionController extends AbstractController {
       if(attachment != null){
          attachmentString = resourceManagementService.getBase64ImageString(attachment);
       }
+      final List<Category> categories =  categoryManagementService.getAllCategories(getSessionUser().getUsername());
+
+      model.addAttribute(categories);
       model.addAttribute(transactionTypeList);
       model.addAttribute(transaction);
       model.addAttribute("attachment", attachmentString);
@@ -84,8 +96,9 @@ public class TransactionController extends AbstractController {
 
    @RequestMapping(value = "{name}/transactions/new", method = RequestMethod.GET)
    public String createTransaction(@PathVariable("name") String accountName, Model model) {
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().
-          getUsername());
+
+      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
+            .getUsername());
       if (!isAuthorized) {
          return "redirect:";
       }
@@ -93,6 +106,10 @@ public class TransactionController extends AbstractController {
       final List<TransactionType> transactionTypeList = new ArrayList<TransactionType>(
           Arrays.asList(TransactionType.values()));
 
+      final List<Category> categories = categoryManagementService.getAllCategories(getSessionUser()
+            .getUsername());
+
+      model.addAttribute(categories);
       model.addAttribute(transactionTypeList);
       model.addAttribute(new Transaction());
       return "transaction";
@@ -101,8 +118,9 @@ public class TransactionController extends AbstractController {
    @RequestMapping(value = "{name}/transactions/{id}", method = RequestMethod.DELETE)
    public String deleteTransaction(@PathVariable("name") String accountName,
        @PathVariable("id") Long transactionId) {
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().
-          getUsername(), transactionId);
+
+      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
+            .getUsername(), transactionId);
       if (!isAuthorized) {
          return "redirect:";
       }
@@ -115,16 +133,17 @@ public class TransactionController extends AbstractController {
       if (transaction == null) {
          return "redirect:";
       }
+
       return "redirect:";
    }
 
    @RequestMapping(value = "{name}/transactions/new", method = RequestMethod.POST)
-   public String postTransaction(@PathVariable("name") String accountName, @ModelAttribute(
-       "transaction") @Valid Transaction transaction,
-       BindingResult result, @RequestParam(value = "attachment", required=false) MultipartFile attachment
-       ) {
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().
-          getUsername());
+   public String postTransaction(@PathVariable("name") String accountName,
+         @ModelAttribute("transaction") @Valid Transaction transaction, BindingResult result,
+         Model model) {
+
+      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
+            .getUsername());
       if (!isAuthorized) {
          return "redirect:";
       }
@@ -144,8 +163,8 @@ public class TransactionController extends AbstractController {
        BindingResult result,
        Model model) {
 
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().
-          getUsername(), transaction.getId());
+      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
+            .getUsername(), transaction.getId());
       if (!isAuthorized) {
          return "redirect:";
       }
@@ -174,11 +193,20 @@ public class TransactionController extends AbstractController {
    }
 
    public TransactionValidationService getTransactionValidation() {
+
       return transactionValidation;
    }
 
    public void setTransactionValidation(TransactionValidationService transactionValidation) {
+
       this.transactionValidation = transactionValidation;
+   }
+
+   @InitBinder
+   protected void initBinder(WebDataBinder binder) {
+
+      binder.registerCustomEditor(Category.class, new CategoryEditor(categoryManagementService,
+            getSessionUser().getUsername()));
    }
 
 }
