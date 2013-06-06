@@ -15,7 +15,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -32,28 +34,29 @@ public class UserManagementController extends AbstractController {
 
       UserDetails userDetails = userManagementService.getUserDetailsByUsername(getSessionUser()
             .getUsername());
+      String userPicString = userManagementService.getUserPicString(userDetails.getUserPic());
       model.addAttribute(userDetails);
-
+      model.addAttribute("userPic", userPicString);
       return "userprofile";
    }
 
    @RequestMapping(method = RequestMethod.PUT)
    @ResponseStatus(HttpStatus.NO_CONTENT)
    public void updateUserDetails(@Valid UserDetails newUserDetails, BindingResult result,
-         Model model) {
+         Model model, @RequestParam(value = "userPic", required=false) MultipartFile userPic) {
 
       UserDetails oldUserDetails = userManagementService.getUserDetailsByUsername(getSessionUser()
             .getUsername());
-      getUserManagementService().updateUserDetails(oldUserDetails, newUserDetails);
+      getUserManagementService().updateUserDetails(oldUserDetails, newUserDetails, userPic);
    }
 
    @Secured("ADMIN_ROLE")
    @RequestMapping(method = RequestMethod.POST)
    @ResponseStatus(HttpStatus.CREATED)
    public UserDetails addUserDetails(@Valid UserDetails userDetails, BindingResult result,
-         Model model) {
+         Model model, @RequestParam(value = "userPic", required=false) MultipartFile userPic) {
 
-      getUserManagementService().saveUserDetails(userDetails);
+      getUserManagementService().saveUserDetails(userDetails, userPic);
 
       return userDetails;
    }
@@ -88,5 +91,7 @@ public class UserManagementController extends AbstractController {
 
       this.userManagementService = userManagementService;
    }
+
+
 
 }
