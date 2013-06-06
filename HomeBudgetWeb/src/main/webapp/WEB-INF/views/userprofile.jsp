@@ -5,7 +5,7 @@
    <jsp:body>
       <div class="container">
          <div class="bs-docs-example">
-            <form:form method="PUT" action="user.html"  commandName="userDetails" enctype="multipart/form-data">
+            <form:form method="put" action="user.html"  commandName="userDetails" enctype="multipart/form-data">
                <form:input type="hidden" name="_method" value="put" path=""/>
                <h2 class="registration-header">User Details</h2>
                <table>
