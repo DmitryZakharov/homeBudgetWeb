@@ -57,30 +57,45 @@
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
-    <!-- Spring PUT, DELETE methods support -->
+
+    <!-- MULTIPART SUPPORT FOR PUT -->
     <filter>
-        <filter-name>httpMethodFilter</filter-name>
+        <filter-name>MultipartFilter</filter-name>
+        <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+        <init-param>
+            <param-name>multipartResolverBeanName</param-name>
+            <param-value>multipartResolver</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>MultipartFilter</filter-name>
+        <servlet-name>homebudget</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!--ENABLE SUPPORT FOR DELETE, PUT methods -->
+    <filter>
+        <filter-name>HiddenHttpMethodFilter</filter-name>
         <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
     </filter>
     <filter-mapping>
-    <filter-name>httpMethodFilter</filter-name>
-    <url-pattern>/*</url-pattern>
+        <filter-name>HiddenHttpMethodFilter</filter-name>
+        <servlet-name>homebudget</servlet-name>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
+
     <!-- HIBERNATE LAZY LOADING -->
-        <filter>
-    <filter-name>OpenEntityManagerInViewFilter</filter-name>
-    <filter-class>
-        org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
-    <init-param>
-        <param-name>entityManagerFactoryBeanName</param-name>
-        <param-value>entityManagerFactory</param-value>
-    </init-param>
-</filter>
- 
-<filter-mapping>
-    <filter-name>OpenEntityManagerInViewFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-</filter-mapping>
+    <filter>
+        <filter-name>OpenEntityManagerInViewFilter</filter-name>
+        <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+        <init-param>
+            <param-name>entityManagerFactoryBeanName</param-name>
+            <param-value>entityManagerFactory</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>OpenEntityManagerInViewFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 </web-app>

@@ -1,8 +1,11 @@
 package org.homebudget.controllers;
 
 import java.util.List;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
+
+import org.apache.log4j.Logger;
 import org.homebudget.model.UserDetails;
 import org.homebudget.services.UserManagementService;
 import org.homebudget.services.UserValidationService;
@@ -22,6 +25,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping(value = "/user")
 public class UserManagementController extends AbstractController {
+
+   private static final Logger gLogger = Logger.getLogger(UserManagementController.class);
 
    @Resource
    private UserManagementService userManagementService;
@@ -43,7 +48,7 @@ public class UserManagementController extends AbstractController {
    @RequestMapping(method = RequestMethod.PUT)
    @ResponseStatus(HttpStatus.NO_CONTENT)
    public void updateUserDetails(@Valid UserDetails newUserDetails, BindingResult result,
-         Model model, @RequestParam(value = "userPic", required=false) MultipartFile userPic) {
+         Model model, @RequestParam(value = "userPic", required = false) MultipartFile userPic) {
 
       UserDetails oldUserDetails = userManagementService.getUserDetailsByUsername(getSessionUser()
             .getUsername());
@@ -54,7 +59,7 @@ public class UserManagementController extends AbstractController {
    @RequestMapping(method = RequestMethod.POST)
    @ResponseStatus(HttpStatus.CREATED)
    public UserDetails addUserDetails(@Valid UserDetails userDetails, BindingResult result,
-         Model model, @RequestParam(value = "userPic", required=false) MultipartFile userPic) {
+         Model model, @RequestParam(value = "userPic", required = false) MultipartFile userPic) {
 
       getUserManagementService().saveUserDetails(userDetails, userPic);
 
@@ -81,7 +86,6 @@ public class UserManagementController extends AbstractController {
       return users;
    }
 
-   
    public UserManagementService getUserManagementService() {
 
       return userManagementService;
@@ -91,7 +95,4 @@ public class UserManagementController extends AbstractController {
 
       this.userManagementService = userManagementService;
    }
-
-
-
 }
