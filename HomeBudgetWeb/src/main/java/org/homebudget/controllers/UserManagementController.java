@@ -5,8 +5,6 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import org.homebudget.model.UserDetails;
 import org.homebudget.services.UserManagementService;
-import org.homebudget.services.UserValidationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -26,9 +24,6 @@ public class UserManagementController extends AbstractController {
    @Resource
    private UserManagementService userManagementService;
 
-   @Autowired
-   private UserValidationService userValidationService;
-
    @RequestMapping(method = RequestMethod.GET)
    public String showUserProfile(Model model) {
 
@@ -42,12 +37,13 @@ public class UserManagementController extends AbstractController {
 
    @RequestMapping(method = RequestMethod.PUT)
    @ResponseStatus(HttpStatus.NO_CONTENT)
-   public void updateUserDetails(@Valid UserDetails newUserDetails, BindingResult result,
+   public String updateUserDetails(@Valid UserDetails newUserDetails, BindingResult result,
          Model model, @RequestParam(value = "userPic", required=false) MultipartFile userPic) {
 
       UserDetails oldUserDetails = userManagementService.getUserDetailsByUsername(getSessionUser()
             .getUsername());
       getUserManagementService().updateUserDetails(oldUserDetails, newUserDetails, userPic);
+      return "userprofile";
    }
 
    @Secured("ADMIN_ROLE")

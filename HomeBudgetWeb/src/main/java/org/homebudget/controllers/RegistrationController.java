@@ -3,11 +3,9 @@ package org.homebudget.controllers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.homebudget.model.Currency;
 import org.homebudget.model.UserDetails;
@@ -41,7 +39,7 @@ public class RegistrationController extends AbstractController {
 
       final List<Currency> currencyList = new ArrayList<Currency>(Arrays.asList(Currency.values()));
 
-      model.addAttribute(userManagementService.getNewUser());
+      model.addAttribute(userManagementService.getNewUser(Role.USER_ROLE.USER_ROLE));
       model.addAttribute(currencyList);
       return "registration";
    }

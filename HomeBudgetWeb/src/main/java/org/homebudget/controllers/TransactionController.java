@@ -11,9 +11,9 @@ import org.homebudget.model.Category;
 import org.homebudget.model.Transaction;
 import org.homebudget.model.Transaction.TransactionType;
 import org.homebudget.services.AccountManagementService;
-import org.homebudget.services.ResourceManagementService;
 import org.homebudget.services.CategoryEditor;
 import org.homebudget.services.CategoryManagementService;
+import org.homebudget.services.ResourceManagementService;
 import org.homebudget.services.TransactionManagementService;
 import org.homebudget.services.TransactionValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,17 +51,17 @@ public class TransactionController extends AbstractController {
 
    @Resource
    private ResourceManagementService resourceManagementService;
-   
+
    @RequestMapping(value = "/{name}/transactions", method = RequestMethod.GET)
    public String getAllTransactions(@PathVariable("name") String accountName, Model model) {
 
       boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
-            .getUsername());
+          .getUsername());
       if (!isAuthorized) {
          return "redirect:";
       }
       final List<Transaction> transactions = transactionManagementService
-            .getAllAccountTransactions(accountName);
+          .getAllAccountTransactions(accountName);
 
       model.addAttribute(transactions);
 
@@ -73,7 +73,7 @@ public class TransactionController extends AbstractController {
        @PathVariable("id") Long transactionId, Model model) {
 
       boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
-            .getUsername(), transactionId);
+          .getUsername(), transactionId);
       if (!isAuthorized) {
          return "redirect:";
       }
@@ -82,10 +82,11 @@ public class TransactionController extends AbstractController {
           Arrays.asList(TransactionType.values()));
       BinaryResource attachment = transaction.getAttachment();
       String attachmentString = null;
-      if(attachment != null){
+      if (attachment != null) {
          attachmentString = resourceManagementService.getBase64ImageString(attachment);
       }
-      final List<Category> categories =  categoryManagementService.getAllCategories(getSessionUser().getUsername());
+      final List<Category> categories = categoryManagementService.getAllCategories(getSessionUser().
+          getUsername());
 
       model.addAttribute(categories);
       model.addAttribute(transactionTypeList);
@@ -98,7 +99,7 @@ public class TransactionController extends AbstractController {
    public String createTransaction(@PathVariable("name") String accountName, Model model) {
 
       boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
-            .getUsername());
+          .getUsername());
       if (!isAuthorized) {
          return "redirect:";
       }
@@ -107,7 +108,7 @@ public class TransactionController extends AbstractController {
           Arrays.asList(TransactionType.values()));
 
       final List<Category> categories = categoryManagementService.getAllCategories(getSessionUser()
-            .getUsername());
+          .getUsername());
 
       model.addAttribute(categories);
       model.addAttribute(transactionTypeList);
@@ -120,7 +121,7 @@ public class TransactionController extends AbstractController {
        @PathVariable("id") Long transactionId) {
 
       boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
-            .getUsername(), transactionId);
+          .getUsername(), transactionId);
       if (!isAuthorized) {
          return "redirect:";
       }
@@ -138,19 +139,19 @@ public class TransactionController extends AbstractController {
    }
 
    @RequestMapping(value = "{name}/transactions/new", method = RequestMethod.POST)
-   public String postTransaction(@PathVariable("name") String accountName,
-         @ModelAttribute("transaction") @Valid Transaction transaction, BindingResult result,
-         Model model) {
-
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
-            .getUsername());
+   public String postTransaction(@PathVariable("name") String accountName, @ModelAttribute(
+       "transaction") @Valid Transaction transaction,
+       BindingResult result,
+       @RequestParam(value = "attachment", required = false) MultipartFile attachment) {
+      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser().
+          getUsername());
       if (!isAuthorized) {
          return "redirect:";
       }
       logger.info("Processing save transacton: " + transaction);
       BinaryResource resource = resourceManagementService.getResource(attachment);
       transaction.setAttachment(resource);
- 
+
       transactionManagementService.saveTransaction(transaction, accountName);
 
       return "redirect:";
@@ -161,10 +162,11 @@ public class TransactionController extends AbstractController {
    public String updateTransactionDetails(Transaction transaction,
        @PathVariable("name") String accountName,
        BindingResult result,
+       @RequestParam(value = "attachment", required = false) MultipartFile attachment,
        Model model) {
 
       boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
-            .getUsername(), transaction.getId());
+          .getUsername(), transaction.getId());
       if (!isAuthorized) {
          return "redirect:";
       }
@@ -206,7 +208,7 @@ public class TransactionController extends AbstractController {
    protected void initBinder(WebDataBinder binder) {
 
       binder.registerCustomEditor(Category.class, new CategoryEditor(categoryManagementService,
-            getSessionUser().getUsername()));
+          getSessionUser().getUsername()));
    }
 
 }
