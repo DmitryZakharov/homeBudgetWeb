@@ -27,9 +27,9 @@ public class UserManagementService {
    @Resource
    private MailService mailService;
 
-   public UserDetails getNewUser(UserRole.Role role) {
+   public UserDetails getNewUser() {
 
-      return new UserDetails(role);
+      return new UserDetails();
    }
 
    @Transactional

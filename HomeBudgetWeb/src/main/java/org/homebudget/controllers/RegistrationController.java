@@ -41,7 +41,7 @@ public class RegistrationController extends AbstractController {
 
       final List<Currency> currencyList = new ArrayList<Currency>(Arrays.asList(Currency.values()));
 
-      model.addAttribute(userManagementService.getNewUser(Role.USER_ROLE));
+      model.addAttribute(userManagementService.getNewUser());
       model.addAttribute(currencyList);
       return "registration";
    }

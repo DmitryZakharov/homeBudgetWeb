@@ -74,17 +74,6 @@ public class UserDetails {
       this.metadata = new UserMetadata();
    }
 
-   /**
-    * Constructor
-    * 
-    * @param role
-    *           user role
-    */
-   public UserDetails(UserRole.Role role) {
-
-      UserRole aUserRole = new UserRole(role);
-      getRoles().add(aUserRole);
-   }
 
    public long getId() {
 

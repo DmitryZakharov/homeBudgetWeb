@@ -35,7 +35,7 @@ public class UserMetadata {
    @Column(name = "MAIN_CURRENCY")
    private Currency currency;
    
-   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
    private List<Category> categories = new ArrayList<Category>();
 
    public long getId() {
@@ -66,6 +66,18 @@ public class UserMetadata {
    public void setCurrency(Currency currency) {
 
       this.currency = currency;
+   }
+
+   
+   public List<Category> getCategories() {
+   
+      return categories;
+   }
+
+   
+   public void setCategories(List<Category> categories) {
+   
+      this.categories = categories;
    }
 
 }

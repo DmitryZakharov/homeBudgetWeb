@@ -23,7 +23,10 @@ public class Category {
    @OneToOne(optional = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
    @JoinColumn(name = "CATEGORY_PARENT")
    private Category parent;
-   
+
+   @OneToOne(fetch = FetchType.LAZY)
+   private UserDetails owner;
+
    public int getId() {
 
       return id;
@@ -32,6 +35,18 @@ public class Category {
    public void setId(int id) {
 
       this.id = id;
+   }
+
+   
+   public UserDetails getOwner() {
+   
+      return owner;
+   }
+
+   
+   public void setOwner(UserDetails owner) {
+   
+      this.owner = owner;
    }
 
    public String getName() {

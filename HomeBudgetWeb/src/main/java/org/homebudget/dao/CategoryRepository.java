@@ -1,5 +1,7 @@
 package org.homebudget.dao;
 
+import java.util.List;
+
 import org.homebudget.model.Category;
 import org.homebudget.model.UserDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,7 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-   public Category findByName(String name);
+   public Category findByNameAndOwner(String name, UserDetails owner);
+   
+   public List<Category> findByOwner(UserDetails owner);
 
    public UserDetails findById(Long id);
 
