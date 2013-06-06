@@ -13,8 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 
@@ -23,6 +25,7 @@ import org.hibernate.validator.constraints.Email;
  * 
  */
 @Entity(name = "USER_DETAILS")
+@Table(name="USER_DETAILS", uniqueConstraints={@UniqueConstraint(columnNames = "USER_USERNAME")})
 public class UserDetails {
 
    @Id
@@ -31,7 +34,7 @@ public class UserDetails {
    private long id;
 
    // @NotNull
-   @Column(name = "USER_USERNAME")
+   @Column(name = "USER_USERNAME", unique = true)
    private String username;
 
    @Column(name = "USER_NAME")
