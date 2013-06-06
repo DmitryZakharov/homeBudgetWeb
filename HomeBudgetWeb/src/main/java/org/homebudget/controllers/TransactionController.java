@@ -8,9 +8,12 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.homebudget.model.Account;
+import org.homebudget.model.Category;
 import org.homebudget.model.Transaction;
 import org.homebudget.model.Transaction.TransactionType;
 import org.homebudget.services.AccountManagementService;
+import org.homebudget.services.CategoryEditor;
+import org.homebudget.services.CategoryManagementService;
 import org.homebudget.services.TransactionManagementService;
 import org.homebudget.services.TransactionValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +41,9 @@ public class TransactionController extends AbstractController {
 
    @Resource
    private AccountManagementService accountManagementService;
+   
+   @Resource
+   private CategoryManagementService categoryManagementService;
 
    @RequestMapping(value = "/{name}/transactions", method = RequestMethod.GET)
    public String getAllTransactions(@PathVariable("name") String accountName,
@@ -81,7 +89,10 @@ public class TransactionController extends AbstractController {
       
       final List<TransactionType> transactionTypeList = new ArrayList<TransactionType>(
             Arrays.asList(TransactionType.values()));
+      
+      List<Category> categories =  categoryManagementService.getAllCategories(getSessionUser().getUsername());
 
+      model.addAttribute(categories);
       model.addAttribute(transactionTypeList);
       model.addAttribute(new Transaction());
       return "transaction";
@@ -170,6 +181,13 @@ public class TransactionController extends AbstractController {
 
    public void setTransactionValidation(TransactionValidationService transactionValidation) {
       this.transactionValidation = transactionValidation;
+   }
+   
+   @InitBinder
+   protected void initBinder(WebDataBinder binder) {
+
+      binder.registerCustomEditor(Category.class, new CategoryEditor(categoryManagementService,
+            getSessionUser().getUsername()));
    }
 
    

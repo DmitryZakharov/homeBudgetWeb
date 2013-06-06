@@ -69,4 +69,16 @@ public class CategoryManagementService {
       userManagementService.saveUserDetails(owner);
    }
 
+   public void delete(String categoryName, String username) {
+
+      final UserDetails owner = userManagementService.getUserDetailsByUsername(username);
+
+      Category category = categoryRepository.findByNameAndOwner(categoryName, owner);
+
+      owner.getMetadata().getCategories().remove(category);
+
+      userManagementService.saveUserDetails(owner);
+
+   }
+
 }

@@ -15,23 +15,24 @@
                <th>Category Owner</th>
                <th></th>
             </tr>
+            <script lang="javascript">
+                 function SubmitForm(formname) {
+                     document.forms[formname]
+                        .submit();
+                 }
+            </script>
             <c:forEach items="${categoryList}" var="category">
                <tr>
 
                   <td>${category.name}</td>
-                  <td>${category.parent}</td>
+                  <td>${category.parent.name}</td>
                   <td>${category.owner.username}</td>
                   <td>
                      <a href="<c:url value="categories/${category.name}.html" />"><i class="icon-edit"/></a>
                      
-                     <form:form name="delete" method="delete" action="categories/${category.name}.html">
-                        <script lang="javascript">
-                           function SubmitForm() {
-                              document.forms['delete']
-                                      .submit();
-                           }
-                        </script>
-                        <i class="icon-trash" onclick="SubmitForm()"></i>
+                     <form:form name="delete_${category.name}" method="delete" action="categories/${category.name}.html">
+
+                        <i class="icon-trash" onclick="SubmitForm('delete_${category.name}')"></i>
                      </form:form>
                   </td>
                </tr>

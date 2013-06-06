@@ -6,10 +6,13 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.homebudget.model.Category;
+import org.homebudget.services.CategoryEditor;
 import org.homebudget.services.CategoryManagementService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,12 +58,27 @@ public class CategoryController extends AbstractController {
    }
 
    @RequestMapping(value = "/new", method = RequestMethod.POST)
-   public String postTransaction(@ModelAttribute("category") @Valid Category category,
+   public String postCategory(@ModelAttribute("category") @Valid Category category,
          BindingResult result, Model model) {
 
       categoryManagementService.saveCategory(category, getSessionUser().getUsername());
 
       return "redirect:";
+   }
+
+   @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
+   public String deleteCategory(@PathVariable("name") String name) {
+
+      categoryManagementService.delete(name, getSessionUser().getUsername());
+
+      return "redirect:";
+   }
+
+   @InitBinder
+   protected void initBinder(WebDataBinder binder) {
+
+      binder.registerCustomEditor(Category.class, new CategoryEditor(categoryManagementService,
+            getSessionUser().getUsername()));
    }
 
 }
