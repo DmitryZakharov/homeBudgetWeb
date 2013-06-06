@@ -154,3 +154,7 @@ table td.center {
 #lines{
     max-width: 100px;
 }
+
+#attachment{
+   max-height: 300px;
+}

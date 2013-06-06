@@ -44,7 +44,7 @@
                <tr>
                   <td>
                      <form:label path="attachment">Attachment:</form:label>		
-                     <img src=${attachment}/>
+                     <img id="attachment" src="${attachment}" alt="attachment" />
                   </td>
                </tr>
                <tr>

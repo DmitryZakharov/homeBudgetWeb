@@ -78,7 +78,7 @@ public class TransactionController extends AbstractController {
       }
       model.addAttribute(transactionTypeList);
       model.addAttribute(transaction);
-      model.addAttribute(attachmentString);
+      model.addAttribute("attachment", attachmentString);
       return "transactionDetails";
    }
 

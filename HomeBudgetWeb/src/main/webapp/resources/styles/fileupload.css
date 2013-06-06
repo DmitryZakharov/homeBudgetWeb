@@ -132,3 +132,7 @@ input {
 .fileupload input {
     font-size: 15px; 
 }
+
+#attachment{
+   max-height: 300px;
+}
