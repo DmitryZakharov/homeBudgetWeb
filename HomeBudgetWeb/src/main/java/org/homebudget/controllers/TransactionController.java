@@ -118,8 +118,6 @@ public class TransactionController extends AbstractController {
 
       accountManagementService.updateAccount(transaction.getParent());
 
-      // transactionManagementService.deleteTransaction(transactionId);
-
       if (transaction == null) {
          return "redirect:";
       }
