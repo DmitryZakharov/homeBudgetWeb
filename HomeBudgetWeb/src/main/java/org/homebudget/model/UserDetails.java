@@ -22,10 +22,11 @@ import org.hibernate.validator.constraints.Email;
 
 /**
  * @author dza
- * 
+ *
  */
 @Entity(name = "USER_DETAILS")
-@Table(name="USER_DETAILS", uniqueConstraints={@UniqueConstraint(columnNames = "USER_USERNAME")})
+
+@Table(name = "USER_DETAILS", uniqueConstraints = {@UniqueConstraint(columnNames = "USER_USERNAME")})
 public class UserDetails {
 
    @Id
@@ -51,7 +52,8 @@ public class UserDetails {
    private String confpassword;
 
    @ManyToMany(cascade = CascadeType.ALL)
-   @JoinTable(name = "USER_USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ROLE_ID"))
+   @JoinTable(name = "USER_USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"),
+       inverseJoinColumns = @JoinColumn(name = "USER_ROLE_ID"))
    private Set<UserRole> roles = new HashSet<UserRole>();
 
    @NotNull
@@ -66,17 +68,17 @@ public class UserDetails {
    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
    private BinaryResource userPic;
 
-   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL,  orphanRemoval = true)
+   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy =
+       "userDetails")
    @JoinColumn(name = "METADATA_ID")
    private UserMetadata metadata;
-   
+
    /**
     * Default constructor
     */
    public UserDetails() {
       this.metadata = new UserMetadata();
    }
-
 
    public long getId() {
 
@@ -181,18 +183,14 @@ public class UserDetails {
       this.userPic = userPic;
    }
 
-   
    public UserMetadata getMetadata() {
-   
+
       return metadata;
    }
 
-   
    public void setMetadata(UserMetadata metadata) {
-   
+
       this.metadata = metadata;
    }
-
-
 
 }

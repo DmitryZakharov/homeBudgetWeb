@@ -12,8 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,9 +36,9 @@ public class Account {
    @Temporal(javax.persistence.TemporalType.DATE)
    private Date dateOfCreation;
 
-   @OneToOne
-   @JoinColumn(name = "USER_ID")
-   private UserDetails owner;
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "OWNER_METADATA")
+   private UserMetadata ownerMetadata;
 
    // @NotBlank (message = "{account.startingbalance.required}")
    @Column(name = "STARTING_BALANCE")
@@ -71,15 +71,15 @@ public class Account {
       this.name = name;
    }
 
-   public UserDetails getOwner() {
-
-      return owner;
+   public UserMetadata getOwnerMetadata() {
+      return ownerMetadata;
    }
 
-   public void setOwner(UserDetails owner) {
-
-      this.owner = owner;
+   public void setOwnerMetadata(UserMetadata ownerMetadata) {
+      this.ownerMetadata = ownerMetadata;
    }
+
+  
 
    public float getStartingBalance() {
 

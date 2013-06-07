@@ -24,7 +24,7 @@ public class AccountManagementService {
    public void saveAccount(Account account, String username) {
 
       final UserDetails owner = userRepository.findByUsername(username);
-      account.setOwner(owner);
+      account.setOwnerMetadata(owner.getMetadata());
 
       accountRepository.save(account);
    }
@@ -46,14 +46,14 @@ public class AccountManagementService {
 
       final UserDetails userDetails = userRepository.findByUsername(username);
 
-      return accountRepository.findByOwner(userDetails);
+      return accountRepository.findByOwnerMetadata(userDetails.getMetadata());
    }
 
    public Account getAccount(String accountName, String username) {
 
       Account account = accountRepository.findByName(accountName);
 
-      if (account != null && account.getOwner().getUsername().equals(username)) {
+      if (account != null && account.getOwnerMetadata().getUserDetails().getUsername().equals(username)) {
          return account;
       }
       return null;
@@ -63,7 +63,7 @@ public class AccountManagementService {
 
       Account account = accountRepository.findOne(id);
 
-      if (account.getOwner().getUsername().equals(username)) {
+      if (account.getOwnerMetadata().getUserDetails().getUsername().equals(username)) {
          return account;
       }
       return null;

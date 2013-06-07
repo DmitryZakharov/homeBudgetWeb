@@ -10,8 +10,11 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity(name = "USER_ROLE")
+@Table(name="USER_ROLE", uniqueConstraints={@UniqueConstraint(columnNames = "USER_ROLE_TYPE")})
 public class UserRole {
 
    public enum Role {
@@ -47,7 +50,7 @@ public class UserRole {
    private long id;
 
    @Enumerated(EnumType.STRING)
-   @Column(name = "USER_ROLE_TYPE")
+   @Column(name = "USER_ROLE_TYPE", unique = true)
    private Role role;
 
    public UserRole() {

@@ -1,10 +1,8 @@
 package org.homebudget.services;
 
 import java.util.Date;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-
 import org.apache.log4j.Logger;
 import org.homebudget.dao.UserRoleRepository;
 import org.homebudget.model.Account;
@@ -150,7 +148,7 @@ public class HomeBudgetInitializationService {
       final Account account = new Account();
       account.setName("account for user " + user.getUsername());
       account.setDateOfCreation(new Date());
-      account.setOwner(user);
+      account.setOwnerMetadata(user.getMetadata());
       account.setStartingBalance(0);
       account.setCurrency(Currency.RUB);
       return account;

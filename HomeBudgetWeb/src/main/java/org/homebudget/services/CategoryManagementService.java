@@ -1,9 +1,7 @@
 package org.homebudget.services;
 
 import java.util.List;
-
 import javax.annotation.Resource;
-
 import org.apache.log4j.Logger;
 import org.homebudget.dao.CategoryRepository;
 import org.homebudget.model.Category;
@@ -25,7 +23,7 @@ public class CategoryManagementService {
 
       final UserDetails owner = userManagementService.getUserDetailsByUsername(username);
 
-      Category category = categoryRepository.findByNameAndOwner(name, owner);
+      Category category = categoryRepository.findByNameAndOwnerMetadata(name, owner.getMetadata());
 
       if (category == null) {
 
@@ -35,7 +33,7 @@ public class CategoryManagementService {
 
          category.setParent(parent);
 
-         category.setOwner(owner);
+         category.setOwnerMetadata(owner.getMetadata());
 
          categoryRepository.save(category);
 
@@ -50,7 +48,7 @@ public class CategoryManagementService {
 
       UserDetails owner = userManagementService.getUserDetailsByUsername(username);
 
-      return categoryRepository.findByOwner(owner);
+      return categoryRepository.findByOwnerMetadata(owner.getMetadata());
 
    }
 
@@ -58,13 +56,13 @@ public class CategoryManagementService {
 
       final UserDetails owner = userManagementService.getUserDetailsByUsername(username);
 
-      return categoryRepository.findByNameAndOwner(name, owner);
+      return categoryRepository.findByNameAndOwnerMetadata(name, owner.getMetadata());
    }
 
    public void saveCategory(Category category, String username) {
 
       UserDetails owner = userManagementService.getUserDetailsByUsername(username);
-      category.setOwner(owner);
+      category.setOwnerMetadata(owner.getMetadata());
       owner.getMetadata().getCategories().add(category);
       userManagementService.saveUserDetails(owner);
    }
@@ -73,7 +71,7 @@ public class CategoryManagementService {
 
       final UserDetails owner = userManagementService.getUserDetailsByUsername(username);
 
-      Category category = categoryRepository.findByNameAndOwner(categoryName, owner);
+      Category category = categoryRepository.findByNameAndOwnerMetadata(categoryName, owner.getMetadata());
 
       owner.getMetadata().getCategories().remove(category);
 

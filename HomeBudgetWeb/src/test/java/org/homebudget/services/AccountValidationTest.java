@@ -6,7 +6,7 @@ package org.homebudget.services;
 
 import java.util.Date;
 import javax.annotation.Resource;
-import org.homebudget.dao.UserRepository;
+import org.homebudget.dao.AccountRepository;
 import org.homebudget.model.Account;
 import org.homebudget.model.UserDetails;
 import org.homebudget.test.config.TestConfigurator;
@@ -24,19 +24,20 @@ import org.springframework.validation.Errors;
 public class AccountValidationTest extends TestConfigurator {
 
    @Resource
-   AccountValidationService instance;
+   AccountValidationService accountValidationService;
 
    @Resource
-   AccountManagementService service;
+   AccountManagementService accountManagementService;
 
    @Autowired
-   UserRepository userRepository;
+   AccountRepository repository;
+
+   @Autowired
+   UserManagementService userManagementService;
 
    @After
    public void tearDown() {
-      userRepository.deleteAll();
-      service.deleteAll();
-
+      userManagementService.deleteAllUserDetails();
    }
 
    /**
@@ -50,12 +51,13 @@ public class AccountValidationTest extends TestConfigurator {
       Account account = new Account();
       String userName = "User";
       UserDetails user = createTestUser(userName);
-      userRepository.save(user);
+      userManagementService.saveUserDetails(user);
       account.setName("AccountName1");
-      service.saveAccount(account, userName);
+      account.setOwnerMetadata(user.getMetadata());
+      accountManagementService.saveAccount(account, userName);
 
       Errors errors = new BeanPropertyBindingResult(account, "Account");
-      instance.validate(account, errors, userName);
+      accountValidationService.validate(account, errors, userName);
       assertTrue(errors.hasErrors());
       assertNotNull(errors.getFieldError("name"));
    }
@@ -68,11 +70,11 @@ public class AccountValidationTest extends TestConfigurator {
       Account account = new Account();
       String userName = "User";
       UserDetails user = createTestUser(userName);
-      userRepository.save(user);
+      userManagementService.saveUserDetails(user);
       account.setName("AccountName1");
-      account.setOwner(user);
+      account.setOwnerMetadata(user.getMetadata());
       Errors errors = new BeanPropertyBindingResult(account, "Account");
-      instance.validate(account, errors, user.getUsername());
+      accountValidationService.validate(account, errors, user.getUsername());
       assertTrue(errors.hasErrors());
       assertNotNull(errors.getFieldError("dateOfCreation"));
    }
@@ -85,12 +87,12 @@ public class AccountValidationTest extends TestConfigurator {
       Account account = new Account();
       String userName = "User";
       UserDetails user = createTestUser(userName);
-      userRepository.save(user);
+      userManagementService.saveUserDetails(user);
       account.setName("AccountName1");
       account.setDateOfCreation(new Date());
-      account.setOwner(user);
+      account.setOwnerMetadata(user.getMetadata());
       Errors errors = new BeanPropertyBindingResult(account, "Account");
-      instance.validate(account, errors, userName);
+      accountValidationService.validate(account, errors, userName);
       assertFalse(errors.hasErrors());
    }
 

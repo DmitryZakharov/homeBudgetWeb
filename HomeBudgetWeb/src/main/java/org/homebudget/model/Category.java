@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity(name = "CATEGORY")
@@ -24,8 +25,9 @@ public class Category {
    @JoinColumn(name = "CATEGORY_PARENT")
    private Category parent;
 
-   @OneToOne(fetch = FetchType.LAZY)
-   private UserDetails owner;
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "OWNER_METADATA")
+   private UserMetadata ownerMetadata;
 
    public int getId() {
 
@@ -37,17 +39,16 @@ public class Category {
       this.id = id;
    }
 
-   
-   public UserDetails getOwner() {
-   
-      return owner;
+   public UserMetadata getOwnerMetadata() {
+      return ownerMetadata;
+   }
+
+   public void setOwnerMetadata(UserMetadata ownerMetadata) {
+      this.ownerMetadata = ownerMetadata;
    }
 
    
-   public void setOwner(UserDetails owner) {
-   
-      this.owner = owner;
-   }
+
 
    public String getName() {
 
