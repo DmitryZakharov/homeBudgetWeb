@@ -5,6 +5,9 @@
 package org.homebudget.test.config;
 
 import java.io.IOException;
+
+import javax.persistence.EntityManagerFactory;
+
 import org.homebudget.model.BinaryResource;
 import org.homebudget.services.ResourceManagementService;
 import org.junit.Test;
@@ -30,6 +33,10 @@ public class TestConfigurator {
 
    @Autowired
    ResourceManagementService aResourceManagementService;
+   
+   
+   @Autowired
+   EntityManagerFactory entityManagerFactory;
 
    public TestConfigurator() {
    }
@@ -53,6 +60,18 @@ public class TestConfigurator {
       when(multipartFile.getBytes()).thenReturn(bytes);
       BinaryResource document = aResourceManagementService.getResource(multipartFile);
       return document;
+   }
+
+   
+   public EntityManagerFactory getEntityManagerFactory() {
+   
+      return entityManagerFactory;
+   }
+
+   
+   public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
+   
+      this.entityManagerFactory = entityManagerFactory;
    }
 
 }

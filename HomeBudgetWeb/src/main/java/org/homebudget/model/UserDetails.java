@@ -78,6 +78,7 @@ public class UserDetails {
     */
    public UserDetails() {
       this.metadata = new UserMetadata();
+      this.metadata.setUserDetails(this);
    }
 
    public long getId() {

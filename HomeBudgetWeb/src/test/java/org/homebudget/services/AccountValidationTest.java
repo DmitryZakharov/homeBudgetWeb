@@ -6,19 +6,27 @@ package org.homebudget.services;
 
 import java.util.Date;
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
 import org.homebudget.dao.AccountRepository;
 import org.homebudget.model.Account;
 import org.homebudget.model.UserDetails;
 import org.homebudget.test.config.TestConfigurator;
 import org.junit.After;
+import org.junit.Before;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.EntityManagerFactoryUtils;
+import org.springframework.orm.jpa.EntityManagerHolder;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 
 /**
- *
+ * 
  * @author Michael Wolowyk
  */
 public class AccountValidationTest extends TestConfigurator {
@@ -35,9 +43,25 @@ public class AccountValidationTest extends TestConfigurator {
    @Autowired
    UserManagementService userManagementService;
 
+   private EntityManager entryManager;
+   
+   @Before
+   public void init() {
+
+      entryManager = getEntityManagerFactory().createEntityManager();
+      
+      TransactionSynchronizationManager.bindResource(getEntityManagerFactory(), new EntityManagerHolder(entryManager));
+
+   }
+
    @After
    public void tearDown() {
+
       userManagementService.deleteAllUserDetails();
+      EntityManagerHolder emHolder = (EntityManagerHolder)
+            TransactionSynchronizationManager.unbindResource(getEntityManagerFactory());
+      EntityManagerFactoryUtils.closeEntityManager(emHolder.getEntityManager());
+      
    }
 
    /**
@@ -97,6 +121,7 @@ public class AccountValidationTest extends TestConfigurator {
    }
 
    private UserDetails createTestUser(String userName) {
+
       UserDetails user = new UserDetails();
       user.setUsername(userName);
       user.setEmail("user@email.com");
