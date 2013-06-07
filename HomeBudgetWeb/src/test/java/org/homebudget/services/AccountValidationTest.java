@@ -34,8 +34,9 @@ public class AccountValidationTest extends TestConfigurator {
 
    @After
    public void tearDown() {
-      service.deleteAll();
       userRepository.deleteAll();
+      service.deleteAll();
+
    }
 
    /**

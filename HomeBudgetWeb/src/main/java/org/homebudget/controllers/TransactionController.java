@@ -149,9 +149,10 @@ public class TransactionController extends AbstractController {
          return "redirect:";
       }
       logger.info("Processing save transacton: " + transaction);
-      BinaryResource resource = resourceManagementService.getResource(attachment);
-      transaction.setAttachment(resource);
-
+      if (attachment != null) {
+         BinaryResource resource = resourceManagementService.getResource(attachment);
+         transaction.setAttachment(resource);
+      }
       transactionManagementService.saveTransaction(transaction, accountName);
 
       return "redirect:";
@@ -177,7 +178,7 @@ public class TransactionController extends AbstractController {
       if (oldTransaction == null) {
          return "redirect:transactions";
       }
-      transactionManagementService.updateTransactionDetails(oldTransaction, transaction);
+      transactionManagementService.updateTransactionDetails(oldTransaction, transaction, attachment);
 
       return "redirect:transactions";
 
@@ -205,6 +206,7 @@ public class TransactionController extends AbstractController {
    }
 
    @InitBinder
+   @Override
    protected void initBinder(WebDataBinder binder) {
 
       binder.registerCustomEditor(Category.class, new CategoryEditor(categoryManagementService,
