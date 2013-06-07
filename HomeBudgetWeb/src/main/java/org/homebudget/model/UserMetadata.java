@@ -40,12 +40,13 @@ public class UserMetadata {
        "ownerMetadata")
    private List<Category> categories = new ArrayList<Category>();
 
-   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy =
-       "ownerMetadata")
+   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true
+       //, mappedBy = "ownerMetadata"
+       )
    private List<Account> account = new ArrayList<Account>();
    
    @OneToOne
-   @JoinColumn(name="USER_DETAILS")
+   @JoinColumn(name="USER_DETAILS", nullable = false)
    private UserDetails userDetails;
 
    public long getId() {

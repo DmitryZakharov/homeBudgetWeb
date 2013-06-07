@@ -11,8 +11,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import org.apache.log4j.Logger;
@@ -36,9 +34,9 @@ public class Account {
    @Temporal(javax.persistence.TemporalType.DATE)
    private Date dateOfCreation;
 
-   @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "OWNER_METADATA")
-   private UserMetadata ownerMetadata;
+//   @ManyToOne(fetch = FetchType.LAZY)
+//   @JoinColumn(name = "OWNER_METADATA")
+//   private UserMetadata ownerMetadata;
 
    // @NotBlank (message = "{account.startingbalance.required}")
    @Column(name = "STARTING_BALANCE")
@@ -71,12 +69,12 @@ public class Account {
       this.name = name;
    }
 
-   public UserMetadata getOwnerMetadata() {
-      return ownerMetadata;
-   }
+//   public UserMetadata getOwnerMetadata() {
+//      return ownerMetadata;
+//   }
 
    public void setOwnerMetadata(UserMetadata ownerMetadata) {
-      this.ownerMetadata = ownerMetadata;
+//      this.ownerMetadata = ownerMetadata;
    }
 
   
@@ -130,7 +128,6 @@ public class Account {
 
    public boolean hasTransaction(Long transactionId) {
 
-      final Collection<Transaction> transactions = getTransactions();
       for (Transaction transaction : transactions) {
          if (transaction.getId() == transactionId) {
             return true;

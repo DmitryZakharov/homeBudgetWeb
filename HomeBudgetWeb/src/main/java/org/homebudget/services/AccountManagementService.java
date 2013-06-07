@@ -45,15 +45,17 @@ public class AccountManagementService {
    public List<Account> getAllUserAccounts(String username) {
 
       final UserDetails userDetails = userRepository.findByUsername(username);
-
-      return accountRepository.findByOwnerMetadata(userDetails.getMetadata());
+      
+      return userDetails.getMetadata().getAccount();
    }
 
    public Account getAccount(String accountName, String username) {
 
       Account account = accountRepository.findByName(accountName);
 
-      if (account != null && account.getOwnerMetadata().getUserDetails().getUsername().equals(username)) {
+      if (account != null 
+          //&& account.getOwnerMetadata().getUserDetails().getUsername().equals(username)
+          ) {
          return account;
       }
       return null;
@@ -63,10 +65,10 @@ public class AccountManagementService {
 
       Account account = accountRepository.findOne(id);
 
-      if (account.getOwnerMetadata().getUserDetails().getUsername().equals(username)) {
+//      if (account.getOwnerMetadata().getUserDetails().getUsername().equals(username)) {
          return account;
-      }
-      return null;
+//      }
+//      return null;
    }
 
    public void deleteAccount(long id) {
