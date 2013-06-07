@@ -7,6 +7,8 @@ package org.homebudget.services;
 import java.util.Date;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
 import org.homebudget.dao.AccountRepository;
 import org.homebudget.model.Account;
 import org.homebudget.model.UserDetails;
@@ -39,15 +41,15 @@ public class AccountValidationTest extends TestConfigurator {
 
    @Autowired
    UserManagementService userManagementService;
-
-   private EntityManager entryManager;
+   @Autowired
+   EntityManagerFactory entityManagerFactory;
    
    @Before
    public void init() {
 
-      entryManager = getEntityManagerFactory().createEntityManager();
+      EntityManager  entryManager = entityManagerFactory.createEntityManager();
       
-      TransactionSynchronizationManager.bindResource(getEntityManagerFactory(), new EntityManagerHolder(entryManager));
+      TransactionSynchronizationManager.bindResource(entityManagerFactory, new EntityManagerHolder(entryManager));
 
    }
 
@@ -56,10 +58,11 @@ public class AccountValidationTest extends TestConfigurator {
 
       userManagementService.deleteAllUserDetails();
       EntityManagerHolder emHolder = (EntityManagerHolder)
-            TransactionSynchronizationManager.unbindResource(getEntityManagerFactory());
+            TransactionSynchronizationManager.unbindResource(entityManagerFactory);
       EntityManagerFactoryUtils.closeEntityManager(emHolder.getEntityManager());
       
    }
+
 
    /**
     * Test of validate method, of class RegistrationValidation.

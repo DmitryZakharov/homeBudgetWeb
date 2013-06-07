@@ -5,13 +5,22 @@
 package org.homebudget.services;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
 import org.homebudget.model.UserDetails;
 import org.homebudget.test.config.TestConfigurator;
 import org.junit.After;
+import org.junit.Before;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.EntityManagerFactoryUtils;
+import org.springframework.orm.jpa.EntityManagerHolder;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 
@@ -30,13 +39,28 @@ public class RegistrationValidationTest extends TestConfigurator {
    @Resource
    UserValidationService instance;
 
-   @Resource
-   UserManagementService service;
+   @Autowired
+   UserManagementService userManagementService;
+   @Autowired
+   EntityManagerFactory entityManagerFactory;
+   
+   @Before
+   public void init() {
+
+      EntityManager  entryManager = entityManagerFactory.createEntityManager();
+      
+      TransactionSynchronizationManager.bindResource(entityManagerFactory, new EntityManagerHolder(entryManager));
+
+   }
 
    @After
    public void tearDown() {
 
-      service.deleteAllUserDetails();
+      userManagementService.deleteAllUserDetails();
+      EntityManagerHolder emHolder = (EntityManagerHolder)
+            TransactionSynchronizationManager.unbindResource(entityManagerFactory);
+      EntityManagerFactoryUtils.closeEntityManager(emHolder.getEntityManager());
+      
    }
 
    /**
@@ -61,13 +85,13 @@ public class RegistrationValidationTest extends TestConfigurator {
       System.out.println("testValidateEmailUniqueness");
       UserDetails target = new UserDetails();
       target.setEmail(VALID_EMAIL);
-      service.saveUserDetails(target);
+      userManagementService.saveUserDetails(target);
       Errors errors = new BeanPropertyBindingResult(target, "userDetails");
 
       instance.validate(target, errors, null);
       assertTrue(errors.hasErrors());
       assertNotNull(errors.getFieldError("email"));
-      service.deleteUserDetails(target);
+      userManagementService.deleteUserDetails(target);
    }
 
    @Test
@@ -77,13 +101,13 @@ public class RegistrationValidationTest extends TestConfigurator {
       UserDetails target = new UserDetails();
       target.setUsername(VALID_USERNAME);
       target.setEmail(VALID_EMAIL);
-      service.saveUserDetails(target);
+      userManagementService.saveUserDetails(target);
       Errors errors = new BeanPropertyBindingResult(target, "userDetails");
 
       instance.validate(target, errors,target.getUsername());
       assertTrue(errors.hasErrors());
       assertNotNull(errors.getFieldError("username"));
-      service.deleteUserDetails(target);
+      userManagementService.deleteUserDetails(target);
    }
 
    @Test

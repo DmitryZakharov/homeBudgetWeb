@@ -7,30 +7,58 @@ package org.homebudget.model;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
 import org.homebudget.dao.AccountRepository;
+import org.homebudget.services.UserManagementService;
 import org.homebudget.test.config.TestConfigurator;
 import static org.junit.Assert.*;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.EntityManagerFactoryUtils;
+import org.springframework.orm.jpa.EntityManagerHolder;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 public class TransactionModelTest extends TestConfigurator {
 
    @Autowired
    AccountRepository repository;
 
-
-
-
    public TransactionModelTest() {
 
    }
-
+   
+   @Autowired
+   UserManagementService userManagementService;
+   @Autowired
+   EntityManagerFactory entityManagerFactory;
+   
    @Before
-   public void setUp() {
+   public void init() {
 
       repository.deleteAll();
+      
+      EntityManager  entryManager = entityManagerFactory.createEntityManager();
+      
+      TransactionSynchronizationManager.bindResource(entityManagerFactory, new EntityManagerHolder(entryManager));
+
    }
+
+   @After
+   public void tearDown() {
+
+      userManagementService.deleteAllUserDetails();
+      EntityManagerHolder emHolder = (EntityManagerHolder)
+            TransactionSynchronizationManager.unbindResource(entityManagerFactory);
+      EntityManagerFactoryUtils.closeEntityManager(emHolder.getEntityManager());
+      
+   }
+
 
    @Test
    public void saveTransactionWithImage() throws IOException {
