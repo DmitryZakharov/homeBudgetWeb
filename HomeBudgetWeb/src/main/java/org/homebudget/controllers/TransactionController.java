@@ -205,8 +205,7 @@ public class TransactionController extends AbstractController {
    }
 
    @InitBinder
-   @Override
-   protected void initBinder(WebDataBinder binder) {
+   public void initBinder(WebDataBinder binder) {
 
       binder.registerCustomEditor(Category.class, new CategoryEditor(categoryManagementService,
             getSessionUser().getUsername()));

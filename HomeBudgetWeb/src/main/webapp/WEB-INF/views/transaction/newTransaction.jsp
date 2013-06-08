@@ -61,9 +61,12 @@
                         </div>
 
                         <table>
+                        <tr>
                            <td>
                               <img id="preview"/>
                            </td>
+                           </tr>
+                           <tr>
                            <td>
                               <div id="fileinfo">
                                  <div id="filename"></div>
@@ -72,6 +75,7 @@
                                  <div id="filedim"></div>
                               </div>
                            </td>
+                           </tr>
                         </table>
 
 
