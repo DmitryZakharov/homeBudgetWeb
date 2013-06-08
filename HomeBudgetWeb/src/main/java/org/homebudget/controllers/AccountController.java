@@ -3,12 +3,16 @@ package org.homebudget.controllers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
+
 import org.homebudget.model.Account;
 import org.homebudget.model.Currency;
+import org.homebudget.model.UserDetails;
 import org.homebudget.services.AccountManagementService;
 import org.homebudget.services.AccountValidationService;
+import org.homebudget.services.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -29,6 +33,9 @@ public class AccountController extends AbstractController {
 
    @Resource
    private AccountManagementService accountManagementService;
+   
+   @Resource
+   private UserManagementService userManagementService;
 
    @RequestMapping(method = RequestMethod.GET)
    public List<Account> getAccounts(Model model) {
@@ -92,7 +99,10 @@ public class AccountController extends AbstractController {
       }
       if (account != null) {
 
-         accountManagementService.saveAccount(account, getSessionUser().getUsername());
+         final UserDetails userDetails =  userManagementService.getUserDetailsByUsername(getSessionUser().getUsername());
+         userDetails.getMetadata().addAccount(account);
+         
+         userManagementService.saveUserDetails(userDetails);
       }
       return "redirect:";
    }
