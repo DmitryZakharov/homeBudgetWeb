@@ -33,7 +33,7 @@ public class AccountController extends AbstractController {
 
    @Resource
    private AccountManagementService accountManagementService;
-   
+
    @Resource
    private UserManagementService userManagementService;
 
@@ -99,9 +99,10 @@ public class AccountController extends AbstractController {
       }
       if (account != null) {
 
-         final UserDetails userDetails =  userManagementService.getUserDetailsByUsername(getSessionUser().getUsername());
+         final UserDetails userDetails = userManagementService
+               .getUserDetailsByUsername(getSessionUser().getUsername());
          userDetails.getMetadata().addAccount(account);
-         
+
          userManagementService.saveUserDetails(userDetails);
       }
       return "redirect:";

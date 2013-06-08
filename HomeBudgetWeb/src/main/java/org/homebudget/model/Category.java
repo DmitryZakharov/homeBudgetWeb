@@ -40,15 +40,14 @@ public class Category {
    }
 
    public UserMetadata getOwnerMetadata() {
+
       return ownerMetadata;
    }
 
    public void setOwnerMetadata(UserMetadata ownerMetadata) {
+
       this.ownerMetadata = ownerMetadata;
    }
-
-   
-
 
    public String getName() {
 

@@ -1,7 +1,9 @@
 package org.homebudget.services;
 
 import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.apache.log4j.Logger;
 import org.homebudget.dao.CategoryRepository;
 import org.homebudget.model.Category;
@@ -69,7 +71,8 @@ public class CategoryManagementService {
 
       final UserDetails owner = userManagementService.getUserDetailsByUsername(username);
 
-      Category category = categoryRepository.findByNameAndOwnerMetadata(categoryName, owner.getMetadata());
+      Category category = categoryRepository.findByNameAndOwnerMetadata(categoryName,
+            owner.getMetadata());
 
       owner.getMetadata().removeCategory(category);
 

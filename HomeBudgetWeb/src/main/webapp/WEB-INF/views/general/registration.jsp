@@ -49,7 +49,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                          <div class="control-group">
                             <label class="control-label">Main Currency</label>
                             <div class="controls">
@@ -67,7 +66,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="control-group">
                             <label class="control-label">Birthday</label>
                             <div class="controls">

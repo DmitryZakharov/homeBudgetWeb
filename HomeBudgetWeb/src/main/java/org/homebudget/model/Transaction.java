@@ -2,6 +2,7 @@ package org.homebudget.model;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -79,14 +80,14 @@ public class Transaction implements Serializable {
    }
 
    public BinaryResource getAttachment() {
+
       return attachment;
    }
 
    public void setAttachment(BinaryResource attachment) {
+
       this.attachment = attachment;
    }
-
-  
 
    public float getAmount() {
 

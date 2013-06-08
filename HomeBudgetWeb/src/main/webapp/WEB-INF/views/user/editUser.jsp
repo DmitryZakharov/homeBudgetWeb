@@ -9,10 +9,8 @@
                <form:input type="hidden" name="_method" value="put" path=""/>
                <h2 class="registration-header">User Details</h2>
                <table>
-
                   <!-- USER USERNAME -->
                   <tr>
-
                      <td><form:errors class="text-error" path="username" /></td>
                   </tr>
                   <tr>
@@ -47,7 +45,6 @@
                      <td><form:input type="email" class="input" placeholder="E-mail" path="email" /> 
                      </td>
                   </tr>
-
                   <tr>
                      <td><form:errors class="text-error" path="birthday" /> 
                      </td>
@@ -80,8 +77,7 @@
                                  </div>
                               </td>
                            </table>
-
-
+                           
                            <div id="error">You should select valid image files only!</div>
                            <div id="error2">An error occurred while uploading the file</div>
                            <div id="abort">The upload has been canceled by the user or the browser dropped the connection</div>
@@ -91,11 +87,7 @@
                               <div id="progress"></div>
                               <div id="progress_percent">&nbsp;</div>
                               <div class="clear_both"></div>
-
-
                            </div>
-
-
                         </div>
                      </td>
                   </tr>
@@ -106,7 +98,6 @@
                </table>
             </form:form>
          </div>
-
       </div> <!-- /container -->
    </jsp:body>
 </t:maintemplate>

@@ -26,7 +26,7 @@ public class CategoryController extends AbstractController {
 
    @Resource
    private CategoryManagementService categoryManagementService;
-   
+
    @Resource
    private UserManagementService userManagementService;
 
@@ -66,7 +66,8 @@ public class CategoryController extends AbstractController {
    public String postCategory(@ModelAttribute("category") @Valid Category category,
          BindingResult result, Model model) {
 
-      final UserDetails userDetails =   userManagementService.getUserDetailsByUsername(getSessionUser().getUsername());
+      final UserDetails userDetails = userManagementService
+            .getUserDetailsByUsername(getSessionUser().getUsername());
       userDetails.getMetadata().addCategory(category);
       userManagementService.saveUserDetails(userDetails);
       return "redirect:";

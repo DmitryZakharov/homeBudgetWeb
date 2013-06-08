@@ -15,13 +15,9 @@
                <tr>
                   <td>
                      <div class="upload_form_cont">
-
-
                         <div class="fileupload">
                            <input  type="file"  id="file" name="userPic" onchange="fileSelected();"/>
-
                         </div>
-
                         <table>
                            <td>
                               <img id="preview"/>
@@ -36,7 +32,6 @@
                            </td>
                         </table>
 
-
                         <div id="error">You should select valid image files only!</div>
                         <div id="error2">An error occurred while uploading the file</div>
                         <div id="abort">The upload has been canceled by the user or the browser dropped the connection</div>
@@ -46,11 +41,7 @@
                            <div id="progress"></div>
                            <div id="progress_percent">&nbsp;</div>
                            <div class="clear_both"></div>
-
-
                         </div>
-
-
                      </div>
                   </td>
                </tr>

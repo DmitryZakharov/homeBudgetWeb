@@ -23,7 +23,6 @@
             </script>
             <c:forEach items="${categoryList}" var="category">
                <tr>
-
                   <td>${category.name}</td>
                   <td>${category.parent.name}</td>
                   <td>${category.ownerMetadata.userDetails.username}</td>
