@@ -3,10 +3,8 @@ package org.homebudget.controllers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.homebudget.model.BinaryResource;
 import org.homebudget.model.Category;
@@ -89,7 +87,7 @@ public class TransactionController extends AbstractController {
       }
       final List<Category> categories = categoryManagementService.getAllCategories(getSessionUser()
             .getUsername());
-
+      
       model.addAttribute(categories);
       model.addAttribute(transactionTypeList);
       model.addAttribute(transaction);
