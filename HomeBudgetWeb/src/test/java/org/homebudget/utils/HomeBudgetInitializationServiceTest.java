@@ -12,6 +12,8 @@ import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import org.apache.log4j.BasicConfigurator;
+import org.homebudget.config.TestConfigurator;
 import org.homebudget.dao.UserRepository;
 import org.homebudget.dao.UserRoleRepository;
 import org.homebudget.model.Account;
@@ -23,7 +25,6 @@ import org.homebudget.services.AccountManagementService;
 import org.homebudget.services.CategoryManagementService;
 import org.homebudget.services.HomeBudgetInitializationTextService;
 import org.homebudget.services.UserManagementService;
-import org.homebudget.test.config.TestConfigurator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -65,10 +66,12 @@ public class HomeBudgetInitializationServiceTest extends TestConfigurator {
    @Before
    public void init() {
       
+      BasicConfigurator.configure();
+
       aUserManagementService.getAllUsers();
 
-      //aHomeBudgetInitializationService.initUserRoles();
-      
+      // aHomeBudgetInitializationService.initUserRoles();
+
       EntityManager entryManager = entityManagerFactory.createEntityManager();
 
       TransactionSynchronizationManager.bindResource(entityManagerFactory, new EntityManagerHolder(
@@ -83,6 +86,8 @@ public class HomeBudgetInitializationServiceTest extends TestConfigurator {
       EntityManagerHolder emHolder = (EntityManagerHolder) TransactionSynchronizationManager
             .unbindResource(entityManagerFactory);
       EntityManagerFactoryUtils.closeEntityManager(emHolder.getEntityManager());
+      
+
 
    }
 
@@ -91,7 +96,7 @@ public class HomeBudgetInitializationServiceTest extends TestConfigurator {
     */
    @Test
    public void testCreateTestUsers() {
-      
+
       System.out.println("testCreateTestUsers");
       int usersNr = 10;
       createTestUsers(usersNr);
@@ -114,7 +119,7 @@ public class HomeBudgetInitializationServiceTest extends TestConfigurator {
 
    @Test
    public void testInitialization() {
-      
+
       int numberOfUsers = 10;
       aHomeBudgetInitializationService.setUserNumber(numberOfUsers);
       aHomeBudgetInitializationService.executePopulation();
@@ -162,9 +167,9 @@ public class HomeBudgetInitializationServiceTest extends TestConfigurator {
          transaction.setCategory(category);
          aAccount.addTransaction(transaction);
          UserDetails userDetails = aUserManagementService.getUserDetailsByUsername(userName);
-         userDetails.getMetadata().getAccount().add(aAccount);
+         userDetails.getMetadata().addAccount(aAccount);
          userManagementService.saveUserDetails(userDetails);
-         //aAccountManagementService.saveAccount(aAccount, userName);
+         // aAccountManagementService.saveAccount(aAccount, userName);
       }
 
    }

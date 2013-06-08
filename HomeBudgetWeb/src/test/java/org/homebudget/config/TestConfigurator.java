@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.homebudget.test.config;
+package org.homebudget.config;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

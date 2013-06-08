@@ -1,7 +1,9 @@
 package org.homebudget.services;
 
 import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.apache.log4j.Logger;
 import org.homebudget.dao.AccountRepository;
 import org.homebudget.dao.UserRepository;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AccountManagementService {
-   
+
    private static final Logger logger = Logger.getLogger(AccountManagementService.class);
 
    @Resource
@@ -24,21 +26,22 @@ public class AccountManagementService {
    public Account saveAccount(Account account, String username) {
 
       final UserDetails owner = userRepository.findByUsername(username);
-     // account.setOwnerMetadata(owner.getMetadata());
-      owner.getMetadata().getAccount().add(account);
+      // account.setOwnerMetadata(owner.getMetadata());
+      owner.getMetadata().addAccount(account);
       userRepository.save(owner);
-     return accountRepository.save(account);
+      return accountRepository.save(account);
    }
 
    public void updateAccountDetails(Account oldAccount, Account newAccount) {
 
-      BeanUtils.copyProperties(newAccount, oldAccount, new String[]{"id", "owner"});
+      BeanUtils.copyProperties(newAccount, oldAccount, new String[] { "id", "owner" });
 
       accountRepository.save(oldAccount);
 
    }
-   
-   public void updateAccount(Account account){
+
+   public void updateAccount(Account account) {
+
       accountRepository.save(account);
 
    }
@@ -46,17 +49,17 @@ public class AccountManagementService {
    public List<Account> getAllUserAccounts(String username) {
 
       final UserDetails userDetails = userRepository.findByUsername(username);
-      
-      return userDetails.getMetadata().getAccount();
+
+      return userDetails.getMetadata().getAccounts();
    }
 
    public Account getAccount(String accountName, String username) {
 
       Account account = accountRepository.findByName(accountName);
 
-      if (account != null 
-          //&& account.getOwnerMetadata().getUserDetails().getUsername().equals(username)
-          ) {
+      if (account != null
+      // && account.getOwnerMetadata().getUserDetails().getUsername().equals(username)
+      ) {
          return account;
       }
       return null;
@@ -66,17 +69,19 @@ public class AccountManagementService {
 
       Account account = accountRepository.findOne(id);
 
-//      if (account.getOwnerMetadata().getUserDetails().getUsername().equals(username)) {
-         return account;
-//      }
-//      return null;
+      // if (account.getOwnerMetadata().getUserDetails().getUsername().equals(username)) {
+      return account;
+      // }
+      // return null;
    }
 
    public void deleteAccount(long id) {
+
       accountRepository.delete(id);
    }
 
    public void deleteAccount(Account account) {
+
       accountRepository.delete(account);
    }
 
@@ -86,6 +91,7 @@ public class AccountManagementService {
    }
 
    public boolean isAuthorized(String accountName, String sessionUserName) {
+
       Account account = getAccount(accountName, sessionUserName);
       if (account == null) {
          logger.warn("The user " + sessionUserName + " is not authorized for " + accountName);
@@ -97,13 +103,14 @@ public class AccountManagementService {
    }
 
    public boolean isAuthorized(String accountName, String sessionUserName, Long transactionId) {
+
       Account account = getAccount(accountName, sessionUserName);
       if (account == null) {
-          logger.warn("The user " + sessionUserName + " is not authorized for " + accountName);
+         logger.warn("The user " + sessionUserName + " is not authorized for " + accountName);
          return false;
       }
       else {
-         
+
          return account.hasTransaction(transactionId);
       }
    }

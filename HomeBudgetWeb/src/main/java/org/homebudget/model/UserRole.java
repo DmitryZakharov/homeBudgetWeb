@@ -13,7 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.Immutable;
+
 @Entity(name = "USER_ROLE")
+@Immutable
 @Table(name="USER_ROLE", uniqueConstraints={@UniqueConstraint(columnNames = "USER_ROLE_TYPE")})
 public class UserRole {
 
@@ -50,7 +53,7 @@ public class UserRole {
    private long id;
 
    @Enumerated(EnumType.STRING)
-   @Column(name = "USER_ROLE_TYPE", unique = true)
+   @Column(name = "USER_ROLE_TYPE", unique = true, nullable = false)
    private Role role;
 
    public UserRole() {

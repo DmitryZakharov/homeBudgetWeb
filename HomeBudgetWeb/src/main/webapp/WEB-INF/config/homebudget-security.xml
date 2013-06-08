@@ -31,7 +31,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
             <jdbc-user-service data-source-ref="dataSource"
                                users-by-username-query="
 	select USER_USERNAME, PASSWORD,  md.ENABLED 
-	from USER_DETAILS as u, METADATA as md WHERE u.METADATA_ID = md.METADATA_ID and USER_USERNAME=?" 
+	from USER_DETAILS as u, METADATA as md WHERE md.USER_ID = u.USER_ID and USER_USERNAME=?" 
                                authorities-by-username-query="
 	select USER_USERNAME, USER_ROLE_TYPE from USER_DETAILS as u, USER_ROLE as r, USER_USER_ROLE as u2r 
 	WHERE u.USER_ID = u2r.USER_ID and u2r.USER_ROLE_ID = r.USER_ROLE_ID and u.USER_USERNAME =?  " />

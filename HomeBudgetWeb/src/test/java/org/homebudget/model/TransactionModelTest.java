@@ -11,9 +11,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import org.homebudget.config.TestConfigurator;
 import org.homebudget.dao.AccountRepository;
+import org.homebudget.model.Account;
+import org.homebudget.model.BinaryResource;
+import org.homebudget.model.Category;
+import org.homebudget.model.Transaction;
 import org.homebudget.services.UserManagementService;
-import org.homebudget.test.config.TestConfigurator;
 import static org.junit.Assert.*;
 
 import org.junit.After;

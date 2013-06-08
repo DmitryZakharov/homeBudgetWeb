@@ -15,6 +15,8 @@
     <context:component-scan base-package="org.homebudget.services" >
           <context:exclude-filter type="aspectj" expression="org.homebudget.services.HomeBudgetInitializationService"/>
     </context:component-scan>
+    
+    <bean id="databasePopulator" class="HomeBudgetInitializationTextService"/>   
 
     <mvc:resources mapping="/bootstrap/**" location="/resources/bootstrap/" />
     <mvc:resources mapping="/scripts/**" location="/resources/scripts/" />

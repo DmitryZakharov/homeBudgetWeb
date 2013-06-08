@@ -8,14 +8,18 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.homebudget.dao.UserRoleRepository;
+import org.homebudget.services.AccountManagementService;
+import org.homebudget.services.CategoryManagementService;
+import org.homebudget.services.TransactionManagementService;
+import org.homebudget.services.UserManagementService;
 import org.homebudget.services.utils.DatabasePopulator;
+import org.junit.runner.RunWith;
 import org.springframework.stereotype.Service;
 
 /**
  * @author dza
  * 
  */
-@Service
 public class HomeBudgetInitializationTextService {
 
    private static final Logger logger = Logger.getLogger(HomeBudgetInitializationTextService.class);

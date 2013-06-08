@@ -4,6 +4,7 @@
 package org.homebudget.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -41,10 +42,10 @@ public class UserMetadata {
    private List<Category> categories = new ArrayList<Category>();
 
    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "ownerMetadata")
-   private List<Account> account = new ArrayList<Account>();
+   private List<Account> accounts = new ArrayList<Account>();
 
    @OneToOne
-   @JoinColumn(name = "USER_DETAILS", nullable = false)
+   @JoinColumn(name = "USER_ID", nullable = false)
    private UserDetails userDetails;
 
    public long getId() {
@@ -87,14 +88,29 @@ public class UserMetadata {
       this.categories = categories;
    }
 
-   public List<Account> getAccount() {
+   public List<Account> getAccounts() {
 
-      return account;
+      return Collections.unmodifiableList(accounts);
    }
-
-   public void setAccount(List<Account> account) {
-
-      this.account = account;
+   
+   public void addAccount(Account account){
+      if (account == null) {
+         throw new IllegalArgumentException("Null account!");
+      }
+      if (accounts.contains(account)) {
+         accounts.remove(account);
+      }
+      account.setOwnerMetadata(this);
+      accounts.add(account);
+   }
+   
+   public void removeAccount(Account account){
+      if (account == null) {
+         throw new IllegalArgumentException("Null account!");
+      }
+      if (accounts.contains(account)) {
+         accounts.remove(account);
+      }
    }
 
    public UserDetails getUserDetails() {

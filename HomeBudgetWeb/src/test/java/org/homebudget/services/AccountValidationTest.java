@@ -4,17 +4,23 @@
  */
 package org.homebudget.services;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Date;
+
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import org.homebudget.dao.AccountRepository;
+import org.homebudget.config.TestConfigurator;
 import org.homebudget.model.Account;
 import org.homebudget.model.UserDetails;
-import org.homebudget.test.config.TestConfigurator;
+import org.homebudget.services.AccountManagementService;
+import org.homebudget.services.AccountValidationService;
+import org.homebudget.services.UserManagementService;
 import org.junit.After;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,17 +44,19 @@ public class AccountValidationTest extends TestConfigurator {
 
    @Autowired
    UserManagementService userManagementService;
+
    @Autowired
    EntityManagerFactory entityManagerFactory;
-   
+
    @Before
    public void init() {
-      
+
       accountManagementService.deleteAll();
 
-      EntityManager  entryManager = entityManagerFactory.createEntityManager();
-      
-      TransactionSynchronizationManager.bindResource(entityManagerFactory, new EntityManagerHolder(entryManager));
+      EntityManager entryManager = entityManagerFactory.createEntityManager();
+
+      TransactionSynchronizationManager.bindResource(entityManagerFactory, new EntityManagerHolder(
+            entryManager));
 
    }
 
@@ -56,12 +64,11 @@ public class AccountValidationTest extends TestConfigurator {
    public void tearDown() {
 
       userManagementService.deleteAllUserDetails();
-      EntityManagerHolder emHolder = (EntityManagerHolder)
-            TransactionSynchronizationManager.unbindResource(entityManagerFactory);
+      EntityManagerHolder emHolder = (EntityManagerHolder) TransactionSynchronizationManager
+            .unbindResource(entityManagerFactory);
       EntityManagerFactoryUtils.closeEntityManager(emHolder.getEntityManager());
-      
-   }
 
+   }
 
    /**
     * Test of validate method, of class RegistrationValidation.
@@ -76,10 +83,10 @@ public class AccountValidationTest extends TestConfigurator {
       UserDetails user = createTestUser(userName);
       account.setOwnerMetadata(user.getMetadata());
       account.setName("AccountName1");
-       user.getMetadata().getAccount().add(account);
-       userManagementService.saveUserDetails(user);
+      user.getMetadata().addAccount(account);
+      userManagementService.saveUserDetails(user);
 
-       //  account = accountManagementService.saveAccount(account, userName);
+      // account = accountManagementService.saveAccount(account, userName);
 
       Errors errors = new BeanPropertyBindingResult(account, "Account");
       accountValidationService.validate(account, errors, userName);

@@ -69,9 +69,7 @@ public class DatabasePopulator {
          }
          UserDetails user = createTestUser(i, name);
          logger.info("Creating user: " + user.getFname());
-
-         // save user so it can queried by other services
-         user.getRoles().add(uRole);
+         user.addUserRole(uRole);
          user = userManagementService.saveUserDetails(user);
 
          Account account = createTestAccount(user);
@@ -85,7 +83,7 @@ public class DatabasePopulator {
 
          account.addTransaction(transaction);
 
-         user.getMetadata().getAccount().add(account);
+         user.getMetadata().addAccount(account);
          userManagementService.saveUserDetails(user);
          // transactionManagementService.saveTransaction(transaction, account.getName());
       }

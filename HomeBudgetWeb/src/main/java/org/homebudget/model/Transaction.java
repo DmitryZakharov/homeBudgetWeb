@@ -55,7 +55,7 @@ public class Transaction implements Serializable {
    private BinaryResource attachment;
 
    @ManyToOne(fetch = FetchType.EAGER)
-   @JoinColumn(name = "ACCOUNT", nullable = false)
+   @JoinColumn(name = "ACCOUNT_ID", nullable = false)
    private Account parent;
 
    public Date getExecutionDate() {

@@ -8,9 +8,11 @@ import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import org.homebudget.config.TestConfigurator;
 import org.homebudget.dao.AccountRepository;
 import org.homebudget.model.UserDetails;
-import org.homebudget.test.config.TestConfigurator;
+import org.homebudget.services.UserManagementService;
+import org.homebudget.services.UserValidationService;
 import org.junit.After;
 import org.junit.Before;
 

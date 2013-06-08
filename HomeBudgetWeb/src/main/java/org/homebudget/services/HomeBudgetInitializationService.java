@@ -38,6 +38,10 @@ public class HomeBudgetInitializationService {
       DatabasePopulator databasePopulator = new DatabasePopulator(userManagementService,
             accountManagementService, userRoleRepository, transactionManagementService,
             categoryManagementService);
+      
+      databasePopulator.initUserRoles();
+      
+      
 
       System.out.println("POST CONSTRUCT!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       logger.info("Create initial Population !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
