@@ -9,7 +9,7 @@
     </context-param>
 
     <welcome-file-list>
-        <welcome-file>/WEB-INF/views/welcome.jsp</welcome-file>
+        <welcome-file>/WEB-INF/views/general/welcome.jsp</welcome-file>
     </welcome-file-list>
 
     <servlet>
