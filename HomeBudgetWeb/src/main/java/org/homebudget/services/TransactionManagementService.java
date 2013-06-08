@@ -1,5 +1,6 @@
 package org.homebudget.services;
 
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import org.homebudget.dao.AccountRepository;
@@ -35,6 +36,14 @@ public class TransactionManagementService {
 
       return transactionRepository.findByParent(accountDetails);
    }
+   
+   public List<Transaction> getAllAccountTransactionsBetween(String accountname, String start, String end) {
+
+      final Account accountDetails = accountRepository.findByName(accountname);
+
+      return transactionRepository.findAccountIdAndByExecutionDateDateBetween(accountDetails.getId(), start, end);
+   }
+
 
    public Transaction getTransaction(Long transactionId, String accountname) {
 

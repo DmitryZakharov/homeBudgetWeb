@@ -1,5 +1,6 @@
 package org.homebudget.dao;
 
+import java.util.Date;
 import java.util.List;
 import org.homebudget.model.Account;
 import org.homebudget.model.Transaction;
@@ -20,5 +21,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
    public List<Transaction> findByParent(Account account);
    
    public Transaction findByComment(String transactionComment);
+   
+   public List<Transaction> findAccountIdAndByExecutionDateDateBetween (Long accountId, String start, String end);
    
 }

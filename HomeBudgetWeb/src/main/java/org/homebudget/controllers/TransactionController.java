@@ -69,6 +69,23 @@ public class TransactionController extends AbstractController {
 
       return "transaction/listTransactions";
    }
+   
+   
+   @RequestMapping(value = "/{name}/transactions", method = RequestMethod.GET)
+   public String getAllTransactionsBetween(@PathVariable("name") String accountName, @RequestParam String start, @RequestParam String end, Model model) {
+
+      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
+            .getUsername());
+      if (!isAuthorized) {
+         return "redirect:";
+      }
+      final List<Transaction> transactions = transactionManagementService
+            .getAllAccountTransactionsBetween(accountName, start, end);
+
+      model.addAttribute(transactions);
+
+      return "transaction/listTransactions";
+   }
 
    @RequestMapping(value = "{name}/transactions/{id}", method = RequestMethod.GET)
    public String getTransaction(@PathVariable("name") String accountName,
