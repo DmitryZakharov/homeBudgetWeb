@@ -22,7 +22,7 @@
                <tr>
                   <td><a href="<c:url value="accounts/${account.name}/transactions.html" />">${account.name}</a></td>
                   <td>${account.dateOfCreation}</td>
-                  <td>${account.owner.fname}</td>
+                  <td>${account.ownerMetadata.userDetails.fname}</td>
                   <td>${account.startingBalance}</td>
 
                   <td>${account.currency}</td>
