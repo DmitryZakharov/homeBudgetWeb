@@ -5,6 +5,7 @@ package org.homebudget.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ import javax.persistence.OneToOne;
 
 /**
  * @author dza
- *
+ * 
  */
 @Entity(name = "METADATA")
 public class UserMetadata {
@@ -36,17 +37,14 @@ public class UserMetadata {
    @Column(name = "MAIN_CURRENCY")
    private Currency currency;
 
-   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy =
-       "ownerMetadata")
+   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "ownerMetadata")
    private List<Category> categories = new ArrayList<Category>();
 
-   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true
-       //, mappedBy = "ownerMetadata"
-       )
+   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "ownerMetadata")
    private List<Account> account = new ArrayList<Account>();
-   
+
    @OneToOne
-   @JoinColumn(name="USER_DETAILS", nullable = false)
+   @JoinColumn(name = "USER_DETAILS", nullable = false)
    private UserDetails userDetails;
 
    public long getId() {
@@ -90,22 +88,23 @@ public class UserMetadata {
    }
 
    public List<Account> getAccount() {
+
       return account;
    }
 
    public void setAccount(List<Account> account) {
+
       this.account = account;
    }
 
    public UserDetails getUserDetails() {
+
       return userDetails;
    }
 
    public void setUserDetails(UserDetails userDetails) {
+
       this.userDetails = userDetails;
    }
-   
-   
-   
 
 }

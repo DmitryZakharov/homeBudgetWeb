@@ -35,9 +35,7 @@ public class CategoryManagementService {
 
          category.setOwnerMetadata(owner.getMetadata());
 
-         categoryRepository.save(category);
-
-         return category;
+         return categoryRepository.save(category);
 
       }
       else

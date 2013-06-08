@@ -45,8 +45,8 @@ public class UserManagementService {
    }
 
    @Transactional
-   public void saveUserDetails(UserDetails userDetails) {
-      userRepositoryDao.save(userDetails);
+   public UserDetails saveUserDetails(UserDetails userDetails) {
+      return userRepositoryDao.save(userDetails);
    }
 
    @Transactional
@@ -62,12 +62,12 @@ public class UserManagementService {
    }
 
    @Transactional
-   public void saveUserRole(UserRole userRole) {
+   public UserRole saveUserRole(UserRole userRole) {
 
-      userRoleRepository.save(userRole);
+     return userRoleRepository.save(userRole);
    }
 
-   public void registerUser(UserDetails aUserDetails) {
+   public UserDetails registerUser(UserDetails aUserDetails) {
 
       final String userPassword = aUserDetails.getPassword();
       try {
@@ -83,7 +83,7 @@ public class UserManagementService {
       // TODO: set to 0, when email confirmation is implemented
       aUserDetails.getMetadata().setEnabled(1);
       mailService.sendConfirmation(aUserDetails);
-      saveUserDetails(aUserDetails);
+     return saveUserDetails(aUserDetails);
    }
 
    public List<UserDetails> getAllUsers() {
@@ -101,7 +101,7 @@ public class UserManagementService {
       return userRepositoryDao.findByEmail(email);
    }
 
-   public void updateUserDetails(UserDetails oldUserDetails, UserDetails newUserDetails) {
+   public UserDetails updateUserDetails(UserDetails oldUserDetails, UserDetails newUserDetails) {
 
       BeanUtils.copyProperties(newUserDetails, oldUserDetails, new String[]{"password", "id",
          "roles", "enabled"});
@@ -115,7 +115,7 @@ public class UserManagementService {
          oldUserDetails.setPassword(userPassword);
          gLogger.error("Failed to create hash from password", e);
       }
-      userRepositoryDao.save(oldUserDetails);
+      return userRepositoryDao.save(oldUserDetails);
 
    }
 

@@ -12,7 +12,9 @@
         class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
         p:location="classpath:/config/homebudget.properties" />
         
-    <context:component-scan base-package="org.homebudget.services" />
+    <context:component-scan base-package="org.homebudget.services" >
+          <context:exclude-filter type="aspectj" expression="org.homebudget.services.HomeBudgetInitializationService"/>
+    </context:component-scan>
 
     <mvc:resources mapping="/bootstrap/**" location="/resources/bootstrap/" />
     <mvc:resources mapping="/scripts/**" location="/resources/scripts/" />

@@ -3,6 +3,7 @@ package org.homebudget.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +12,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,9 +38,9 @@ public class Account {
    @Temporal(javax.persistence.TemporalType.DATE)
    private Date dateOfCreation;
 
-//   @ManyToOne(fetch = FetchType.LAZY)
-//   @JoinColumn(name = "OWNER_METADATA")
-//   private UserMetadata ownerMetadata;
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "OWNER_METADATA")
+   private UserMetadata ownerMetadata;
 
    // @NotBlank (message = "{account.startingbalance.required}")
    @Column(name = "STARTING_BALANCE")
@@ -69,15 +73,15 @@ public class Account {
       this.name = name;
    }
 
-//   public UserMetadata getOwnerMetadata() {
-//      return ownerMetadata;
-//   }
+   public UserMetadata getOwnerMetadata() {
 
-   public void setOwnerMetadata(UserMetadata ownerMetadata) {
-//      this.ownerMetadata = ownerMetadata;
+      return ownerMetadata;
    }
 
-  
+   public void setOwnerMetadata(UserMetadata ownerMetadata) {
+
+      this.ownerMetadata = ownerMetadata;
+   }
 
    public float getStartingBalance() {
 

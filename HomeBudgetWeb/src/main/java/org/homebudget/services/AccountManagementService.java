@@ -21,12 +21,13 @@ public class AccountManagementService {
    @Resource
    private UserRepository userRepository;
 
-   public void saveAccount(Account account, String username) {
+   public Account saveAccount(Account account, String username) {
 
       final UserDetails owner = userRepository.findByUsername(username);
-      account.setOwnerMetadata(owner.getMetadata());
-
-      accountRepository.save(account);
+     // account.setOwnerMetadata(owner.getMetadata());
+      owner.getMetadata().getAccount().add(account);
+      userRepository.save(owner);
+     return accountRepository.save(account);
    }
 
    public void updateAccountDetails(Account oldAccount, Account newAccount) {

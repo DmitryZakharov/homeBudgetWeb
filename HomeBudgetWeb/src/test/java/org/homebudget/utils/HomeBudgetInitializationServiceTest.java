@@ -4,23 +4,36 @@
  */
 package org.homebudget.utils;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
+
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
+import org.homebudget.dao.UserRepository;
+import org.homebudget.dao.UserRoleRepository;
 import org.homebudget.model.Account;
 import org.homebudget.model.Category;
 import org.homebudget.model.Transaction;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
 import org.homebudget.services.AccountManagementService;
-import org.homebudget.services.HomeBudgetInitializationService;
+import org.homebudget.services.CategoryManagementService;
+import org.homebudget.services.HomeBudgetInitializationTextService;
 import org.homebudget.services.UserManagementService;
 import org.homebudget.test.config.TestConfigurator;
-import static org.junit.Assert.*;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.EntityManagerFactoryUtils;
+import org.springframework.orm.jpa.EntityManagerHolder;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 /**
- *
+ * 
  * @author Michael Wolowyk
  */
 public class HomeBudgetInitializationServiceTest extends TestConfigurator {
@@ -30,20 +43,55 @@ public class HomeBudgetInitializationServiceTest extends TestConfigurator {
 
    @Resource
    AccountManagementService aAccountManagementService;
-   
+
    @Resource
-   HomeBudgetInitializationService aHomeBudgetInitializationService;
+   HomeBudgetInitializationTextService aHomeBudgetInitializationService;
+
+   @Resource
+   CategoryManagementService categoryManagementService;
+
+   @Resource
+   UserRoleRepository userRoleRepository;
+
+   @Autowired
+   UserManagementService userManagementService;
+
+   @Autowired
+   EntityManagerFactory entityManagerFactory;
+
+   @Autowired
+   UserRepository repository;
 
    @Before
-   public void setUp(){
-      aAccountManagementService.deleteAll();
-      aUserManagementService.deleteAllUserDetails();
+   public void init() {
+      
+      aUserManagementService.getAllUsers();
+
+      //aHomeBudgetInitializationService.initUserRoles();
+      
+      EntityManager entryManager = entityManagerFactory.createEntityManager();
+
+      TransactionSynchronizationManager.bindResource(entityManagerFactory, new EntityManagerHolder(
+            entryManager));
+
    }
+
+   @After
+   public void tearDown() {
+
+      userManagementService.deleteAllUserDetails();
+      EntityManagerHolder emHolder = (EntityManagerHolder) TransactionSynchronizationManager
+            .unbindResource(entityManagerFactory);
+      EntityManagerFactoryUtils.closeEntityManager(emHolder.getEntityManager());
+
+   }
+
    /**
     * Test of executePopulation method, of class HomeBudgetInitializationService.
     */
    @Test
    public void testCreateTestUsers() {
+      
       System.out.println("testCreateTestUsers");
       int usersNr = 10;
       createTestUsers(usersNr);
@@ -52,6 +100,7 @@ public class HomeBudgetInitializationServiceTest extends TestConfigurator {
 
    @Test
    public void testCreateTestAccounts() {
+
       System.out.println("testCreateTestAccount");
       int accountNr = 10;
       UserDetails aUserDetails = createTestUser(1);
@@ -59,11 +108,13 @@ public class HomeBudgetInitializationServiceTest extends TestConfigurator {
       createTestAccounts(accountNr, username);
 
       assertEquals(accountNr, aAccountManagementService.getAllUserAccounts(username).size());
-      assertEquals(1, aAccountManagementService.getAllUserAccounts(username).get(0).getTransactions().size());
+      assertEquals(1, aAccountManagementService.getAllUserAccounts(username).get(0)
+            .getTransactions().size());
    }
 
    @Test
-   public void testInitialization(){
+   public void testInitialization() {
+      
       int numberOfUsers = 10;
       aHomeBudgetInitializationService.setUserNumber(numberOfUsers);
       aHomeBudgetInitializationService.executePopulation();
@@ -75,8 +126,9 @@ public class HomeBudgetInitializationServiceTest extends TestConfigurator {
       List<Transaction> transactions = (List<Transaction>) accounts.get(0).getTransactions();
       assertEquals(1, transactions.size());
    }
-   
+
    private void createTestUsers(int usersNr) {
+
       for (int j = 0; j < usersNr; j++) {
          createTestUser(j);
 
@@ -84,18 +136,20 @@ public class HomeBudgetInitializationServiceTest extends TestConfigurator {
    }
 
    private UserDetails createTestUser(int j) {
+
       UserDetails aUserDetails = new UserDetails();
       aUserDetails.setEmail("test" + j + "@example.com");
       aUserDetails.getMetadata().setEnabled(1);
       aUserDetails.setUsername("user" + j);
       aUserDetails.setPassword("password");
-      UserRole role = new UserRole(UserRole.Role.USER_ROLE);
+      UserRole role = userRoleRepository.findByRole(UserRole.Role.USER_ROLE);
       aUserDetails.addUserRole(role);
-      aUserManagementService.saveUserDetails(aUserDetails);
-      return aUserDetails;
+
+      return aUserManagementService.saveUserDetails(aUserDetails);
    }
 
    private void createTestAccounts(int accountNr, String userName) {
+
       for (int i = 0; i < accountNr; i++) {
          Account aAccount = new Account();
          aAccount.setName("account" + i);
@@ -103,11 +157,14 @@ public class HomeBudgetInitializationServiceTest extends TestConfigurator {
          Transaction transaction = new Transaction();
          transaction.setAmount(i);
          transaction.setComment("transaction" + i);
-         Category category = new Category();
-         category.setName("category" + 1);
+         Category category = categoryManagementService.createCategory("category" + 1, null,
+               userName);
          transaction.setCategory(category);
          aAccount.addTransaction(transaction);
-         aAccountManagementService.saveAccount(aAccount, userName);
+         UserDetails userDetails = aUserManagementService.getUserDetailsByUsername(userName);
+         userDetails.getMetadata().getAccount().add(aAccount);
+         userManagementService.saveUserDetails(userDetails);
+         //aAccountManagementService.saveAccount(aAccount, userName);
       }
 
    }

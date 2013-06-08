@@ -33,9 +33,6 @@ public class UserManagementServiceTest extends TestConfigurator {
    public static final String USER_NAME = "testUser";
 
    @Autowired
-   UserManagementService service;
-
-   @Autowired
    UserRepository repository;
    
    @Autowired
@@ -45,6 +42,8 @@ public class UserManagementServiceTest extends TestConfigurator {
    
    @Before
    public void init() {
+      
+      repository.deleteAll();
 
       EntityManager  entryManager = entityManagerFactory.createEntityManager();
       
@@ -71,7 +70,7 @@ public class UserManagementServiceTest extends TestConfigurator {
       System.out.println("saveUserDetails");
       UserDetails userDetails = createTestUser();
 
-      service.saveUserDetails(userDetails);
+      userManagementService.saveUserDetails(userDetails);
       UserDetails result = repository.findByUsername(userDetails.getUsername());
       assertNotNull(result);
       assertEquals(userDetails.getEmail(), result.getEmail());
@@ -87,7 +86,7 @@ public class UserManagementServiceTest extends TestConfigurator {
       
       BinaryResource document = createTestDocument();
       userDetails.setUserPic(document);
-      service.saveUserDetails(userDetails);
+      userManagementService.saveUserDetails(userDetails);
       UserDetails result = repository.findByUsername(userDetails.getUsername());
       assertNotNull(result);
       assertNotNull(result.getUserPic());

@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package org.homebudget.services;
 
 import javax.annotation.PostConstruct;
@@ -8,10 +11,14 @@ import org.homebudget.dao.UserRoleRepository;
 import org.homebudget.services.utils.DatabasePopulator;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author dza
+ * 
+ */
 @Service
-public class HomeBudgetInitializationService {
+public class HomeBudgetInitializationTextService {
 
-   private static final Logger logger = Logger.getLogger(HomeBudgetInitializationService.class);
+   private static final Logger logger = Logger.getLogger(HomeBudgetInitializationTextService.class);
 
    @Resource
    UserManagementService userManagementService;
@@ -32,12 +39,26 @@ public class HomeBudgetInitializationService {
 
    private int userNumber = 10;
 
-   @PostConstruct
-   public void executePopulation() {
+   private DatabasePopulator databasePopulator;
 
-      DatabasePopulator databasePopulator = new DatabasePopulator(userManagementService,
-            accountManagementService, userRoleRepository, transactionManagementService,
-            categoryManagementService);
+   @PostConstruct
+   public void init() {
+
+      databasePopulator = new DatabasePopulator(userManagementService, accountManagementService,
+            userRoleRepository, transactionManagementService, categoryManagementService);
+      
+      initUserRoles();
+   }
+
+   /**
+    * 
+    */
+   public HomeBudgetInitializationTextService() {
+
+      // TODO Auto-generated constructor stub
+   }
+
+   public void executePopulation() {
 
       System.out.println("POST CONSTRUCT!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       logger.info("Create initial Population !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -54,11 +75,27 @@ public class HomeBudgetInitializationService {
          logger.info("ALREADY CREATED MANY USERS!!!!!!!!!!!");
       }
    }
-   
+
+   public void initUserRoles(){
+      databasePopulator.initUserRoles();
+   }
+
    public void setUserNumber(int userNumber) {
 
       this.executed = false;
       this.userNumber = userNumber;
+   }
+
+   
+   public DatabasePopulator getDatabasePopulator() {
+   
+      return databasePopulator;
+   }
+
+   
+   public void setDatabasePopulator(DatabasePopulator databasePopulator) {
+   
+      this.databasePopulator = databasePopulator;
    }
 
 }

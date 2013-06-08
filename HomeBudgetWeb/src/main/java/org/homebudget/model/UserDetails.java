@@ -51,7 +51,7 @@ public class UserDetails {
    @Transient
    private String confpassword;
 
-   @ManyToMany(cascade = CascadeType.ALL)
+   @ManyToMany()
    @JoinTable(name = "USER_USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"),
        inverseJoinColumns = @JoinColumn(name = "USER_ROLE_ID"))
    private Set<UserRole> roles = new HashSet<UserRole>();
@@ -70,7 +70,6 @@ public class UserDetails {
 
    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy =
        "userDetails")
-   @JoinColumn(name = "METADATA_ID")
    private UserMetadata metadata;
 
    /**

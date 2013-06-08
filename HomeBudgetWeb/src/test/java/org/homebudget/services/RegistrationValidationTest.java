@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import org.homebudget.dao.AccountRepository;
 import org.homebudget.model.UserDetails;
 import org.homebudget.test.config.TestConfigurator;
 import org.junit.After;
@@ -44,8 +45,13 @@ public class RegistrationValidationTest extends TestConfigurator {
    @Autowired
    EntityManagerFactory entityManagerFactory;
    
+   @Autowired
+   AccountRepository repository;
+   
    @Before
    public void init() {
+      
+      repository.deleteAll();
 
       EntityManager  entryManager = entityManagerFactory.createEntityManager();
       
@@ -101,7 +107,7 @@ public class RegistrationValidationTest extends TestConfigurator {
       UserDetails target = new UserDetails();
       target.setUsername(VALID_USERNAME);
       target.setEmail(VALID_EMAIL);
-      userManagementService.saveUserDetails(target);
+      target = userManagementService.saveUserDetails(target);
       Errors errors = new BeanPropertyBindingResult(target, "userDetails");
 
       instance.validate(target, errors,target.getUsername());

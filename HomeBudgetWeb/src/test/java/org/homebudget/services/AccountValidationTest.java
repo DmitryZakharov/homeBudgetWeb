@@ -37,15 +37,14 @@ public class AccountValidationTest extends TestConfigurator {
    AccountManagementService accountManagementService;
 
    @Autowired
-   AccountRepository repository;
-
-   @Autowired
    UserManagementService userManagementService;
    @Autowired
    EntityManagerFactory entityManagerFactory;
    
    @Before
    public void init() {
+      
+      accountManagementService.deleteAll();
 
       EntityManager  entryManager = entityManagerFactory.createEntityManager();
       
@@ -75,10 +74,12 @@ public class AccountValidationTest extends TestConfigurator {
       Account account = new Account();
       String userName = "User";
       UserDetails user = createTestUser(userName);
-      userManagementService.saveUserDetails(user);
-      account.setName("AccountName1");
       account.setOwnerMetadata(user.getMetadata());
-      accountManagementService.saveAccount(account, userName);
+      account.setName("AccountName1");
+       user.getMetadata().getAccount().add(account);
+       userManagementService.saveUserDetails(user);
+
+       //  account = accountManagementService.saveAccount(account, userName);
 
       Errors errors = new BeanPropertyBindingResult(account, "Account");
       accountValidationService.validate(account, errors, userName);
