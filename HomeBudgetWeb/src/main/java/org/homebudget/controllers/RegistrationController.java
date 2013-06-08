@@ -39,15 +39,15 @@ public class RegistrationController extends AbstractController {
 
       final List<Currency> currencyList = new ArrayList<Currency>(Arrays.asList(Currency.values()));
 
-      model.addAttribute(userManagementService.getNewUser(Role.USER_ROLE.USER_ROLE));
+      model.addAttribute(userManagementService.getNewUser(Role.USER_ROLE));
       model.addAttribute(currencyList);
-      return "registration";
+      return "general/registration";
    }
 
    @RequestMapping(value = "/success", method = RequestMethod.GET)
    public String successfulRegistration(Model model) {
 
-      return "registrationsuccess";
+      return "general/registrationsuccess";
    }
 
    @RequestMapping(method = RequestMethod.POST)
@@ -57,7 +57,7 @@ public class RegistrationController extends AbstractController {
 
       userValidationService.validate(userDetails, result, "");
       if (result.hasErrors()) {
-         return "registration";
+         return "general/registration";
       }
 
       userManagementService.registerUser(userDetails);

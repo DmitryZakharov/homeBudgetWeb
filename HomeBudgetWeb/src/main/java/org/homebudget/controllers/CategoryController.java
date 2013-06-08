@@ -38,7 +38,7 @@ public class CategoryController extends AbstractController {
 
       model.addAttribute(accounts);
 
-      return "categories";
+      return "category/listCategories";
    }
 
    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
@@ -48,7 +48,7 @@ public class CategoryController extends AbstractController {
             getSessionUser().getUsername());
 
       model.addAttribute(category);
-      return "categoryDetails";
+      return "category/editCategory";
    }
 
    @RequestMapping(value = "/new", method = RequestMethod.GET)
@@ -59,7 +59,7 @@ public class CategoryController extends AbstractController {
 
       model.addAttribute(categoryList);
       model.addAttribute(new Category());
-      return "category";
+      return "category/newCategory";
    }
 
    @RequestMapping(value = "/new", method = RequestMethod.POST)

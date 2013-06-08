@@ -36,12 +36,12 @@ public class UserManagementService {
    }
 
    @Transactional
-   public void saveUserDetails(UserDetails userDetails, MultipartFile userPic) {
+   public UserDetails saveUserDetails(UserDetails userDetails, MultipartFile userPic) {
       if (userPic != null) {
          BinaryResource resource = resourceManagementService.getResource(userPic);
          userDetails.setUserPic(resource);
       }
-      saveUserDetails(userDetails);
+      return saveUserDetails(userDetails);
    }
 
    @Transactional

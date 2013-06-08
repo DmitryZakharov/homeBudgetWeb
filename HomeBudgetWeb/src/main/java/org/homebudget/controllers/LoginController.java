@@ -11,14 +11,14 @@ public class LoginController extends AbstractController {
    @RequestMapping(value = "/main", method = RequestMethod.GET)
    public String printWelcome(ModelMap model) {
 
-      return "main";
+      return "general/main";
 
    }
 
    @RequestMapping(value = "/welcome", method = RequestMethod.GET)
    public String login(ModelMap model) {
 
-      return "welcome";
+      return "general/welcome";
 
    }
 
@@ -26,7 +26,7 @@ public class LoginController extends AbstractController {
    public String loginerror(ModelMap model) {
 
       model.addAttribute("error", "true");
-      return "welcome";
+      return "general/welcome";
 
    }
 

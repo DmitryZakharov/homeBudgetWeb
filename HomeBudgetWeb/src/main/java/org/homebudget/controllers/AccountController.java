@@ -38,14 +38,14 @@ public class AccountController extends AbstractController {
    private UserManagementService userManagementService;
 
    @RequestMapping(method = RequestMethod.GET)
-   public List<Account> getAccounts(Model model) {
+   public String getAccounts(Model model) {
 
       final List<Account> accounts = accountManagementService.getAllUserAccounts(getSessionUser()
             .getUsername());
 
       model.addAttribute(accounts);
 
-      return accounts;
+      return "account/accounts";
    }
 
    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
@@ -58,7 +58,7 @@ public class AccountController extends AbstractController {
 
       model.addAttribute(currencyList);
       model.addAttribute(account);
-      return "accountDetails";
+      return "account/editAccount";
    }
 
    @RequestMapping(value = "/new", method = RequestMethod.GET)
@@ -69,7 +69,7 @@ public class AccountController extends AbstractController {
       model.addAttribute(currencyList);
 
       model.addAttribute(new Account());
-      return "account";
+      return "account/newAccount";
    }
 
    @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
@@ -95,7 +95,7 @@ public class AccountController extends AbstractController {
          final List<Currency> currencyList = new ArrayList<Currency>(Arrays.asList(Currency
                .values()));
          model.addAttribute(currencyList);
-         return "account";
+         return "account/newAccount";
       }
       if (account != null) {
 
@@ -115,11 +115,11 @@ public class AccountController extends AbstractController {
 
       Account oldAccount = accountManagementService.getAccount(account.getId(), sessionUsername);
 
-      if (oldAccount == null) return "redirect:accounts";
+      if (oldAccount == null) return "redirect:account/listAccounts";
 
       accountManagementService.updateAccountDetails(oldAccount, account);
 
-      return "redirect:accounts";
+      return "redirect:account/listAccounts";
 
    }
 

@@ -37,49 +37,50 @@ public class UserManagementController extends AbstractController {
       String userPicString = userManagementService.getUserPicString(userDetails.getUserPic());
       model.addAttribute(userDetails);
       model.addAttribute("userPic", userPicString);
-      return "userprofile";
+      return "user/editUser";
    }
 
    @RequestMapping(method = RequestMethod.PUT)
    @ResponseStatus(HttpStatus.NO_CONTENT)
    public String updateUserDetails(@Valid UserDetails newUserDetails, BindingResult result,
-         Model model, @RequestParam(value = "userPic", required=false) MultipartFile userPic) {
+         Model model, @RequestParam(value = "userPic", required = false) MultipartFile userPic) {
 
       UserDetails oldUserDetails = userManagementService.getUserDetailsByUsername(getSessionUser()
             .getUsername());
       getUserManagementService().updateUserDetails(oldUserDetails, newUserDetails, userPic);
-      return "userprofile";
+      return "user/editUser";
    }
 
    @Secured("ADMIN_ROLE")
    @RequestMapping(method = RequestMethod.POST)
    @ResponseStatus(HttpStatus.CREATED)
-   public UserDetails addUserDetails(@Valid UserDetails userDetails, BindingResult result,
-         Model model, @RequestParam(value = "userPic", required=false) MultipartFile userPic) {
+   public String addUserDetails(@Valid UserDetails userDetails, BindingResult result, Model model,
+         @RequestParam(value = "userPic", required = false) MultipartFile userPic) {
 
-      getUserManagementService().saveUserDetails(userDetails, userPic);
+      userDetails = getUserManagementService().saveUserDetails(userDetails, userPic);
 
-      return userDetails;
+      model.addAttribute(userDetails);
+      return "user/editUser";
    }
 
    @Secured("ADMIN_ROLE")
    @RequestMapping(value = "/{username}", method = RequestMethod.DELETE)
    @ResponseStatus(HttpStatus.NO_CONTENT)
-   public UserDetails deleteUserDetails(@PathVariable("username") String username) {
+   public String deleteUserDetails(@PathVariable("username") String username) {
 
       final UserDetails userDetails = userManagementService.getUserDetailsByUsername(username);
       getUserManagementService().deleteUserDetails(userDetails);
 
-      return userDetails;
+      return "";
    }
 
    @Secured("ADMIN_ROLE")
    @RequestMapping()
-   public List<UserDetails> showAllUsers(Model model) {
+   public String showAllUsers(Model model) {
 
       final List<UserDetails> users = userManagementService.getAllUsers();
       model.addAttribute(users);
-      return users;
+      return "user/listUsers";
    }
 
    public UserManagementService getUserManagementService() {

@@ -55,7 +55,11 @@
                             <div class="controls">
                                 <div class="input-prepend">
                                     <span class="add-on"><i class="icon-globe"></i></span>
-                                    <form:select  class="input-xlarge" path="metadata.currency" items="${currencyList}" />
+                                    <form:select name="currency" class="input-xlarge" path="metadata.currency">
+                                        <c:forEach items="${currencyList}" var="currency">
+                                             <option value="${currency}">${currency}</option>
+                                        </c:forEach>
+                                    </form:select>
                                     <font color="red"><form:errors path="metadata.currency" /></font>
                                 </div>
                                 <div class="text">
