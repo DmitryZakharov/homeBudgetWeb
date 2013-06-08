@@ -61,7 +61,7 @@ public class CategoryManagementService {
 
       UserDetails owner = userManagementService.getUserDetailsByUsername(username);
       category.setOwnerMetadata(owner.getMetadata());
-      owner.getMetadata().getCategories().add(category);
+      owner.getMetadata().addCategory(category);
       userManagementService.saveUserDetails(owner);
    }
 
@@ -71,7 +71,7 @@ public class CategoryManagementService {
 
       Category category = categoryRepository.findByNameAndOwnerMetadata(categoryName, owner.getMetadata());
 
-      owner.getMetadata().getCategories().remove(category);
+      owner.getMetadata().removeCategory(category);
 
       userManagementService.saveUserDetails(owner);
 

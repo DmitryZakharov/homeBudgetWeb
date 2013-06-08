@@ -80,20 +80,38 @@ public class UserMetadata {
 
    public List<Category> getCategories() {
 
-      return categories;
+      return Collections.unmodifiableList(categories);
    }
 
-   public void setCategories(List<Category> categories) {
+   public void addCategory(Category category) {
 
-      this.categories = categories;
+      if (category == null) {
+         throw new IllegalArgumentException("Null category!");
+      }
+      if (categories.contains(category)) {
+         categories.remove(category);
+      }
+      category.setOwnerMetadata(this);
+      categories.add(category);
+   }
+
+   public void removeCategory(Category category) {
+
+      if (category == null) {
+         throw new IllegalArgumentException("Null category!");
+      }
+      if (categories.contains(category)) {
+         categories.remove(category);
+      }
    }
 
    public List<Account> getAccounts() {
 
       return Collections.unmodifiableList(accounts);
    }
-   
-   public void addAccount(Account account){
+
+   public void addAccount(Account account) {
+
       if (account == null) {
          throw new IllegalArgumentException("Null account!");
       }
@@ -103,8 +121,9 @@ public class UserMetadata {
       account.setOwnerMetadata(this);
       accounts.add(account);
    }
-   
-   public void removeAccount(Account account){
+
+   public void removeAccount(Account account) {
+
       if (account == null) {
          throw new IllegalArgumentException("Null account!");
       }

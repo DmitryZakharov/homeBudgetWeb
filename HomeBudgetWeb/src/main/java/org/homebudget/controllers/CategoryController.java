@@ -6,8 +6,10 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.homebudget.model.Category;
+import org.homebudget.model.UserDetails;
 import org.homebudget.services.CategoryEditor;
 import org.homebudget.services.CategoryManagementService;
+import org.homebudget.services.UserManagementService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +26,9 @@ public class CategoryController extends AbstractController {
 
    @Resource
    private CategoryManagementService categoryManagementService;
+   
+   @Resource
+   private UserManagementService userManagementService;
 
    @RequestMapping(method = RequestMethod.GET)
    public String getAllUserCategories(Model model) {
@@ -61,8 +66,9 @@ public class CategoryController extends AbstractController {
    public String postCategory(@ModelAttribute("category") @Valid Category category,
          BindingResult result, Model model) {
 
-      categoryManagementService.saveCategory(category, getSessionUser().getUsername());
-
+      final UserDetails userDetails =   userManagementService.getUserDetailsByUsername(getSessionUser().getUsername());
+      userDetails.getMetadata().addCategory(category);
+      userManagementService.saveUserDetails(userDetails);
       return "redirect:";
    }
 

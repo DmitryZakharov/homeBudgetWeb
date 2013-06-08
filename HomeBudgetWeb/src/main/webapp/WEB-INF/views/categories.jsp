@@ -26,7 +26,7 @@
 
                   <td>${category.name}</td>
                   <td>${category.parent.name}</td>
-                  <td>${category.owner.username}</td>
+                  <td>${category.ownerMetadata.userDetails.username}</td>
                   <td>
                      <a href="<c:url value="categories/${category.name}.html" />"><i class="icon-edit"/></a>
                      
