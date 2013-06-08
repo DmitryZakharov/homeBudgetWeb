@@ -104,7 +104,7 @@ public class UserManagementService {
    public UserDetails updateUserDetails(UserDetails oldUserDetails, UserDetails newUserDetails) {
 
       BeanUtils.copyProperties(newUserDetails, oldUserDetails, new String[]{"password", "id",
-         "roles", "enabled"});
+         "roles", "metadata"});
       final String userPassword = newUserDetails.getPassword();
       try {
          final String passwordHash = PasswordService.getHash(newUserDetails.getPassword());
@@ -135,7 +135,4 @@ public class UserManagementService {
       }
       return userPicString;
    }
-
-
-
 }

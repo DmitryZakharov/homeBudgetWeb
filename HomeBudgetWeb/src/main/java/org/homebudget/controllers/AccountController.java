@@ -45,7 +45,7 @@ public class AccountController extends AbstractController {
 
       model.addAttribute(accounts);
 
-      return "account/accounts";
+      return "account/listAccounts";
    }
 
    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
