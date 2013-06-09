@@ -22,6 +22,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
    
    public Transaction findByComment(String transactionComment);
    
-   public List<Transaction> findAccountIdAndByExecutionDateDateBetween (Long accountId, String start, String end);
+   public List<Transaction> findByParentAndExecutionDateBetween (Account account, Date start, Date end);
    
 }

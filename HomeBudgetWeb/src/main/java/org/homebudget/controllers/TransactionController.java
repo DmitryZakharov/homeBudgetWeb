@@ -2,12 +2,14 @@ package org.homebudget.controllers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.homebudget.model.BinaryResource;
 import org.homebudget.model.Category;
 import org.homebudget.model.Transaction;
@@ -55,32 +57,25 @@ public class TransactionController extends AbstractController {
    private ResourceManagementService resourceManagementService;
 
    @RequestMapping(value = "/{name}/transactions", method = RequestMethod.GET)
-   public String getAllTransactions(@PathVariable("name") String accountName, Model model) {
+   public String getAllTransactions(@PathVariable("name") String accountName,
+         @RequestParam(value = "start" , defaultValue = "") String start,
+         @RequestParam(value = "end", defaultValue = "") String end, Model model) {
 
       boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
             .getUsername());
       if (!isAuthorized) {
          return "redirect:";
       }
-      final List<Transaction> transactions = transactionManagementService
-            .getAllAccountTransactions(accountName);
 
-      model.addAttribute(transactions);
-
-      return "transaction/listTransactions";
-   }
-   
-   
-   @RequestMapping(value = "/{name}/transactions", method = RequestMethod.GET)
-   public String getAllTransactionsBetween(@PathVariable("name") String accountName, @RequestParam String start, @RequestParam String end, Model model) {
-
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
-            .getUsername());
-      if (!isAuthorized) {
-         return "redirect:";
+      List<Transaction> transactions = new ArrayList<Transaction>();
+      if (!"".equals(start) && "".equals(end)) {
+         DataFormat df = new 
+         transactions = transactionManagementService.getAllAccountTransactionsBetween(accountName,
+               start, end);
       }
-      final List<Transaction> transactions = transactionManagementService
-            .getAllAccountTransactionsBetween(accountName, start, end);
+      else {
+         transactions = transactionManagementService.getAllAccountTransactions(accountName);
+      }
 
       model.addAttribute(transactions);
 

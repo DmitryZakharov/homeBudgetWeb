@@ -37,11 +37,11 @@ public class TransactionManagementService {
       return transactionRepository.findByParent(accountDetails);
    }
    
-   public List<Transaction> getAllAccountTransactionsBetween(String accountname, String start, String end) {
+   public List<Transaction> getAllAccountTransactionsBetween(String accountname, Date start, Date end) {
 
       final Account accountDetails = accountRepository.findByName(accountname);
 
-      return transactionRepository.findAccountIdAndByExecutionDateDateBetween(accountDetails.getId(), start, end);
+      return transactionRepository.findByParentAndExecutionDateBetween(accountDetails, start, end);
    }
 
 
