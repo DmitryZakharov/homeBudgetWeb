@@ -1,5 +1,6 @@
 package org.homebudget.controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -19,6 +20,8 @@ import org.homebudget.services.ResourceManagementService;
 import org.homebudget.services.TransactionManagementService;
 import org.homebudget.services.TransactionValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,8 +59,8 @@ public class TransactionController extends AbstractController {
 
    @RequestMapping(value = "/{name}/transactions", method = RequestMethod.GET)
    public String getAllTransactions(@PathVariable("name") String accountName,
-         @RequestParam(value = "start" , defaultValue = "") String start,
-         @RequestParam(value = "end", defaultValue = "") String end, Model model) {
+         @RequestParam(value = "start", required = false)  @DateTimeFormat(pattern="mm/dd/yyyy") Date start,
+         @RequestParam(value = "end", required = false)   @DateTimeFormat(pattern="mm/dd/yyyy") Date end, Model model) {
 
       boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
             .getUsername());
@@ -66,8 +69,7 @@ public class TransactionController extends AbstractController {
       }
 
       List<Transaction> transactions = new ArrayList<Transaction>();
-      if (!"".equals(start) && "".equals(end)) {
-         DataFormat df = new 
+      if (start != null && end != null) {
          transactions = transactionManagementService.getAllAccountTransactionsBetween(accountName,
                start, end);
       }
@@ -218,6 +220,9 @@ public class TransactionController extends AbstractController {
 
    @InitBinder
    public void initBinder(WebDataBinder binder) {
+      
+      SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+      binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 
       binder.registerCustomEditor(Category.class, new CategoryEditor(categoryManagementService,
             getSessionUser().getUsername()));

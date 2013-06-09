@@ -23,7 +23,7 @@
                     <tr>
                         <td>
                             <form:label path="dateOfCreation">Date of Creation:</form:label>
-                            <form:input type="text" id="datepicker" name="dateOfCreation" path="dateOfCreation" />
+                            <form:input type="text" class="datepicker" id="datepicker" name="dateOfCreation" path="dateOfCreation" />
                             <font color="red"><form:errors class="text-error" path="dateOfCreation" /></font>
                         </td>
                     </tr>

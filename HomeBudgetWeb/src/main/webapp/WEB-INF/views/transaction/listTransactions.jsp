@@ -49,24 +49,28 @@
                </tr>
             </c:forEach>
             </table>
-            <form:form method="GET" action="accounts/${name}/transactions/">
+            <form method="GET" action="accounts/${name}/transactions/">
              <h3>Select dates for filtering transactions</h3>
              <table>
                <tr>
                   <td>
                   <label>Starting date</label>
-                     <input name="start" type="text" id="datepicker" />
+                     <input name="start" type="text" class="datepicker" id="datepicker_start" />
                      <font color="red"><form:errors path="start" /></font>
                   </td>
+               </tr>
+               <tr>
                   <td>
                   <label>End date</label>
-                     <input name="end" type="text" id="datepicker" />
+                     <input name="end" type="text" class="datepicker" id="datepicker_end" />
                      <font color="red"><form:errors path="end" /></font>
                   </td>
+               </tr>
+               <tr>
                   <td colspan="3"><input type="submit" value="filter" /></td>
                </tr>
             </table>
-       </form:form>
+       </form >
       <a href="<c:url value="accounts/${name}/transactions/new.html" />">create new transaction</a>
       </div> <!-- /container -->
    </jsp:body>
