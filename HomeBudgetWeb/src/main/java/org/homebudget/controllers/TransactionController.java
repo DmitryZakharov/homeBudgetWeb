@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.DataFormat;
 import org.homebudget.model.BinaryResource;
@@ -101,7 +99,7 @@ public class TransactionController extends AbstractController {
       }
       final List<Category> categories = categoryManagementService.getAllCategories(getSessionUser()
             .getUsername());
-
+      
       model.addAttribute(categories);
       model.addAttribute(transactionTypeList);
       model.addAttribute(transaction);
@@ -219,8 +217,7 @@ public class TransactionController extends AbstractController {
    }
 
    @InitBinder
-   @Override
-   protected void initBinder(WebDataBinder binder) {
+   public void initBinder(WebDataBinder binder) {
 
       binder.registerCustomEditor(Category.class, new CategoryEditor(categoryManagementService,
             getSessionUser().getUsername()));

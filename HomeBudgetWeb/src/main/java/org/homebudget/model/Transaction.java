@@ -2,7 +2,6 @@ package org.homebudget.model;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity(name = "TRANSACTION")
 public class Transaction implements Serializable {
@@ -35,6 +35,7 @@ public class Transaction implements Serializable {
 
    @Column(name = "EXECUTION_DATE")
    @Temporal(TemporalType.DATE)
+   @DateTimeFormat(pattern = "dd/MM/yyyy")
    private Date executionDate;
 
    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -60,7 +61,6 @@ public class Transaction implements Serializable {
    private Account parent;
 
    public Date getExecutionDate() {
-
       return executionDate;
    }
 

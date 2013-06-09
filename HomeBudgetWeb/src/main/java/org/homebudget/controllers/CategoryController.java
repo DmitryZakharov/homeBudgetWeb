@@ -1,5 +1,7 @@
 package org.homebudget.controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,6 +12,7 @@ import org.homebudget.model.UserDetails;
 import org.homebudget.services.CategoryEditor;
 import org.homebudget.services.CategoryManagementService;
 import org.homebudget.services.UserManagementService;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -80,9 +83,12 @@ public class CategoryController extends AbstractController {
 
       return "redirect:";
    }
-
+   
    @InitBinder
-   protected void initBinder(WebDataBinder binder) {
+   public void initBinder(WebDataBinder binder) {
+      
+      SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+      binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 
       binder.registerCustomEditor(Category.class, new CategoryEditor(categoryManagementService,
             getSessionUser().getUsername()));
