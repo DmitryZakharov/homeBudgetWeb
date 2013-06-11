@@ -1,10 +1,14 @@
 package org.homebudget.controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.homebudget.model.BinaryResource;
 import org.homebudget.model.Category;
@@ -17,6 +21,7 @@ import org.homebudget.services.ResourceManagementService;
 import org.homebudget.services.TransactionManagementService;
 import org.homebudget.services.TransactionValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -87,7 +92,7 @@ public class TransactionController extends AbstractController {
       }
       final List<Category> categories = categoryManagementService.getAllCategories(getSessionUser()
             .getUsername());
-      
+
       model.addAttribute(categories);
       model.addAttribute(transactionTypeList);
       model.addAttribute(transaction);
@@ -160,9 +165,10 @@ public class TransactionController extends AbstractController {
 
    @RequestMapping(value = "{name}/transactions", method = RequestMethod.PUT)
    @ResponseStatus(HttpStatus.NO_CONTENT)
-   public String updateTransactionDetails(Transaction transaction,
-         @PathVariable("name") String accountName, BindingResult result,
-         @RequestParam(value = "attachment", required = false) MultipartFile attachment, Model model) {
+   public String updateTransactionDetails(
+         @RequestParam(value = "file", required = false) MultipartFile file,
+         @PathVariable("name") String accountName, Transaction transaction, BindingResult result,
+         Model model) {
 
       boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
             .getUsername(), transaction.getId());
@@ -174,12 +180,11 @@ public class TransactionController extends AbstractController {
             accountName);
 
       if (oldTransaction == null) {
-         return "redirect:transaction/listTransactions";
+         return "redirect:transactions";
       }
-      transactionManagementService
-            .updateTransactionDetails(oldTransaction, transaction, attachment);
+      transactionManagementService.updateTransactionDetails(oldTransaction, transaction, file);
 
-      return "redirect:transaction/listTransactions";
+      return "redirect:transactions";
 
    }
 
@@ -207,6 +212,8 @@ public class TransactionController extends AbstractController {
    @InitBinder
    public void initBinder(WebDataBinder binder) {
 
+      SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+      binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
       binder.registerCustomEditor(Category.class, new CategoryEditor(categoryManagementService,
             getSessionUser().getUsername()));
    }

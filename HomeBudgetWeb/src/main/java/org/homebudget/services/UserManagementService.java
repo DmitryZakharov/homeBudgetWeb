@@ -39,7 +39,7 @@ public class UserManagementService {
    public UserDetails saveUserDetails(UserDetails userDetails, MultipartFile userPic) {
       if (userPic != null) {
          BinaryResource resource = resourceManagementService.getResource(userPic);
-         userDetails.setUserPic(resource);
+         userDetails.setUserpic(resource);
       }
       return saveUserDetails(userDetails);
    }
@@ -122,8 +122,8 @@ public class UserManagementService {
    public void updateUserDetails(UserDetails oldUserDetails, UserDetails newUserDetails,
        MultipartFile userPic) {
       if (userPic != null) {
-         BinaryResource resource = resourceManagementService.getResource(userPic);
-         newUserDetails.setUserPic(resource);
+         final BinaryResource resource = resourceManagementService.getResource(userPic);
+         newUserDetails.setUserpic(resource);
       }
       updateUserDetails(oldUserDetails, newUserDetails);
    }

@@ -57,13 +57,9 @@
                   <tr>
                      <td>
                         <div class="upload_form_cont">
-
-
                            <div class="fileupload">
-                              <input  type="file"  id="file" name="userPic" onchange="fileSelected();"/>
-
+                              <input  type="file"  id="file" onchange="fileSelected();"/>
                            </div>
-
                            <table>
                               <td>
                                  <img id="preview"/>

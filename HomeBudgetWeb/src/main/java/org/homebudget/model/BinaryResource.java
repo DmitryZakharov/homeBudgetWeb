@@ -13,7 +13,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
  
 @Entity
-@Table(name="resources")
+@Table(name="RESOURCES")
 public class BinaryResource {
      
     @Id
