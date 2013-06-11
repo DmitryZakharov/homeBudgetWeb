@@ -130,6 +130,9 @@ html,body {
                             <li class="nav-header">Manage Accounts</li>
                             <li><a href="accounts">accounts</a></li>
                             <li><a href="<c:url value="accounts/new" />">add account</a></li>
+                            <li class="nav-header">Manage Transaction Templates</li>
+                            <li><a href="transactionTemplates">Transaction Templates</a></li>
+                            <li><a href="<c:url value="transactionTemplates/new" />">add Transaction Template</a></li>
                             <li class="nav-header">Manage Categories</li>
                             <li><a href="categories">categories</a></li>
                             <li><a href="<c:url value="categories/new" />">add category</a></li>

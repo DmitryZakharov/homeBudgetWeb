@@ -52,7 +52,7 @@
                      <font color="red"><form:errors path="amount" /></font>
                   </td>
                </tr>
-               <!--tr>
+               <tr>
                   <td>
                      <div class="upload_form_cont">
 
@@ -93,7 +93,7 @@
 
                      </div>
                   </td>
-               </tr-->
+               </tr>
                <tr>
                   <td>
                      Attachment:
@@ -102,6 +102,7 @@
                      <img src="${attachment}"/>
                   </td>
                </tr>
+            
                <tr>
                   <td colspan="3"><input type="submit" value="update" /></td>
                </tr>

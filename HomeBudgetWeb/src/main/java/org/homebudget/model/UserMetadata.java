@@ -6,7 +6,6 @@ package org.homebudget.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +20,7 @@ import javax.persistence.OneToOne;
 
 /**
  * @author dza
- * 
+ *
  */
 @Entity(name = "METADATA")
 public class UserMetadata {
@@ -38,11 +37,17 @@ public class UserMetadata {
    @Column(name = "MAIN_CURRENCY")
    private Currency currency;
 
-   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "ownerMetadata")
+   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy =
+       "ownerMetadata")
    private List<Category> categories = new ArrayList<Category>();
 
-   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "ownerMetadata")
+   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy =
+       "ownerMetadata")
    private List<Account> accounts = new ArrayList<Account>();
+
+   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy =
+       "ownerMetadata")
+   private List<TransactionTemplate> transactionTemplates = new ArrayList<TransactionTemplate>();
 
    @OneToOne
    @JoinColumn(name = "USER_ID", nullable = false)
@@ -141,5 +146,16 @@ public class UserMetadata {
 
       this.userDetails = userDetails;
    }
+
+   public List<TransactionTemplate> getTransactionTemplates() {
+      return transactionTemplates;
+   }
+
+   public void setTransactionTemplates(
+       List<TransactionTemplate> transactionTemplates) {
+      this.transactionTemplates = transactionTemplates;
+   }
+   
+   
 
 }

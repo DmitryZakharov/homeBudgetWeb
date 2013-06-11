@@ -7,20 +7,14 @@ package org.homebudget.model;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-
 import org.homebudget.config.TestConfigurator;
 import org.homebudget.dao.AccountRepository;
-import org.homebudget.model.Account;
-import org.homebudget.model.BinaryResource;
-import org.homebudget.model.Category;
-import org.homebudget.model.Transaction;
+import org.homebudget.model.TransactionTemplate.TransactionType;
 import org.homebudget.services.UserManagementService;
-import static org.junit.Assert.*;
-
 import org.junit.After;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +73,7 @@ public class TransactionModelTest extends TestConfigurator {
       transaction.setComment("dummy comment");
       Date date = new Date();
       transaction.setExecutionDate(date);
-      transaction.setType(Transaction.TransactionType.INCOME);
+      transaction.setType(TransactionType.INCOME);
 
       BinaryResource image = createTestDocument();
       transaction.setAttachment(image);

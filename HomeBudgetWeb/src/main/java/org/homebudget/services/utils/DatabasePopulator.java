@@ -4,14 +4,13 @@
 package org.homebudget.services.utils;
 
 import java.util.Date;
-
 import org.apache.log4j.Logger;
 import org.homebudget.dao.UserRoleRepository;
 import org.homebudget.model.Account;
 import org.homebudget.model.Category;
 import org.homebudget.model.Currency;
 import org.homebudget.model.Transaction;
-import org.homebudget.model.Transaction.TransactionType;
+import org.homebudget.model.TransactionTemplate.TransactionType;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
 import org.homebudget.model.UserRole.Role;
