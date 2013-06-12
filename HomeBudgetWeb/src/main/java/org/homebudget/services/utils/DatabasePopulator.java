@@ -10,7 +10,7 @@ import org.homebudget.model.Account;
 import org.homebudget.model.Category;
 import org.homebudget.model.Currency;
 import org.homebudget.model.Transaction;
-import org.homebudget.model.TransactionTemplate.TransactionType;
+import org.homebudget.model.TransactionAbstract.TransactionType;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
 import org.homebudget.model.UserRole.Role;

@@ -1,9 +1,9 @@
 package org.homebudget.model;
 
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -13,11 +13,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Entity(name = "TRANSACTION")
-public class Transaction extends TransactionTemplate implements Serializable {
-
-   private static final long serialVersionUID = -5210927811826634768L;
-
+@Entity
+@DiscriminatorValue("TRANS")
+public class Transaction extends TransactionAbstract {
 
    @Column(name = "EXECUTION_DATE")
    @Temporal(TemporalType.DATE)
@@ -37,7 +35,6 @@ public class Transaction extends TransactionTemplate implements Serializable {
    }
 
    public void setExecutionDate(Date executionDate) {
-
       this.executionDate = executionDate;
    }
 
@@ -51,8 +48,6 @@ public class Transaction extends TransactionTemplate implements Serializable {
       this.attachment = attachment;
    }
 
-
-
    public Account getParent() {
 
       return parent;
@@ -62,7 +57,5 @@ public class Transaction extends TransactionTemplate implements Serializable {
 
       this.parent = parent;
    }
-
-  
 
 }
