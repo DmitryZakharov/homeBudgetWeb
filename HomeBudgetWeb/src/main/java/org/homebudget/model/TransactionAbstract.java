@@ -14,11 +14,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
 @Entity
 @Inheritance
 @DiscriminatorColumn(name = "TRANSACTION_CLASS")
-@Table(name = "TRANSACTION")
+@Table(name = "TRANSACTIONS")
 public class TransactionAbstract {
 
    @Id
@@ -39,6 +38,8 @@ public class TransactionAbstract {
 
    @Column(name = "COMMENT")
    protected String comment;
+
+  
 
    public Transaction.TransactionType getType() {
       return type;
@@ -78,20 +79,16 @@ public class TransactionAbstract {
 
       this.comment = comment;
    }
-   
 
-
- public Long getId() {
+   public Long getId() {
       return id;
    }
-
 
    public void setId(Long id) {
       this.id = id;
    }
-   
-   
 
+   
    public static enum TransactionType {
 
       INCOME, OUTCOME

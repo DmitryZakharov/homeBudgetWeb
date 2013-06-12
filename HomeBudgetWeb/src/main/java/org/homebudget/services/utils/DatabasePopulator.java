@@ -11,6 +11,7 @@ import org.homebudget.model.Category;
 import org.homebudget.model.Currency;
 import org.homebudget.model.Transaction;
 import org.homebudget.model.TransactionAbstract.TransactionType;
+import org.homebudget.model.TransactionTemplate;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
 import org.homebudget.model.UserRole.Role;
@@ -80,9 +81,13 @@ public class DatabasePopulator {
          Transaction transaction = createTestTransaction(category);
          logger.info("Creating transaction: " + transaction.getAmount());
 
+         
+         TransactionTemplate template = new TransactionTemplate(transaction);
+         
          account.addTransaction(transaction);
 
          user.getMetadata().addAccount(account);
+         user.getMetadata().addTransactionTemplate(template);
          userManagementService.saveUserDetails(user);
          // transactionManagementService.saveTransaction(transaction, account.getName());
       }
@@ -154,5 +159,6 @@ public class DatabasePopulator {
             "work".concat(Long.toString(index)), null, user.getUsername());
       return category;
    }
+
 
 }

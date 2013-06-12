@@ -18,10 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
-   public List<Transaction> findByParent(Account account);
+   public List<Transaction> findByAccount(Account account);
    
    public Transaction findByComment(String transactionComment);
    
-   public List<Transaction> findByParentAndExecutionDateBetween (Account account, Date start, Date end);
+   public List<Transaction> findByAccountAndExecutionDateBetween (Account account, Date start, Date end);
    
 }

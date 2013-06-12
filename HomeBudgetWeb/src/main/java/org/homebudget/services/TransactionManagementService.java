@@ -26,7 +26,7 @@ public class TransactionManagementService {
 
    public void saveTransaction(Transaction transaction, String accountname) {
       final Account parent = accountRepository.findByName(accountname);
-      transaction.setParent(parent);
+      transaction.setAccount(parent);
       transactionRepository.save(transaction);
    }
 
@@ -34,14 +34,14 @@ public class TransactionManagementService {
 
       final Account accountDetails = accountRepository.findByName(accountname);
 
-      return transactionRepository.findByParent(accountDetails);
+      return transactionRepository.findByAccount(accountDetails);
    }
    
    public List<Transaction> getAllAccountTransactionsBetween(String accountname, Date start, Date end) {
 
       final Account accountDetails = accountRepository.findByName(accountname);
 
-      return transactionRepository.findByParentAndExecutionDateBetween(accountDetails, start, end);
+      return transactionRepository.findByAccountAndExecutionDateBetween(accountDetails, start, end);
    }
 
 
@@ -49,7 +49,7 @@ public class TransactionManagementService {
 
       Transaction transaction = transactionRepository.findOne(transactionId);
 
-      if (transaction != null && transaction.getParent().getName().equals(accountname)) {
+      if (transaction != null && transaction.getAccount().getName().equals(accountname)) {
          return transaction;
       }
       return null;

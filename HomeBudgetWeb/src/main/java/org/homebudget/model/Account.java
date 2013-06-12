@@ -3,7 +3,6 @@ package org.homebudget.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
-
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +44,7 @@ public class Account {
    @Column(name = "STARTING_BALANCE")
    private float startingBalance;
 
-   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "parent")
+   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "account")
    private Collection<Transaction> transactions = new ArrayList<Transaction>();
 
    @Enumerated(EnumType.STRING)
@@ -116,7 +114,7 @@ public class Account {
 
    public void addTransaction(Transaction transaction) {
 
-      transaction.setParent(this);
+      transaction.setAccount(this);
       this.transactions.add(transaction);
    }
 

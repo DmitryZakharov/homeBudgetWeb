@@ -156,6 +156,8 @@ public class UserMetadata {
       this.transactionTemplates = transactionTemplates;
    }
    
-   
+   public void addTransactionTemplate(TransactionTemplate template){
+      this.transactionTemplates.add(template);
+   }
 
 }

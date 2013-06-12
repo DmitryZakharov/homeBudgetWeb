@@ -26,9 +26,9 @@ public class Transaction extends TransactionAbstract {
    @JoinColumn(name = "ATTACHMENT")
    private BinaryResource attachment;
 
-   @ManyToOne(fetch = FetchType.EAGER)
+ @ManyToOne(fetch = FetchType.EAGER)
    @JoinColumn(name = "ACCOUNT_ID")
-   private Account parent;
+   private Account account;
 
    public Date getExecutionDate() {
       return executionDate;
@@ -48,14 +48,15 @@ public class Transaction extends TransactionAbstract {
       this.attachment = attachment;
    }
 
-   public Account getParent() {
-
-      return parent;
+  public Account getAccount() {
+      return account;
    }
 
-   public void setParent(Account parent) {
-
-      this.parent = parent;
+   public void setAccount(Account account) {
+      this.account = account;
    }
+
+
+
 
 }

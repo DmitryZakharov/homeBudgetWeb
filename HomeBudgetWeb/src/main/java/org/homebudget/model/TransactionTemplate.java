@@ -14,6 +14,17 @@ public class TransactionTemplate extends TransactionAbstract {
    @JoinColumn(name = "OWNER_METADATA")
    private UserMetadata ownerMetadata;
 
+   public TransactionTemplate(Transaction transaction) {
+      this.amount = transaction.getAmount();
+      this.category = transaction.getCategory();
+      this.comment = transaction.getComment();
+      this.type = transaction.getType();
+   }
+   
+   public TransactionTemplate(){
+      
+   }
+
    public UserMetadata getOwnerMetadata() {
       return ownerMetadata;
    }
