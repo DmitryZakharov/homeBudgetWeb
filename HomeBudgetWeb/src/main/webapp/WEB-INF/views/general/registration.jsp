@@ -71,7 +71,7 @@
                             <div class="controls">
                                 <div class="input-prepend">
                                     <span class="add-on"><i class="icon-gift"></i></span>
-                                    <form:input type="text" class="input-xlarge" id="datepicker" name="birthday"
+                                    <form:input type="text" class="input-xlarge datepicker" id="datepicker" name="birthday"
                                         placeholder="Date of birth" path="birthday" />
                                 </div>
                                 <div class="text">

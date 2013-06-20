@@ -50,7 +50,7 @@
                      </td>
                   </tr>
                   <tr>
-                     <td><form:input type="text" id="datepicker" class="input" placeholder="Date of birth"
+                                          <td><form:input type="text" id="datepicker" class="input datepicker" placeholder="Date of birth"
                                  path="birthday" />
                      </td>
                   </tr>
@@ -58,6 +58,7 @@
                      <td>
                         <div class="upload_form_cont">
                            <div class="fileupload">
+                          
                               <input  type="file"  id="file" name="file" onchange="fileSelected();"/>
                            </div>
                            <table>

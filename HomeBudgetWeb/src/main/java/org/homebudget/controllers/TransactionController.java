@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.homebudget.model.BinaryResource;
 import org.homebudget.model.Category;
 import org.homebudget.model.Transaction;
@@ -20,6 +21,7 @@ import org.homebudget.services.TransactionManagementService;
 import org.homebudget.services.TransactionValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,15 +58,25 @@ public class TransactionController extends AbstractController {
    private ResourceManagementService resourceManagementService;
 
    @RequestMapping(value = "/{name}/transactions", method = RequestMethod.GET)
-   public String getAllTransactions(@PathVariable("name") String accountName, Model model) {
+
+   public String getAllTransactions(@PathVariable("name") String accountName,
+         @RequestParam(value = "start", required = false)  @DateTimeFormat(pattern="mm/dd/yyyy") Date start,
+         @RequestParam(value = "end", required = false)   @DateTimeFormat(pattern="mm/dd/yyyy") Date end, Model model) {
 
       boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
           .getUsername());
       if (!isAuthorized) {
          return "redirect:";
       }
-      final List<Transaction> transactions = transactionManagementService
-          .getAllAccountTransactions(accountName);
+
+      List<Transaction> transactions = new ArrayList<Transaction>();
+      if (start != null && end != null) {
+         transactions = transactionManagementService.getAllAccountTransactionsBetween(accountName,
+               start, end);
+      }
+      else {
+         transactions = transactionManagementService.getAllAccountTransactions(accountName);
+      }
 
       model.addAttribute(transactions);
 
@@ -142,8 +154,7 @@ public class TransactionController extends AbstractController {
    }
 
    @RequestMapping(value = "{name}/transactions/new", method = RequestMethod.POST)
-   public String postTransaction(
-       @PathVariable("name") String accountName,
+   public String postTransaction(@PathVariable("name") String accountName,
        @ModelAttribute("transaction") @Valid Transaction transaction, BindingResult result,
        @RequestParam(value = "file", required = false) MultipartFile file) {
       if (file == null) {
@@ -166,6 +177,7 @@ public class TransactionController extends AbstractController {
 
    @RequestMapping(value = "{name}/transactions", method = RequestMethod.PUT)
    @ResponseStatus(HttpStatus.NO_CONTENT)
+
    public String updateTransactionDetails(
        @RequestParam(value = "file", required = false) MultipartFile file,
        @PathVariable("name") String accountName, Transaction transaction, BindingResult result,
@@ -183,11 +195,11 @@ public class TransactionController extends AbstractController {
           accountName);
 
       if (oldTransaction == null) {
-         return "redirect:transactions";
+
       }
       transactionManagementService.updateTransactionDetails(oldTransaction, transaction, file);
 
-      return "redirect:transactions";
+
 
    }
 
@@ -217,6 +229,7 @@ public class TransactionController extends AbstractController {
 
       SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
       binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+
       binder.registerCustomEditor(Category.class, new CategoryEditor(categoryManagementService,
           getSessionUser().getUsername()));
    }
