@@ -58,7 +58,7 @@
                      <td>
                         <div class="upload_form_cont">
                            <div class="fileupload">
-                              <input  type="file"  id="file" onchange="fileSelected();"/>
+                              <input  type="file"  id="file" name="file" onchange="fileSelected();"/>
                            </div>
                            <table>
                               <td>
@@ -87,6 +87,12 @@
                         </div>
                      </td>
                   </tr>
+                  <tr>
+                  <td>
+                     UserPic:
+                     <img class="picture" src="${userpic}"/>
+                  </td>
+               </tr>
                   <!-- USER SUBMISSION ACTION -->
                   <tr>
                      <td><input class="btn btn-primary registration-submit" type="submit" value="update" /></td>

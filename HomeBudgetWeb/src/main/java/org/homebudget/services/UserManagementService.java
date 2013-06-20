@@ -119,17 +119,17 @@ public class UserManagementService {
 
    }
 
-   public void updateUserDetails(UserDetails oldUserDetails, UserDetails newUserDetails,
+   public UserDetails updateUserDetails(UserDetails oldUserDetails, UserDetails newUserDetails,
        MultipartFile userPic) {
       if (userPic != null) {
          final BinaryResource resource = resourceManagementService.getResource(userPic);
          newUserDetails.setUserpic(resource);
       }
-      updateUserDetails(oldUserDetails, newUserDetails);
+      return updateUserDetails(oldUserDetails, newUserDetails);
    }
 
    public String getUserPicString(BinaryResource userPic) {
-      String userPicString = "";
+      String userPicString = null;
       if (userPic != null) {
          userPicString = resourceManagementService.getBase64ImageString(userPic);
       }

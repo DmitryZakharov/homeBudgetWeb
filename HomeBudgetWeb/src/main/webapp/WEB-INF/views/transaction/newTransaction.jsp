@@ -56,7 +56,7 @@
 
 
                         <div class="fileupload">
-                           <input  type="file"  id="file" name="attachment" onchange="fileSelected();"/>
+                           <input  type="file"  id="file" name="file" onchange="fileSelected();"/>
 
                         </div>
 

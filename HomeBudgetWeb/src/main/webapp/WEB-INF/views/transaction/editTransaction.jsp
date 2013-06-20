@@ -89,9 +89,8 @@
                <tr>
                   <td>
                      Attachment:
-                  </td>
-                  <td>
-                     <img src="${attachment}"/>
+               
+                     <img class ="picture" src="${attachment}"/>
                   </td>
                </tr>
                <tr>

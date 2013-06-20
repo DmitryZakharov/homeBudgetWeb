@@ -16,7 +16,7 @@
                   <td>
                      <div class="upload_form_cont">
                         <div class="fileupload">
-                           <input  type="file"  id="file" name="userPic" onchange="fileSelected();"/>
+                           <input  type="file"  id="file" name="userpic" onchange="fileSelected();"/>
                         </div>
                         <table>
                            <td>

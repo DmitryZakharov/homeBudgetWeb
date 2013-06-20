@@ -3,10 +3,8 @@ package org.homebudget.controllers;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.homebudget.model.UserDetails;
 import org.homebudget.services.UserManagementService;
@@ -38,30 +36,35 @@ public class UserManagementController extends AbstractController {
    public String showUserProfile(Model model) {
 
       UserDetails userDetails = userManagementService.getUserDetailsByUsername(getSessionUser()
-            .getUsername());
+          .getUsername());
       String userPicString = userManagementService.getUserPicString(userDetails.getUserpic());
       model.addAttribute(userDetails);
-      model.addAttribute("userPic", userPicString);
+      model.addAttribute("userpic", userPicString);
       return "user/editUser";
    }
 
    @RequestMapping(method = RequestMethod.PUT)
-   @ResponseStatus(HttpStatus.NO_CONTENT)
+//   @ResponseStatus(HttpStatus.NO_CONTENT)
    public String updateUserDetails(@Valid UserDetails newUserDetails, BindingResult result,
-         Model model, @RequestParam(value = "file", required = false) MultipartFile userpic) {
+       Model model, @RequestParam(value = "file", required = false) MultipartFile userpic) {
 
       UserDetails oldUserDetails = userManagementService.getUserDetailsByUsername(getSessionUser()
-            .getUsername());
-      getUserManagementService().updateUserDetails(oldUserDetails, newUserDetails, userpic);
-      return "user/editUser";
+          .getUsername());
+
+      oldUserDetails = getUserManagementService().updateUserDetails(oldUserDetails, newUserDetails,
+          userpic);
+      String userPicString = userManagementService.getUserPicString(oldUserDetails.getUserpic());
+      model.addAttribute(oldUserDetails);
+      model.addAttribute("userpic", userPicString);
+      return "redirect:user";
    }
 
    @Secured("ADMIN_ROLE")
    @RequestMapping(method = RequestMethod.POST)
    @ResponseStatus(HttpStatus.CREATED)
    public String addUserDetails(
-         @RequestParam(value = "userPic", required = false) MultipartFile userPic,
-         @Valid UserDetails userDetails, BindingResult result, Model model) {
+       @RequestParam(value = "userpic", required = false) MultipartFile userPic,
+       @Valid UserDetails userDetails, BindingResult result, Model model) {
 
       userDetails = getUserManagementService().saveUserDetails(userDetails, userPic);
 
@@ -105,4 +108,5 @@ public class UserManagementController extends AbstractController {
       SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
       binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
    }
+
 }
