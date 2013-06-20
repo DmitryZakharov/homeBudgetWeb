@@ -8,7 +8,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
-import org.apache.poi.ss.usermodel.DataFormat;
 import org.homebudget.model.BinaryResource;
 import org.homebudget.model.Category;
 import org.homebudget.model.Transaction;
@@ -195,10 +194,11 @@ public class TransactionController extends AbstractController {
           accountName);
 
       if (oldTransaction == null) {
-
+         return "redirect:transactions";
       }
       transactionManagementService.updateTransactionDetails(oldTransaction, transaction, file);
 
+      return "redirect:transactions";
 
 
    }
