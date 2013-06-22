@@ -8,11 +8,10 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
-import org.apache.poi.ss.usermodel.DataFormat;
 import org.homebudget.model.BinaryResource;
 import org.homebudget.model.Category;
 import org.homebudget.model.Transaction;
-import org.homebudget.model.Transaction.TransactionType;
+import org.homebudget.model.TransactionAbstract.TransactionType;
 import org.homebudget.services.AccountManagementService;
 import org.homebudget.services.CategoryEditor;
 import org.homebudget.services.CategoryManagementService;
@@ -22,7 +21,6 @@ import org.homebudget.services.TransactionValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,7 +31,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -58,10 +55,10 @@ public class TransactionController extends AbstractController {
    private ResourceManagementService resourceManagementService;
 
    @RequestMapping(value = "/{name}/transactions", method = RequestMethod.GET)
-
    public String getAllTransactions(@PathVariable("name") String accountName,
-         @RequestParam(value = "start", required = false)  @DateTimeFormat(pattern="mm/dd/yyyy") Date start,
-         @RequestParam(value = "end", required = false)   @DateTimeFormat(pattern="mm/dd/yyyy") Date end, Model model) {
+       @RequestParam(value = "start", required = false) @DateTimeFormat(pattern = "mm/dd/yyyy") Date start,
+       @RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "mm/dd/yyyy") Date end,
+       Model model) {
 
       boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
           .getUsername());
@@ -72,7 +69,7 @@ public class TransactionController extends AbstractController {
       List<Transaction> transactions = new ArrayList<Transaction>();
       if (start != null && end != null) {
          transactions = transactionManagementService.getAllAccountTransactionsBetween(accountName,
-               start, end);
+             start, end);
       }
       else {
          transactions = transactionManagementService.getAllAccountTransactions(accountName);
@@ -142,9 +139,9 @@ public class TransactionController extends AbstractController {
       }
       final Transaction transaction = transactionManagementService.getTransaction(transactionId);
 
-      transaction.getParent().getTransactions().remove(transaction);
+      transaction.getAccount().getTransactions().remove(transaction);
 
-      accountManagementService.updateAccount(transaction.getParent());
+      accountManagementService.updateAccount(transaction.getAccount());
 
       if (transaction == null) {
          return "redirect:";
@@ -156,35 +153,28 @@ public class TransactionController extends AbstractController {
    @RequestMapping(value = "{name}/transactions/new", method = RequestMethod.POST)
    public String postTransaction(@PathVariable("name") String accountName,
        @ModelAttribute("transaction") @Valid Transaction transaction, BindingResult result,
-         @RequestParam(value = "attachment", required = false) MultipartFile attachment) {
-
        @RequestParam(value = "file", required = false) MultipartFile file) {
-      if (file == null) {
-         System.err.println("!!!!!!!!!!!!!!!!!!!!!!File is null!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-      }
+
       boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
           .getUsername());
       if (!isAuthorized) {
          return "redirect:";
       }
       logger.info("Processing save transacton: " + transaction);
-      if (attachment != null) {
-         BinaryResource resource = resourceManagementService.getResource(attachment);
-      if (file != null) {
+      if (file == null) {
+         System.err.println("!!!!!!!!!!!!!!!!!!!!!!File is null!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      }
+      else {
          BinaryResource resource = resourceManagementService.getResource(file);
          transaction.setAttachment(resource);
       }
+
       transactionManagementService.saveTransaction(transaction, accountName);
 
       return "redirect:";
    }
 
    @RequestMapping(value = "{name}/transactions", method = RequestMethod.PUT)
-   @ResponseStatus(HttpStatus.NO_CONTENT)
-   public String updateTransactionDetails(Transaction transaction,
-         @PathVariable("name") String accountName, BindingResult result,
-         @RequestParam(value = "attachment", required = false) MultipartFile attachment, Model model) {
-
    public String updateTransactionDetails(
        @RequestParam(value = "file", required = false) MultipartFile file,
        @PathVariable("name") String accountName, Transaction transaction, BindingResult result,
@@ -203,14 +193,11 @@ public class TransactionController extends AbstractController {
 
       if (oldTransaction == null) {
          return "redirect:transaction/listTransactions";
-         return "redirect:transactions";
       }
-      transactionManagementService
-            .updateTransactionDetails(oldTransaction, transaction, attachment);
+
       transactionManagementService.updateTransactionDetails(oldTransaction, transaction, file);
 
       return "redirect:transaction/listTransactions";
-      return "redirect:transactions";
 
 
    }

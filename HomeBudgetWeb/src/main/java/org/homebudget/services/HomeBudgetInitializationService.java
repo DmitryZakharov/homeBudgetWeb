@@ -2,7 +2,6 @@ package org.homebudget.services;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-
 import org.apache.log4j.Logger;
 import org.homebudget.dao.UserRoleRepository;
 import org.homebudget.services.utils.DatabasePopulator;
@@ -44,6 +43,7 @@ public class HomeBudgetInitializationService {
       
 
       System.out.println("POST CONSTRUCT!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      System.out.println("POST CONSTRUCT2!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       logger.info("Create initial Population !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       int userCount = 0;
       if (userRoleRepository != null) {

@@ -94,7 +94,7 @@ public class DatabasePopulator {
    }
 
    public void initUserRoles() {
-
+    
       for (Role role : Role.values()) {
          UserRole uRole = new UserRole();
          uRole.setRole(role);
