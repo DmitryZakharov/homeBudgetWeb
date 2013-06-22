@@ -136,3 +136,7 @@ input {
 #attachment{
    max-height: 300px;
 }
+
+.picture{
+   max-width : 200px;
+}

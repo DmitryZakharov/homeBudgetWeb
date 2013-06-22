@@ -86,11 +86,11 @@ public class UserManagementServiceTest extends TestConfigurator {
       UserDetails userDetails = createTestUser();
       
       BinaryResource document = createTestDocument();
-      userDetails.setUserPic(document);
+      userDetails.setUserpic(document);
       userManagementService.saveUserDetails(userDetails);
       UserDetails result = repository.findByUsername(userDetails.getUsername());
       assertNotNull(result);
-      assertNotNull(result.getUserPic());
+      assertNotNull(result.getUserpic());
 
    }
 

@@ -50,20 +50,17 @@
                      </td>
                   </tr>
                   <tr>
-                     <td><form:input type="text" id="datepicker" class="input datepicker" placeholder="Date of birth"
+                                          <td><form:input type="text" id="datepicker" class="input datepicker" placeholder="Date of birth"
                                  path="birthday" />
                      </td>
                   </tr>
                   <tr>
                      <td>
                         <div class="upload_form_cont">
-
-
                            <div class="fileupload">
-                              <input  type="file"  id="file" name="userPic" onchange="fileSelected();"/>
-
+                          
+                              <input  type="file"  id="file" name="file" onchange="fileSelected();"/>
                            </div>
-
                            <table>
                               <td>
                                  <img id="preview"/>
@@ -91,6 +88,12 @@
                         </div>
                      </td>
                   </tr>
+                  <tr>
+                  <td>
+                     UserPic:
+                     <img class="picture" src="${userpic}"/>
+                  </td>
+               </tr>
                   <!-- USER SUBMISSION ACTION -->
                   <tr>
                      <td><input class="btn btn-primary registration-submit" type="submit" value="update" /></td>

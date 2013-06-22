@@ -55,13 +55,9 @@
                <tr>
                   <td>
                      <div class="upload_form_cont">
-
-
                         <div class="fileupload">
-                           <input  type="file"  id="file" name="attachment" onchange="fileSelected();"/>
-
+                           <input  type="file"  id="file" name="file" onchange="fileSelected();"/>
                         </div>
-
                         <table>
                            <td>
                               <img id="preview"/>
@@ -86,20 +82,15 @@
                            <div id="progress"></div>
                            <div id="progress_percent">&nbsp;</div>
                            <div class="clear_both"></div>
-
-
                         </div>
-
-
                      </div>
                   </td>
                </tr>
                <tr>
                   <td>
                      Attachment:
-                  </td>
-                  <td>
-                     <img src="${attachment}"/>
+               
+                     <img class ="picture" src="${attachment}"/>
                   </td>
                </tr>
             

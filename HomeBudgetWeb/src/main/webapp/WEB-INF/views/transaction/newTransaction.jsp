@@ -39,7 +39,8 @@
                <tr>
                   <td>
                      <form:label path="executionDate">Date of Creation:</form:label>
-                     <form:input type="text" class="datepicker" id="datepicker" path="executionDate" />
+            
+                     <form:input type="text" class="datepicker" path="executionDate" />
                      <font color="red"><form:errors path="executionDate" /></font>
                   </td>
                </tr>
@@ -56,7 +57,8 @@
 
 
                         <div class="fileupload">
-                           <input  type="file"  id="file" name="attachment" onchange="fileSelected();"/>
+                          
+                           <input  type="file"  id="file" name="file" onchange="fileSelected();"/>
 
                         </div>
 
