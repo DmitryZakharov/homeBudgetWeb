@@ -11,7 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.homebudget.config.TestConfigurator;
 import org.homebudget.dao.AccountRepository;
-import org.homebudget.model.TransactionAbstract.TransactionType;
+
+import org.homebudget.model.Transaction.TransactionType;
 import org.homebudget.services.UserManagementService;
 import org.junit.After;
 import static org.junit.Assert.*;

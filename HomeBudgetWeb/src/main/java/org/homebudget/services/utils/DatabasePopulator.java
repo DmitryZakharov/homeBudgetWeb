@@ -10,7 +10,8 @@ import org.homebudget.model.Account;
 import org.homebudget.model.Category;
 import org.homebudget.model.Currency;
 import org.homebudget.model.Transaction;
-import org.homebudget.model.TransactionAbstract.TransactionType;
+import org.homebudget.model.Transaction.TransactionType;
+
 import org.homebudget.model.TransactionTemplate;
 import org.homebudget.model.UserDetails;
 import org.homebudget.model.UserRole;
@@ -81,10 +82,10 @@ public class DatabasePopulator {
          Transaction transaction = createTestTransaction(category);
          logger.info("Creating transaction: " + transaction.getAmount());
 
-         
+         account.addTransaction(transaction);
          TransactionTemplate template = new TransactionTemplate(transaction);
          
-         account.addTransaction(transaction);
+        
 
          user.getMetadata().addAccount(account);
          user.getMetadata().addTransactionTemplate(template);

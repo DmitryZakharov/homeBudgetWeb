@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.homebudget.model.Category;
 import org.homebudget.model.Transaction;
 import org.homebudget.model.TransactionTemplate;
+import org.homebudget.model.Transaction.TransactionType;
 import org.homebudget.services.CategoryEditor;
 import org.homebudget.services.CategoryManagementService;
 import org.homebudget.services.TransactionTemplateManagementService;
@@ -53,9 +54,15 @@ public class TransactionTemplateController extends AbstractController {
 
       TransactionTemplate transactionTemplate = transactionTemplateManagementService.
           getTransactionTemplate(getSessionUser().getUsername(), transactionTemplateId);
+      final List<TransactionType> transactionTypeList = new ArrayList<TransactionType>(
+              Arrays.asList(TransactionType.values()));
       if (transactionTemplate == null) {
          return "redirect:";
       }
+      final List<Category> categories = categoryManagementService.getAllCategories(getSessionUser()
+              .getUsername());
+      model.addAttribute(categories);
+      model.addAttribute(transactionTypeList);
       model.addAttribute(transactionTemplate);
       return "transactionTemplate/editTransactionTemplate";
    }

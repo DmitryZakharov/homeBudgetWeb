@@ -34,7 +34,7 @@ public class TransactionTemplateManagementService {
    }
 
    public List<TransactionTemplate> getAllTransactionTemplates(String username) {
-      UserMetadata userMetadata = getParentMetadata(username);
+      final UserMetadata userMetadata = getParentMetadata(username);
       return getAllTransactionTemplates(userMetadata);
    }
 

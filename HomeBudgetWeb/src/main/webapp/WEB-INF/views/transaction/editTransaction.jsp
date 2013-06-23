@@ -5,7 +5,7 @@
 <t:maintemplate>
    <jsp:body>
       <div class="container">
-         <form:form method="put" commandName="transaction" action="accounts/${name}/transactions" enctype="multipart/form-data">
+         <form:form method="put" commandName="transaction" action="${name}/transactions" enctype="multipart/form-data">
             <form:input type="hidden" name="_method" value="put" path="" />
             <form:input type="hidden" name="id" path="id" />
             <table>

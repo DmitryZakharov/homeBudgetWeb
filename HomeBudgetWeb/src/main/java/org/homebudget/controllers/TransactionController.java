@@ -11,7 +11,8 @@ import org.apache.log4j.Logger;
 import org.homebudget.model.BinaryResource;
 import org.homebudget.model.Category;
 import org.homebudget.model.Transaction;
-import org.homebudget.model.TransactionAbstract.TransactionType;
+import org.homebudget.model.Transaction.TransactionType;
+
 import org.homebudget.services.AccountManagementService;
 import org.homebudget.services.CategoryEditor;
 import org.homebudget.services.CategoryManagementService;

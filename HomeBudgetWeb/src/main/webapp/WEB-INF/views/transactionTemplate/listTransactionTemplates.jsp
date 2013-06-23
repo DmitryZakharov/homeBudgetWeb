@@ -7,7 +7,7 @@
 <t:maintemplate>
     <jsp:body>
       <div class="container">
-         <h1>List Of Transactions Templates</h1>
+         <h1>List Of Transaction Templates</h1>
          <table title="List Of Transaction Templates" class="table table-striped table-condensed">
             <tr>
                <th></th>
@@ -24,7 +24,7 @@
 																.submit();
 													}
 												</script>
-            <c:forEach items="${transactionTemplates}" var="transactionTemplate">
+            <c:forEach items="${transactionTemplateList}" var="transactionTemplate">
                <tr>
 
                   <td><span class="badge"><a

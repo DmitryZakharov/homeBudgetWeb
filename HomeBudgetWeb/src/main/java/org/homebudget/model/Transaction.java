@@ -1,62 +1,143 @@
 package org.homebudget.model;
 
 import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@DiscriminatorValue("TRANS")
-public class Transaction extends TransactionAbstract {
+public class Transaction {
 
-   @Column(name = "EXECUTION_DATE")
-   @Temporal(TemporalType.DATE)
-   @DateTimeFormat(pattern = "dd/MM/yyyy")
-   private Date executionDate;
+	@Id
+	@GeneratedValue
+	@Column(name = "TRANSACTION_ID")
+	private Long id;
 
-   @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-   @JoinColumn(name = "ATTACHMENT")
-   private BinaryResource attachment;
+	@Column(name = "EXECUTION_DATE")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date executionDate;
 
- @ManyToOne(fetch = FetchType.EAGER)
-   @JoinColumn(name = "ACCOUNT_ID")
-   private Account account;
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "CATEGORY")
+	protected Category category;
 
-   public Date getExecutionDate() {
-      return executionDate;
-   }
+	@Column(name = "AMOUNT")
+	protected float amount;
 
-   public void setExecutionDate(Date executionDate) {
-      this.executionDate = executionDate;
-   }
+	@Enumerated(EnumType.STRING)
+	@Column(name = "TRANSACTION_TYPE")
+	protected TransactionType type;
 
-   public BinaryResource getAttachment() {
+	@Column(name = "COMMENT")
+	protected String comment;
 
-      return attachment;
-   }
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "ATTACHMENT")
+	private BinaryResource attachment;
 
-   public void setAttachment(BinaryResource attachment) {
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ACCOUNT_ID")
+	private Account account;
 
-      this.attachment = attachment;
-   }
+	public Date getExecutionDate() {
+		return executionDate;
+	}
 
-  public Account getAccount() {
-      return account;
-   }
+	public void setExecutionDate(Date executionDate) {
+		this.executionDate = executionDate;
+	}
 
-   public void setAccount(Account account) {
-      this.account = account;
-   }
+	public BinaryResource getAttachment() {
 
+		return attachment;
+	}
 
+	public void setAttachment(BinaryResource attachment) {
 
+		this.attachment = attachment;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
+	public Transaction.TransactionType getType() {
+		return type;
+	}
+
+	public void setType(Transaction.TransactionType type) {
+
+		this.type = type;
+	}
+
+	public float getAmount() {
+
+		return amount;
+	}
+
+	public void setAmount(float amount) {
+
+		this.amount = amount;
+	}
+
+	public Category getCategory() {
+
+		return category;
+	}
+
+	public void setCategory(Category category) {
+
+		this.category = category;
+	}
+
+	public String getComment() {
+
+		return comment;
+	}
+
+	public void setComment(String comment) {
+
+		this.comment = comment;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public UserMetadata getUserMetadata(){
+		UserMetadata result = null;
+		if(account != null){
+			result = account.getOwnerMetadata();
+		}
+		return result;
+	}
+
+	public static enum TransactionType {
+
+		INCOME, OUTCOME
+
+	};
 
 }
