@@ -38,200 +38,212 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/accounts")
 public class TransactionController extends AbstractController {
 
-   private static final Logger logger = Logger.getLogger(TransactionController.class);
+	private static final Logger logger = Logger
+			.getLogger(TransactionController.class);
 
-   @Autowired
-   private TransactionValidationService transactionValidation;
+	@Autowired
+	private TransactionValidationService transactionValidation;
 
-   @Resource
-   private TransactionManagementService transactionManagementService;
+	@Resource
+	private TransactionManagementService transactionManagementService;
 
-   @Resource
-   private AccountManagementService accountManagementService;
+	@Resource
+	private AccountManagementService accountManagementService;
 
-   @Resource
-   private CategoryManagementService categoryManagementService;
+	@Resource
+	private CategoryManagementService categoryManagementService;
 
-   @Resource
-   private ResourceManagementService resourceManagementService;
+	@Resource
+	private ResourceManagementService resourceManagementService;
 
-   @RequestMapping(value = "/{name}/transactions", method = RequestMethod.GET)
-   public String getAllTransactions(@PathVariable("name") String accountName,
-       @RequestParam(value = "start", required = false) @DateTimeFormat(pattern = "mm/dd/yyyy") Date start,
-       @RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "mm/dd/yyyy") Date end,
-       Model model) {
+	@RequestMapping(value = "/{name}/transactions", method = RequestMethod.GET)
+	public String getAllTransactions(
+			@PathVariable("name") String accountName,
+			@RequestParam(value = "start", required = false) @DateTimeFormat(pattern = "mm/dd/yyyy") Date start,
+			@RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "mm/dd/yyyy") Date end,
+			Model model) {
 
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
-          .getUsername());
-      if (!isAuthorized) {
-         return "redirect:";
-      }
+		boolean isAuthorized = accountManagementService.isAuthorized(
+				accountName, getSessionUser().getUsername());
+		if (!isAuthorized) {
+			return "redirect:";
+		}
 
-      List<Transaction> transactions = new ArrayList<Transaction>();
-      if (start != null && end != null) {
-         transactions = transactionManagementService.getAllAccountTransactionsBetween(accountName,
-             start, end);
-      }
-      else {
-         transactions = transactionManagementService.getAllAccountTransactions(accountName);
-      }
+		List<Transaction> transactions = new ArrayList<Transaction>();
+		if (start != null && end != null) {
+			transactions = transactionManagementService
+					.getAllAccountTransactionsBetween(accountName, start, end);
+		} else {
+			transactions = transactionManagementService
+					.getAllAccountTransactions(accountName);
+		}
 
-      model.addAttribute(transactions);
+		model.addAttribute(transactions);
 
-      return "transaction/listTransactions";
-   }
+		return "transaction/listTransactions";
+	}
 
-   @RequestMapping(value = "{name}/transactions/{id}", method = RequestMethod.GET)
-   public String getTransaction(@PathVariable("name") String accountName,
-       @PathVariable("id") Long transactionId, Model model) {
+	@RequestMapping(value = "{name}/transactions/{id}", method = RequestMethod.GET)
+	public String getTransaction(@PathVariable("name") String accountName,
+			@PathVariable("id") Long transactionId, Model model) {
 
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
-          .getUsername(), transactionId);
-      if (!isAuthorized) {
-         return "redirect:";
-      }
-      final Transaction transaction = transactionManagementService.getTransaction(transactionId);
-      final List<TransactionType> transactionTypeList = new ArrayList<TransactionType>(
-          Arrays.asList(TransactionType.values()));
-      BinaryResource attachment = transaction.getAttachment();
-      String attachmentString = null;
-      if (attachment != null) {
-         attachmentString = resourceManagementService.getBase64ImageString(attachment);
-      }
-      final List<Category> categories = categoryManagementService.getAllCategories(getSessionUser()
-          .getUsername());
+		boolean isAuthorized = accountManagementService.isAuthorized(
+				accountName, getSessionUser().getUsername(), transactionId);
+		if (!isAuthorized) {
+			return "redirect:";
+		}
+		final Transaction transaction = transactionManagementService
+				.getTransaction(transactionId);
+		final List<TransactionType> transactionTypeList = new ArrayList<TransactionType>(
+				Arrays.asList(TransactionType.values()));
+		BinaryResource attachment = transaction.getAttachment();
+		String attachmentString = null;
+		if (attachment != null) {
+			attachmentString = resourceManagementService
+					.getBase64ImageString(attachment);
+		}
+		final List<Category> categories = categoryManagementService
+				.getAllCategories(getSessionUser().getUsername());
 
-      model.addAttribute(categories);
-      model.addAttribute(transactionTypeList);
-      model.addAttribute(transaction);
-      model.addAttribute("attachment", attachmentString);
-      return "transaction/editTransaction";
-   }
+		model.addAttribute(categories);
+		model.addAttribute(transactionTypeList);
+		model.addAttribute(transaction);
+		model.addAttribute("attachment", attachmentString);
+		return "transaction/editTransaction";
+	}
 
-   @RequestMapping(value = "{name}/transactions/new", method = RequestMethod.GET)
-   public String createTransaction(@PathVariable("name") String accountName, Model model) {
+	@RequestMapping(value = "{name}/transactions/new", method = RequestMethod.GET)
+	public String createTransaction(@PathVariable("name") String accountName,
+			Model model) {
 
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
-          .getUsername());
-      if (!isAuthorized) {
-         return "redirect:";
-      }
+		boolean isAuthorized = accountManagementService.isAuthorized(
+				accountName, getSessionUser().getUsername());
+		if (!isAuthorized) {
+			return "redirect:";
+		}
 
-      final List<TransactionType> transactionTypeList = new ArrayList<TransactionType>(
-          Arrays.asList(TransactionType.values()));
+		final List<TransactionType> transactionTypeList = new ArrayList<TransactionType>(
+				Arrays.asList(TransactionType.values()));
 
-      final List<Category> categories = categoryManagementService.getAllCategories(getSessionUser()
-          .getUsername());
+		final List<Category> categories = categoryManagementService
+				.getAllCategories(getSessionUser().getUsername());
 
-      model.addAttribute(categories);
-      model.addAttribute(transactionTypeList);
-      model.addAttribute(new Transaction());
-      return "transaction/newTransaction";
-   }
+		model.addAttribute(categories);
+		model.addAttribute(transactionTypeList);
+		model.addAttribute(new Transaction());
+		return "transaction/newTransaction";
+	}
 
-   @RequestMapping(value = "{name}/transactions/{id}", method = RequestMethod.DELETE)
-   public String deleteTransaction(@PathVariable("name") String accountName,
-       @PathVariable("id") Long transactionId) {
+	@RequestMapping(value = "{name}/transactions/{id}", method = RequestMethod.DELETE)
+	public String deleteTransaction(@PathVariable("name") String accountName,
+			@PathVariable("id") Long transactionId) {
 
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
-          .getUsername(), transactionId);
-      if (!isAuthorized) {
-         return "redirect:";
-      }
-      final Transaction transaction = transactionManagementService.getTransaction(transactionId);
+		boolean isAuthorized = accountManagementService.isAuthorized(
+				accountName, getSessionUser().getUsername(), transactionId);
+		if (!isAuthorized) {
+			return "redirect:";
+		}
+		final Transaction transaction = transactionManagementService
+				.getTransaction(transactionId);
 
-      transaction.getAccount().getTransactions().remove(transaction);
+		transaction.getAccount().getTransactions().remove(transaction);
 
-      accountManagementService.updateAccount(transaction.getAccount());
+		accountManagementService.updateAccount(transaction.getAccount());
 
-      if (transaction == null) {
-         return "redirect:";
-      }
+		if (transaction == null) {
+			return "redirect:";
+		}
 
-      return "redirect:";
-   }
+		return "redirect:";
+	}
 
-   @RequestMapping(value = "{name}/transactions/new", method = RequestMethod.POST)
-   public String postTransaction(@PathVariable("name") String accountName,
-       @ModelAttribute("transaction") @Valid Transaction transaction, BindingResult result,
-       @RequestParam(value = "file", required = false) MultipartFile file) {
+	@RequestMapping(value = "{name}/transactions/new", method = RequestMethod.POST)
+	public String postTransaction(@PathVariable("name") String accountName,
+			@ModelAttribute("transaction") @Valid Transaction transaction,
+			BindingResult result,
+			@RequestParam(value = "file", required = false) MultipartFile file) {
 
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
-          .getUsername());
-      if (!isAuthorized) {
-         return "redirect:";
-      }
-      logger.info("Processing save transacton: " + transaction);
-      if (file == null) {
-         System.err.println("!!!!!!!!!!!!!!!!!!!!!!File is null!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-      }
-      else {
-         BinaryResource resource = resourceManagementService.getResource(file);
-         transaction.setAttachment(resource);
-      }
+		boolean isAuthorized = accountManagementService.isAuthorized(
+				accountName, getSessionUser().getUsername());
+		if (!isAuthorized) {
+			return "redirect:";
+		}
+		logger.info("Processing save transacton: " + transaction);
+		if (file == null) {
+			System.err
+					.println("!!!!!!!!!!!!!!!!!!!!!!File is null!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		} else {
+			BinaryResource resource = resourceManagementService
+					.getResource(file);
+			transaction.setAttachment(resource);
+		}
 
-      transactionManagementService.saveTransaction(transaction, accountName);
+		transactionManagementService.saveTransaction(transaction, accountName);
 
-      return "redirect:";
-   }
+		return "redirect:";
+	}
 
-   @RequestMapping(value = "{name}/transactions", method = RequestMethod.PUT)
-   public String updateTransactionDetails(
-       @RequestParam(value = "file", required = false) MultipartFile file,
-       @PathVariable("name") String accountName, Transaction transaction, BindingResult result,
-       Model model) {
-      if (file == null) {
-         System.err.println("!!!!!!!!!!!!!!!!!!!!!!File is null!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-      }
-      boolean isAuthorized = accountManagementService.isAuthorized(accountName, getSessionUser()
-          .getUsername(), transaction.getId());
-      if (!isAuthorized) {
-         return "redirect:";
-      }
+	@RequestMapping(value = "{name}/transactions", method = RequestMethod.PUT)
+	public String updateTransactionDetails(
+			@RequestParam(value = "file", required = false) MultipartFile file,
+			@PathVariable("name") String accountName, Transaction transaction,
+			BindingResult result, Model model) {
+		final String redirectPath = "/accounts/" + accountName
+				+ "/transactions";
 
-      Transaction oldTransaction = transactionManagementService.getTransaction(transaction.getId(),
-          accountName);
+		boolean isAuthorized = accountManagementService.isAuthorized(
+				accountName, getSessionUser().getUsername(),
+				transaction.getId());
+		if (!isAuthorized) {
+			return "redirect:" + redirectPath;
+		}
 
-      if (oldTransaction == null) {
-         return "redirect:transaction/listTransactions";
-      }
+		Transaction oldTransaction = transactionManagementService
+				.getTransaction(transaction.getId(), accountName);
 
-      transactionManagementService.updateTransactionDetails(oldTransaction, transaction, file);
+		if (oldTransaction == null) {
 
-      return "redirect:transaction/listTransactions";
+			return "redirect:" + redirectPath;
+		}
 
+		transactionManagementService.updateTransactionDetails(oldTransaction,
+				transaction, file);
 
-   }
+		return "redirect:" + redirectPath;
 
-   public TransactionManagementService getTransactionManagementService() {
+	}
 
-      return transactionManagementService;
-   }
+	public TransactionManagementService getTransactionManagementService() {
 
-   public void setTransactionManagementService(
-       TransactionManagementService transactionManagementService) {
+		return transactionManagementService;
+	}
 
-      this.transactionManagementService = transactionManagementService;
-   }
+	public void setTransactionManagementService(
+			TransactionManagementService transactionManagementService) {
 
-   public TransactionValidationService getTransactionValidation() {
+		this.transactionManagementService = transactionManagementService;
+	}
 
-      return transactionValidation;
-   }
+	public TransactionValidationService getTransactionValidation() {
 
-   public void setTransactionValidation(TransactionValidationService transactionValidation) {
+		return transactionValidation;
+	}
 
-      this.transactionValidation = transactionValidation;
-   }
+	public void setTransactionValidation(
+			TransactionValidationService transactionValidation) {
 
-   @InitBinder
-   public void initBinder(WebDataBinder binder) {
+		this.transactionValidation = transactionValidation;
+	}
 
-      SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-      binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
 
-      binder.registerCustomEditor(Category.class, new CategoryEditor(categoryManagementService,
-          getSessionUser().getUsername()));
-   }
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(
+				dateFormat, false));
+
+		binder.registerCustomEditor(Category.class, new CategoryEditor(
+				categoryManagementService, getSessionUser().getUsername()));
+	}
 
 }

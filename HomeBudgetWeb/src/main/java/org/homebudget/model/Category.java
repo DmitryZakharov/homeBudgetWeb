@@ -13,60 +13,60 @@ import javax.persistence.OneToOne;
 @Entity(name = "CATEGORY")
 public class Category {
 
-   @Id
-   @Column(name = "CATEGORY_ID")
-   @GeneratedValue
-   private int id;
+	@Id
+	@Column(name = "CATEGORY_ID")
+	@GeneratedValue
+	private int id;
 
-   @Column(name = "CATEGORY_NAME")
-   private String name;
+	@Column(name = "CATEGORY_NAME")
+	private String name;
 
-   @OneToOne(optional = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-   @JoinColumn(name = "CATEGORY_PARENT")
-   private Category parent;
+	@OneToOne(optional = true,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "CATEGORY_PARENT")
+	private Category parent;
 
-   @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "OWNER_METADATA")
-   private UserMetadata ownerMetadata;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "OWNER_METADATA")
+	private UserMetadata ownerMetadata;
 
-   public int getId() {
+	public int getId() {
 
-      return id;
-   }
+		return id;
+	}
 
-   public void setId(int id) {
+	public void setId(int id) {
 
-      this.id = id;
-   }
+		this.id = id;
+	}
 
-   public UserMetadata getOwnerMetadata() {
+	public UserMetadata getOwnerMetadata() {
 
-      return ownerMetadata;
-   }
+		return ownerMetadata;
+	}
 
-   public void setOwnerMetadata(UserMetadata ownerMetadata) {
+	public void setOwnerMetadata(UserMetadata ownerMetadata) {
 
-      this.ownerMetadata = ownerMetadata;
-   }
+		this.ownerMetadata = ownerMetadata;
+	}
 
-   public String getName() {
+	public String getName() {
 
-      return name;
-   }
+		return name;
+	}
 
-   public void setName(String name) {
+	public void setName(String name) {
 
-      this.name = name;
-   }
+		this.name = name;
+	}
 
-   public Category getParent() {
+	public Category getParent() {
 
-      return parent;
-   }
+		return parent;
+	}
 
-   public void setParent(Category parent) {
+	public void setParent(Category parent) {
 
-      this.parent = parent;
-   }
+		this.parent = parent;
+	}
 
 }

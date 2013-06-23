@@ -72,9 +72,23 @@ public class TransactionManagementService {
    }
 
    public void updateTransactionDetails(Transaction oldTransaction, Transaction newTransaction) {
-      BeanUtils.copyProperties(newTransaction, oldTransaction, new String[]{"id", "parent"});
+	  if(isAttachmentEmpty(newTransaction.getAttachment())){
+	      BeanUtils.copyProperties(newTransaction, oldTransaction, new String[]{"id", "account", "attachment"});  
+	  }
+	  else{
+	      BeanUtils.copyProperties(newTransaction, oldTransaction, new String[]{"id", "account"});  
+
+	  }
       transactionRepository.save(oldTransaction);
    }
+
+private boolean isAttachmentEmpty(BinaryResource attachment) {
+	if(attachment == null || attachment.getFilename() == null || attachment.getFilename().isEmpty()){
+		return true;
+	}
+	
+	return false;
+}
 
    public void updateTransactionDetails(Transaction oldTransaction, Transaction newTransaction,
        MultipartFile attachment) {

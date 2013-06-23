@@ -123,11 +123,11 @@ public class AccountController extends AbstractController {
 
       Account oldAccount = accountManagementService.getAccount(account.getId(), sessionUsername);
 
-      if (oldAccount == null) return "redirect:account/listAccounts";
+      if (oldAccount == null) return "redirect:/accounts";
 
       accountManagementService.updateAccountDetails(oldAccount, account);
 
-      return "redirect:account/listAccounts";
+      return "redirect:/accounts";
 
    }
 

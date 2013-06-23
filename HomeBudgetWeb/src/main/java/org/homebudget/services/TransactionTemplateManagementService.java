@@ -74,7 +74,7 @@ public class TransactionTemplateManagementService {
    public void updateTransactionTemplateDetails(TransactionTemplate oldTransactionTemplate,
        TransactionTemplate newTransactionTemplate) {
       BeanUtils.copyProperties(newTransactionTemplate, oldTransactionTemplate, new String[]{"id",
-         "parent"});
+         "ownerMetadata"});
       transactionTemplateRepository.save(oldTransactionTemplate);
    }
 

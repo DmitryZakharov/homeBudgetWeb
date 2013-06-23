@@ -15,104 +15,118 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountManagementService {
 
-   private static final Logger logger = Logger.getLogger(AccountManagementService.class);
+	private static final Logger logger = Logger
+			.getLogger(AccountManagementService.class);
 
-   @Resource
-   private AccountRepository accountRepository;
+	@Resource
+	private AccountRepository accountRepository;
 
-   @Resource
-   private UserRepository userRepository;
+	@Resource
+	private UserRepository userRepository;
 
-   public Account saveAccount(Account account, String username) {
+	public Account saveAccount(Account account, String username) {
 
-      final UserDetails owner = userRepository.findByUsername(username);
-      // account.setOwnerMetadata(owner.getMetadata());
-      owner.getMetadata().addAccount(account);
-      userRepository.save(owner);
-      return accountRepository.save(account);
-   }
+		final UserDetails owner = userRepository.findByUsername(username);
+		// account.setOwnerMetadata(owner.getMetadata());
+		owner.getMetadata().addAccount(account);
+		userRepository.save(owner);
+		
+		return accountRepository.findByName(account.getName());
+	}
 
-   public void updateAccountDetails(Account oldAccount, Account newAccount) {
+	public void updateAccountDetails(Account oldAccount, Account newAccount) {
 
-      BeanUtils.copyProperties(newAccount, oldAccount, new String[] { "id", "owner" });
+		BeanUtils.copyProperties(newAccount, oldAccount, new String[] { "id",
+				"ownerMetadata", "transactions" });
 
-      accountRepository.save(oldAccount);
+		accountRepository.save(oldAccount);
 
-   }
+	}
 
-   public void updateAccount(Account account) {
+	public void updateAccount(Account account) {
 
-      accountRepository.save(account);
+		accountRepository.save(account);
 
-   }
+	}
 
-   public List<Account> getAllUserAccounts(String username) {
+	public List<Account> getAllUserAccounts(String username) {
 
-      final UserDetails userDetails = userRepository.findByUsername(username);
+		final UserDetails userDetails = userRepository.findByUsername(username);
 
-      return userDetails.getMetadata().getAccounts();
-   }
+		return userDetails.getMetadata().getAccounts();
+	}
+	
+	public long getCount() {
+		return accountRepository.count();
+		
+	}
 
-   public Account getAccount(String accountName, String username) {
+	public Account getAccount(String accountName, String username) {
 
-      Account account = accountRepository.findByName(accountName);
+		Account account = accountRepository.findByName(accountName);
 
-      if (account != null
-      // && account.getOwnerMetadata().getUserDetails().getUsername().equals(username)
-      ) {
-         return account;
-      }
-      return null;
-   }
+		if (account != null
+		// &&
+		// account.getOwnerMetadata().getUserDetails().getUsername().equals(username)
+		) {
+			return account;
+		}
+		return null;
+	}
 
-   public Account getAccount(long id, String username) {
+	public Account getAccount(long id, String username) {
 
-      Account account = accountRepository.findOne(id);
+		Account account = accountRepository.findOne(id);
 
-      // if (account.getOwnerMetadata().getUserDetails().getUsername().equals(username)) {
-      return account;
-      // }
-      // return null;
-   }
+		// if
+		// (account.getOwnerMetadata().getUserDetails().getUsername().equals(username))
+		// {
+		return account;
+		// }
+		// return null;
+	}
 
-   public void deleteAccount(long id) {
+	public void deleteAccount(long id) {
 
-      accountRepository.delete(id);
-   }
+		accountRepository.delete(id);
+	}
 
-   public void deleteAccount(Account account) {
+	public void deleteAccount(Account account) {
 
-      accountRepository.delete(account);
-   }
+		accountRepository.delete(account);
+	}
 
-   public void deleteAll() {
+	public void deleteAll() {
 
-      accountRepository.deleteAll();
-   }
+		accountRepository.deleteAll();
+	}
 
-   public boolean isAuthorized(String accountName, String sessionUserName) {
+	public boolean isAuthorized(String accountName, String sessionUserName) {
 
-      Account account = getAccount(accountName, sessionUserName);
-      if (account == null) {
-         logger.warn("The user " + sessionUserName + " is not authorized for " + accountName);
-         return false;
-      }
-      else {
-         return true;
-      }
-   }
+		Account account = getAccount(accountName, sessionUserName);
+		if (account == null) {
+			logger.warn("The user " + sessionUserName
+					+ " is not authorized for " + accountName);
+			return false;
+		} else {
+			return true;
+		}
+	}
 
-   public boolean isAuthorized(String accountName, String sessionUserName, Long transactionId) {
+	public boolean isAuthorized(String accountName, String sessionUserName,
+			Long transactionId) {
 
-      Account account = getAccount(accountName, sessionUserName);
-      if (account == null) {
-         logger.warn("The user " + sessionUserName + " is not authorized for " + accountName);
-         return false;
-      }
-      else {
+		Account account = getAccount(accountName, sessionUserName);
+		if (account == null) {
+			logger.warn("The user " + sessionUserName
+					+ " is not authorized for " + accountName);
+			return false;
+		} else {
 
-         return account.hasTransaction(transactionId);
-      }
-   }
+			return account.hasTransaction(transactionId);
+		}
+	}
+
+
 
 }

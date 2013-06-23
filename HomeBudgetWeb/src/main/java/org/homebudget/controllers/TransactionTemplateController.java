@@ -106,17 +106,17 @@ public class TransactionTemplateController extends AbstractController {
    public String updateTransactionTemplateDetails(TransactionTemplate transactionTemplate,
        BindingResult result,
        Model model) {
-
+	  final String redirectPath = "/transactionTemplates";
       TransactionTemplate oldTransactionTemplate = transactionTemplateManagementService.
           getTransactionTemplate(getSessionUser().getUsername(), transactionTemplate.getId());
 
       if (oldTransactionTemplate == null) {
-         return "redirect:transactionTemplate/listTransactionTemplates";
-      }
+         return "redirect:" + redirectPath;
+      } 
       transactionTemplateManagementService
           .updateTransactionTemplateDetails(oldTransactionTemplate, transactionTemplate);
 
-      return "redirect:transactionTemplate/listTransactionTemplates";
+      return "redirect:" + redirectPath;
 
    }
 

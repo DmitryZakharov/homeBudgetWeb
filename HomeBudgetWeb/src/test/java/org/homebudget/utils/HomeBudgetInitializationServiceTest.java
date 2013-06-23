@@ -4,7 +4,7 @@
  */
 package org.homebudget.utils;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -81,8 +81,8 @@ public class HomeBudgetInitializationServiceTest extends TestConfigurator {
 
    @After
    public void tearDown() {
-
-      userManagementService.deleteAllUserDetails();
+	   
+	  userManagementService.deleteAllUserDetails();
       EntityManagerHolder emHolder = (EntityManagerHolder) TransactionSynchronizationManager
             .unbindResource(entityManagerFactory);
       EntityManagerFactoryUtils.closeEntityManager(emHolder.getEntityManager());
@@ -106,6 +106,8 @@ public class HomeBudgetInitializationServiceTest extends TestConfigurator {
    @Test
    public void testCreateTestAccounts() {
 
+
+	 System.out.println("Size: " + userManagementService.getAllUsers().size());
       System.out.println("testCreateTestAccount");
       int accountNr = 10;
       UserDetails aUserDetails = createTestUser(1);
@@ -155,21 +157,25 @@ public class HomeBudgetInitializationServiceTest extends TestConfigurator {
 
    private void createTestAccounts(int accountNr, String userName) {
 
+       final UserDetails userDetails = aUserManagementService.getUserDetailsByUsername(userName);
+
       for (int i = 0; i < accountNr; i++) {
          Account aAccount = new Account();
          aAccount.setName("account" + i);
          aAccount.setStartingBalance(i);
+         aAccount = aAccountManagementService.saveAccount(aAccount, userName);
+         
          Transaction transaction = new Transaction();
          transaction.setAmount(i);
          transaction.setComment("transaction" + i);
-         Category category = categoryManagementService.createCategory("category" + 1, null,
-               userName);
+         final  Category category = categoryManagementService.createCategory("category" + i, null,
+                 userName);
+         
          transaction.setCategory(category);
          aAccount.addTransaction(transaction);
-         UserDetails userDetails = aUserManagementService.getUserDetailsByUsername(userName);
+
          userDetails.getMetadata().addAccount(aAccount);
          userManagementService.saveUserDetails(userDetails);
-         // aAccountManagementService.saveAccount(aAccount, userName);
       }
 
    }

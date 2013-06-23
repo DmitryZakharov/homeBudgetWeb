@@ -11,6 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.homebudget.config.TestConfigurator;
 import org.homebudget.dao.AccountRepository;
+import org.homebudget.dao.CategoryRepository;
+import org.homebudget.dao.TransactionRepository;
 
 import org.homebudget.model.Transaction.TransactionType;
 import org.homebudget.services.UserManagementService;
@@ -26,21 +28,29 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 public class TransactionModelTest extends TestConfigurator {
 
    @Autowired
-   AccountRepository repository;
-
-   public TransactionModelTest() {
-
-   }
+   private AccountRepository accountRepository;
+   
+   @Autowired
+   private CategoryRepository categoryRepository;
+   
+   @Autowired
+   private TransactionRepository transactionRepository;
+   
+    
    
    @Autowired
    UserManagementService userManagementService;
    @Autowired
    EntityManagerFactory entityManagerFactory;
+
+   public TransactionModelTest() {
+
+   }
    
    @Before
    public void init() {
 
-      repository.deleteAll();
+	   accountRepository.deleteAll();
       
       EntityManager  entryManager = entityManagerFactory.createEntityManager();
       
@@ -64,12 +74,14 @@ public class TransactionModelTest extends TestConfigurator {
 
       Account account = new Account();
       account.setName("my account");
-
+      account = accountRepository.save(account);
+      
       Transaction transaction = new Transaction();
       transaction.setAmount(12);
       Category category = new Category();
       category.setName("dummy");
-
+      category= categoryRepository.save(category);
+      
       transaction.setCategory(category);
       transaction.setComment("dummy comment");
       Date date = new Date();
@@ -80,9 +92,9 @@ public class TransactionModelTest extends TestConfigurator {
       transaction.setAttachment(image);
       account.addTransaction(transaction);
 
-      repository.save(account);
+      accountRepository.save(account);
 
-      List<Account> accounts = repository.findAll();
+      List<Account> accounts = accountRepository.findAll();
       assertEquals(1, accounts.size());
       List<Transaction> foundTransactions = (List<Transaction>) accounts.get(0).getTransactions();
       assertEquals(1, foundTransactions.size());
@@ -96,18 +108,21 @@ public class TransactionModelTest extends TestConfigurator {
 
       Account account = new Account();
       account.setName("my account");
+      account = accountRepository.save(account);
 
       Transaction transaction = new Transaction();
       transaction.setAmount(12);
       Category category1 = new Category();
       String categoryName1 = "category1";
       category1.setName(categoryName1);
+      category1= categoryRepository.save(category1);
 
       Category category2 = new Category();
       String categoryName2 = "category2";
       category2.setName(categoryName2);
 
       category2.setParent(category1);
+      category2 = categoryRepository.save(category2);
 
       transaction.setCategory(category2);
       transaction.setComment("dummy comment");
@@ -116,9 +131,9 @@ public class TransactionModelTest extends TestConfigurator {
       transaction.setType(Transaction.TransactionType.INCOME);
       account.addTransaction(transaction);
 
-      repository.save(account);
+      accountRepository.save(account);
 
-      List<Account> accounts = repository.findAll();
+      List<Account> accounts = accountRepository.findAll();
       assertEquals(1, accounts.size());
       List<Transaction> foundTransactions = (List<Transaction>) accounts.get(0).getTransactions();
       assertEquals(1, foundTransactions.size());

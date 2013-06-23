@@ -12,10 +12,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -31,19 +33,19 @@ public class Transaction {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date executionDate;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "CATEGORY")
-	protected Category category;
+	private Category category;
 
 	@Column(name = "AMOUNT")
-	protected float amount;
+	private float amount;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TRANSACTION_TYPE")
-	protected TransactionType type;
+	private TransactionType type;
 
 	@Column(name = "COMMENT")
-	protected String comment;
+	private String comment;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "ATTACHMENT")

@@ -2,7 +2,6 @@ package org.homebudget.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 @Entity
 public class TransactionTemplate {
@@ -21,7 +19,7 @@ public class TransactionTemplate {
 	@Column(name = "TRANSACTION_TEMPLATE_ID")
 	private Long id;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "CATEGORY")
 	protected Category category;
 
