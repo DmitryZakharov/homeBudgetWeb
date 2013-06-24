@@ -1,6 +1,5 @@
 package org.homebudget.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,94 +13,100 @@ import javax.persistence.ManyToOne;
 @Entity
 public class TransactionTemplate {
 
-	@Id
-	@GeneratedValue
-	@Column(name = "TRANSACTION_TEMPLATE_ID")
-	private Long id;
+   @Id
+   @GeneratedValue
+   @Column(name = "TRANSACTION_TEMPLATE_ID")
+   private Long id;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "CATEGORY")
-	protected Category category;
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "CATEGORY")
+   protected Category category;
 
-	@Column(name = "AMOUNT")
-	protected float amount;
+   @Column(name = "AMOUNT")
+   protected float amount;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "TRANSACTION_TYPE")
-	protected Transaction.TransactionType type;
+   @Enumerated(EnumType.STRING)
+   @Column(name = "TRANSACTION_TYPE")
+   protected Transaction.TransactionType type;
 
-	@Column(name = "COMMENT")
-	protected String comment;
+   @Column(name = "COMMENT")
+   protected String comment;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "OWNER_METADATA")
-	private UserMetadata ownerMetadata;
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "OWNER_METADATA")
+   private UserMetadata ownerMetadata;
 
-	public TransactionTemplate(Transaction transaction) {
-		this.amount = transaction.getAmount();
-		this.category = transaction.getCategory();
-		this.comment = transaction.getComment();
-		this.type = transaction.getType();
-		this.ownerMetadata = transaction.getUserMetadata();
-	}
+   public TransactionTemplate(Transaction transaction) {
 
-	public TransactionTemplate() {
+      this.amount = transaction.getAmount();
+      this.category = transaction.getCategory();
+      this.comment = transaction.getComment();
+      this.type = transaction.getType();
+      this.ownerMetadata = transaction.getUserMetadata();
+   }
 
-	}
+   public TransactionTemplate() {
 
-	public Transaction.TransactionType getType() {
-		return type;
-	}
+   }
 
-	public void setType(Transaction.TransactionType type) {
+   public Transaction.TransactionType getType() {
 
-		this.type = type;
-	}
+      return type;
+   }
 
-	public float getAmount() {
+   public void setType(Transaction.TransactionType type) {
 
-		return amount;
-	}
+      this.type = type;
+   }
 
-	public void setAmount(float amount) {
+   public float getAmount() {
 
-		this.amount = amount;
-	}
+      return amount;
+   }
 
-	public Category getCategory() {
+   public void setAmount(float amount) {
 
-		return category;
-	}
+      this.amount = amount;
+   }
 
-	public void setCategory(Category category) {
+   public Category getCategory() {
 
-		this.category = category;
-	}
+      return category;
+   }
 
-	public String getComment() {
+   public void setCategory(Category category) {
 
-		return comment;
-	}
+      this.category = category;
+   }
 
-	public void setComment(String comment) {
+   public String getComment() {
 
-		this.comment = comment;
-	}
+      return comment;
+   }
 
-	public Long getId() {
-		return id;
-	}
+   public void setComment(String comment) {
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+      this.comment = comment;
+   }
 
-	public UserMetadata getOwnerMetadata() {
-		return ownerMetadata;
-	}
+   public Long getId() {
 
-	public void setOwnerMetadata(UserMetadata ownerMetadata) {
-		this.ownerMetadata = ownerMetadata;
-	}
+      return id;
+   }
+
+   public void setId(Long id) {
+
+      this.id = id;
+   }
+
+   public UserMetadata getOwnerMetadata() {
+
+      return ownerMetadata;
+   }
+
+   public void setOwnerMetadata(UserMetadata ownerMetadata) {
+
+      this.ownerMetadata = ownerMetadata;
+   }
 
 }

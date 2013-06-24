@@ -1,5 +1,6 @@
 package org.homebudget.services;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -49,7 +50,7 @@ public class AccountManagementService {
 
 	}
 
-	public List<Account> getAllUserAccounts(String username) {
+	public Collection<Account> getAllUserAccounts(String username) {
 
 		final UserDetails userDetails = userRepository.findByUsername(username);
 

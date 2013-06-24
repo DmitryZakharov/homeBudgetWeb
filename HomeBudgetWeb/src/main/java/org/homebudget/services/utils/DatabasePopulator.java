@@ -85,9 +85,8 @@ public class DatabasePopulator {
          account.addTransaction(transaction);
          TransactionTemplate template = new TransactionTemplate(transaction);
          
-        
-
          user.getMetadata().addAccount(account);
+         user.getMetadata().addCategory(category);
          user.getMetadata().addTransactionTemplate(template);
          userManagementService.saveUserDetails(user);
          // transactionManagementService.saveTransaction(transaction, account.getName());

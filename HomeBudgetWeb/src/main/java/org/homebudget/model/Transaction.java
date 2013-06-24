@@ -33,7 +33,7 @@ public class Transaction {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date executionDate;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CATEGORY")
 	private Category category;
 

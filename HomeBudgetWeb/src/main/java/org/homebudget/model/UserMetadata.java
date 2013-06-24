@@ -4,6 +4,7 @@
 package org.homebudget.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -38,16 +39,18 @@ public class UserMetadata {
    private Currency currency;
 
    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy =
-       "ownerMetadata")
-   private List<Category> categories = new ArrayList<Category>();
-
+         "ownerMetadata")
+     private Collection<Account> accounts = new ArrayList<Account>();
+   
+   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy =
+         "ownerMetadata")
+     private Collection<TransactionTemplate> transactionTemplates = new ArrayList<TransactionTemplate>();
+   
    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy =
        "ownerMetadata")
-   private List<Account> accounts = new ArrayList<Account>();
+   private Collection<Category> categories = new ArrayList<Category>();
 
-   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy =
-       "ownerMetadata")
-   private List<TransactionTemplate> transactionTemplates = new ArrayList<TransactionTemplate>();
+
 
    @OneToOne
    @JoinColumn(name = "USER_ID", nullable = false)
@@ -83,9 +86,9 @@ public class UserMetadata {
       this.currency = currency;
    }
 
-   public List<Category> getCategories() {
+   public Collection<Category> getCategories() {
 
-      return Collections.unmodifiableList(categories);
+      return Collections.unmodifiableCollection(categories);
    }
 
    public void addCategory(Category category) {
@@ -110,9 +113,9 @@ public class UserMetadata {
       }
    }
 
-   public List<Account> getAccounts() {
+   public Collection<Account> getAccounts() {
 
-      return Collections.unmodifiableList(accounts);
+      return Collections.unmodifiableCollection(accounts);
    }
 
    public void addAccount(Account account) {
@@ -125,6 +128,14 @@ public class UserMetadata {
       }
       account.setOwnerMetadata(this);
       accounts.add(account);
+   }
+   
+   public void deleteAllAccounts(){
+      accounts.clear();
+   }
+   
+   public void deleteAllCategories(){
+      categories.clear();
    }
 
    public void removeAccount(Account account) {
@@ -147,7 +158,7 @@ public class UserMetadata {
       this.userDetails = userDetails;
    }
 
-   public List<TransactionTemplate> getTransactionTemplates() {
+   public Collection<TransactionTemplate> getTransactionTemplates() {
       return transactionTemplates;
    }
 

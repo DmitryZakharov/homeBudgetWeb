@@ -21,11 +21,11 @@ public class Category {
 	@Column(name = "CATEGORY_NAME")
 	private String name;
 
-	@OneToOne(optional = true,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(optional = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "CATEGORY_PARENT")
 	private Category parent;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "OWNER_METADATA")
 	private UserMetadata ownerMetadata;
 

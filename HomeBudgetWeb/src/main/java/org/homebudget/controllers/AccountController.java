@@ -3,6 +3,7 @@ package org.homebudget.controllers;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class AccountController extends AbstractController {
    @RequestMapping(method = RequestMethod.GET)
    public String getAccounts(Model model) {
 
-      final List<Account> accounts = accountManagementService.getAllUserAccounts(getSessionUser()
+      final Collection<Account> accounts = accountManagementService.getAllUserAccounts(getSessionUser()
             .getUsername());
 
       model.addAttribute(accounts);
